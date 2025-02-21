@@ -31,12 +31,12 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/koreo-dev/koreo.dev/',
+            'https://github.com/koreo-dev/koreo.dev/blob/main/',
         },
         blog: {
           showReadingTime: true,
           editUrl:
-            'https://github.com/koreo-dev/koreo.dev/',
+            'https://github.com/koreo-dev/koreo.dev/blob/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
