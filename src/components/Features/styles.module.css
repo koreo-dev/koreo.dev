@@ -1,0 +1,84 @@
+.features {
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-auto-rows: 1fr; 
+  grid-gap: 1rem; /* Equal spacing between the grid items */
+  width: 100%;
+  max-width: 1684px;
+  margin: auto;
+}
+
+.feature {
+  box-sizing: border-box; 
+  border: 2px solid rgba(203, 199, 217, 0.50);
+  border-radius: 15px;
+  padding: 1.8em;
+  color: #17065A;
+  line-height: 1.8em;
+}
+
+.purpleFeature {
+  background: rgba(255, 255, 255, 0.10);
+  border: none;
+  color: rgba(255, 255, 255, 0.90);
+}
+
+.featureTitleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.featureDescriptionContainer {
+  margin-top: 1em;
+}
+
+.featureSvg {
+  height: 3em;
+  width: 3em;
+  margin-right: 1.2em;
+  vertical-align: middle;
+}
+
+.featureTitleContainer h3 {
+  margin: 0; /* Remove default margin for better alignment */
+  line-height: 1.2; /* Adjust line-height to improve alignment */
+}
+
+/* Medium Screens */
+@media (max-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    grid-gap: 1rem; /* Adjust gap for better spacing on smaller screens */
+  }
+}
+
+/* Small Screens */
+@media (max-width: 768px) {
+  .featuresGrid {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+    grid-gap: 1rem; /* Consistent gap for single-column layout */
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 500px) {
+  .features {
+    padding: 1rem; /* Less padding around the container on very small screens */
+  }
+
+  .feature {
+    padding: 1.2em; /* Reduced padding inside feature boxes for small screens */
+  }
+
+  .featureSvg {
+    height: 2.5em; /* Slightly smaller icons */
+    width: 2.5em;
+  }
+}

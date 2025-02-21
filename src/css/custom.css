@@ -1,0 +1,233 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-font-family-base: 'Lato', sans-serif;
+  --ifm-background-color: #fcfcfc;
+  --ifm-color-primary: #0A6DDC;
+  --ifm-color-primary-dark: #17065A;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  /* --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e; */
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-footer-background-color: #0c0a50;
+  --ifm-footer-color: #8685a9;
+  --ifm-footer-title-color: #f2f1f6;
+  --ifm-footer-link-color: #8685a9;
+  --ifm-footer-link-hover-color: #ffffff;
+  --ifm-menu-color: #5d518b;
+  --ifm-menu-color-active: #17055a;
+  --ifm-navbar-link-color: #5d518b;
+  --ifm-navbar-link-active-color: #17055a;
+  --ifm-dropdown-link-color: #5d518b;
+  --ifm-navbar-link-hover-color: #17055a;
+  --ifm-navbar-shadow: none;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+/*
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+*/
+
+.navbar {
+  background: #fcfcfcdb;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar__items .actionButton {
+  text-decoration: none;
+}
+
+.menu__list .actionButton {
+  color: #5d518b;
+  background: none;
+  font-size: inherit;
+}
+
+.menu__list .actionButton:hover {
+  color: #5d518b;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+}
+
+.menu__link--active.actionButton:hover {
+  color: #17055a;
+}
+
+.menu__link--active.actionButton {
+  color: #17055a;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+}
+
+.navbar__link--active, .navbar__link--active:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer__logo {
+  margin-top: 0;
+}
+
+.footer a:hover {
+  text-decoration: none;
+}
+
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.footer__links {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__bottom {
+  order: -1; 
+  margin-right: 3.2em;
+  text-align: left;
+}
+
+@media (max-width: 996px) {
+  .navbar {
+    background: #fcfcfc;
+    backdrop-filter: none;
+  }
+
+  .footer .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer__bottom {
+    order: 0;
+    margin-right: 0;
+    text-align: center; 
+  }
+}
+
+.heroHeaderHighlight {
+  background: linear-gradient(to right, #78BFFF, #1DC996);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Lora', serif;
+}
+
+.actionButton {
+  color: #ffffff;
+  position: relative;
+  margin-top: auto;
+  background: #05a576;
+  border: 2px solid #05a576;
+  border-radius: 30px;
+}
+
+.actionButton:hover {
+  background: rgba(5, 165, 118, 0.8);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.secondaryActionButton {
+  background: none !important;
+  border: 2px solid #17065a;
+  color: #17065a;
+  position: relative;
+  margin-top: auto;
+  margin-left: 1em;
+  background: #05a576;
+  border-radius: 30px;
+}
+
+.secondaryActionButton:hover {
+  color: #05a576;
+  border: 2px solid #05a576;
+  text-decoration: none;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.boldWhite {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.imageFade {
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1006px) {
+  .actionButton, .secondaryActionButton {
+    font-size: 0.875rem; 
+  } 
+}
+
+@media (max-width: 390px) {
+  .actionButton, .secondaryActionButton {
+    font-size: 0.83rem !important; 
+  } 
+}
+
+.docImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.docImage-75 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.docImage-100 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.docImage img {
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+}
+
+.docImage-75 img {
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+}
+
+.docImage-100 img {
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+}

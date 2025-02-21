@@ -1,0 +1,156 @@
+.backgroundContainer {
+  background: #ffffff;
+  background:
+    radial-gradient(56.73% 109.64% at 31.11% 87.57%, rgba(0, 255, 251, 0.10) 0%, rgba(255, 255, 255, 0.00) 70%),
+    radial-gradient(53.27% 82.76% at 98.19% 100%, rgba(38, 3, 173, 0.29) 0%, rgba(255, 255, 255, 0.00) 70%),
+    radial-gradient(43.01% 85.58% at 55.35% 107.63%, rgba(0, 106, 255, 0.27) 0%, rgba(255, 255, 255, 0.00) 70%);
+  height: 100%;
+  display: flex;
+  justify-content: center; 
+}
+
+.compareHero {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1684px;
+  align-items: flex-start;
+  gap: 3rem;
+  padding: 3.5rem;
+  color: #17065A;
+}
+
+.compareRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  background: rgba(200, 200, 200, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.compareInfo {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+}
+
+.compareImage {
+  max-width: 60%;
+  border-radius: 8px;
+}
+
+.compareName {
+  font-size: 3em;
+  font-family: 'Lora', serif;
+}
+
+.compareSubtitle {
+  margin-bottom: 1.5em;
+}
+
+.content {
+  font-size: 1.2em;
+}
+
+.compareIcon {
+  height: 1em;
+  width: 1em;
+  margin-right: 0.2em;
+  vertical-align: middle;
+  color: #5cc2e0;
+}
+
+.compareLabel {
+  display: inline-flex;
+  align-items: center;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+.compareContent {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  font-size: 1.2em;
+  width: 100%;
+}
+
+.compareContent ul {
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+}
+
+.compareContent li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.compareContent ul li::marker {
+  color: #1DC996;
+}
+
+.gradientText {
+  background: linear-gradient(to right, #78BFFF, #1DC996);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 1429px) {
+  .compareHero {
+    padding: 2rem;
+  }
+
+  .compareLabel {
+    font-size: 1.5rem;
+  }
+
+  .compareName {
+    font-size: 1.9rem;
+  }
+
+  .compareSubtitle {
+    font-size: 1.2rem;
+  }
+
+  .content, .compareContent {
+    font-size: 1rem;
+  }
+
+}
+
+@media (max-width: 912px) {
+  .backgroundContainer {
+    background: #ffffff;
+    background:
+      radial-gradient(circle at 31.11% 87.57%, rgba(0, 255, 251, 0.10) 0%, rgba(255, 255, 255, 0.00) 70%),
+      radial-gradient(53.27% 82.76% at 98.19% 100%, rgba(38, 3, 173, 0.29) 0%, rgba(255, 255, 255, 0.00) 70%);
+  }
+
+  .compareHero {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .compareInfo {
+    max-width: 100%;
+  }
+
+  .compareRight {
+    width: 100%;
+  }
+
+  .compareImage {
+    height: auto;
+    max-width: 50%;
+  }
+
+  .compareContent {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
+}
+

@@ -1,0 +1,491 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBackgroundContainer {
+  background: #fcfcfc;
+  background:
+    radial-gradient(56.73% 109.64% at 31.11% 87.57%, rgba(0, 255, 251, 0.10) 0%, rgba(252, 252, 252, 0.00) 70%),
+    radial-gradient(53.27% 82.76% at 98.19% 100%, rgba(38, 3, 173, 0.29) 0%, rgba(252, 252, 252, 0.00) 70%),
+    radial-gradient(43.01% 85.58% at 55.35% 107.63%, rgba(0, 106, 255, 0.27) 0%, rgba(252, 252, 252, 0.00) 70%);
+  height: 100%;
+}
+
+.heroBackgroundContainer .spotlight {
+  color: #524b8b;
+}
+
+.heroBackgroundContainer .spotlightHeader, .heroBackgroundContainer .spotlightSubheader {
+  color: #17065A;
+}
+
+.spotlightPurpleContainer {
+  background: #392488;
+  color: #dad6ea;
+  height: 100%;
+  display: flex;
+  justify-content: center; 
+}
+
+.spotlightPurpleContainer .spotlightHeader, .spotlightPurpleContainer .spotlightSubheader {
+  color: #ffffff;
+}
+
+.spotlightTanContainer {
+  background: #F6F1EB;
+  color: #52412f;
+  height: 100%;
+  display: flex;
+  justify-content: center; 
+}
+
+.spotlightTanContainer .spotlightHeader, .spotlightTanContainer .spotlightSubheader {
+  color: #291500;
+}
+
+.spotlightTanToPurpleContainer {
+  background: #F6F1EB;
+  background: linear-gradient(180deg, #F6F1EB 0%, #EDEAFB 100%);
+  color: #524b8b;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.spotlightTanToPurpleContainer .spotlightHeader, .spotlightTanToPurpleContainer .spotlightSubheader {
+  color: #17065A;
+}
+
+.spotlightTanToWhiteContainer {
+  background: #F6F1EB;
+  background: linear-gradient(180deg, #F6F1EB 0%, #fcfcfc 100%);
+  color: #52412f;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.spotlightTanToWhiteContainer .spotlightHeader, .spotlightTanToWhiteContainer .spotlightSubheader {
+  color: #291500;
+}
+
+.spotlightPurpleToWhiteContainer {
+  background: #EDEAFB;
+  background: linear-gradient(180deg, #EDEAFB 0%, #fcfcfc 100%);
+  color: #524b8b;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.spotlightPurpleToWhiteContainer .spotlightHeader, .spotlightPurpleToWhiteContainer .spotlightSubheader {
+  color: #17065A;
+}
+
+.spotlightWhiteContainer .spotlightHeader, .spotlightWhiteContainer .spotlightSubheader {
+  color: #17065A;
+}
+
+.spotlightRadialGradientContainer {
+  background: #fcfcfc;
+  background:
+    radial-gradient(56.73% 109.64% at 31.11% 87.57%, rgba(0, 255, 251, 0.10) 0%, rgba(252, 252, 252, 0.00) 90%),
+    radial-gradient(53.27% 82.76% at 98.19% 100%, rgba(38, 3, 173, 0.29) 0%, rgba(252, 252, 252, 0.00) 90%),
+    radial-gradient(43.01% 85.58% at 55.35% 107.63%, rgba(0, 106, 255, 0.27) 0%, rgba(252, 252, 252, 0.00) 90%);
+  color: #524b8b;
+  height: 100%;
+  justify-content: center;
+}
+
+.spotlightRadialGradientContainer .spotlightHeader, .spotlightRadialGradientContainer .spotlightSubheader {
+  color: #17065A;
+}
+
+.spotlightHeader {
+  font-family: 'Lora', serif;
+  margin-bottom: 0;
+}
+
+.heroBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  color: #17065A;
+  flex-wrap: wrap; 
+  width: 100%;
+  max-width: 1684px;
+  margin: 0 auto;
+}
+
+.heroContent {
+  flex-grow: 1;
+  max-width: 55%;
+}
+
+.heroTitle {
+  font-size: 3rem;
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+}
+
+.heroVideo {
+  max-width: 40%;
+  flex-grow: 1;
+}
+
+.spotlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1684px;
+  margin: 0 auto;
+}
+
+.tabbedSpotlightContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+}
+
+.tabbedImageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 45%;
+}
+
+.spotlightContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  gap: 3rem;
+}
+
+.spotlightInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 55%;
+}
+
+.spotlightInfoFullWidth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.spotlightHeader {
+  font-size: 2.7rem;
+  font-weight: bold;
+}
+
+.spotlightSubheader {
+  font-size: 1.8em; 
+  margin-bottom: 1.5em;
+}
+
+.spotlightDescription {
+  font-size: 1.2rem;
+}
+
+.tabbedSpotlightImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border-top: 8px solid #0e101b;
+}
+
+.spotlightImage {
+  max-width: 100%;
+  height: auto;
+  width: 45%;
+  border-radius: 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  padding-bottom: 2px;
+  margin-left: 8px;
+}
+
+.tabButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #ae9aff;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.tabButton:hover {
+  color: #ffffff;
+}
+
+.tabButton::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.activeTab {
+  color: #ffffff;
+  background: transparent;
+}
+
+.activeTab::after {
+  background: #3b82f6;
+}
+
+.activeTab:hover {
+  color: #ffffff;
+}
+
+.useCasesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.useCaseItem {
+  border: 1px solid #eee;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.useCaseItem h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.useCaseItem p {
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 1429px) {
+  .spotlight {
+    padding: 2rem;
+  }
+
+  .spotlightHeader {
+    font-size: 1.9rem;
+  }
+
+  .spotlightSubheader {
+    font-size: 1.3em;
+  }
+
+  .spotlightDescription {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1161px) {
+  .tabButton {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1109px) {
+  .tabButton {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabButton {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 605px) {
+  .tabButton {
+    font-size: 0.56rem;
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+@media (max-width: 912px) {
+  .heroBackgroundContainer {
+    background: #fcfcfc;
+    background:
+      radial-gradient(circle at 31.11% 87.57%, rgba(0, 255, 251, 0.05) 0%, rgba(252, 252, 252, 0.00) 70%),
+      radial-gradient(53.27% 82.76% at 98.19% 100%, rgba(38, 3, 173, 0.145) 0%, rgba(252, 252, 252, 0.00) 70%);
+  }
+
+  .spotlightContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .spotlight .spotlightHeader, .spotlight .spotlightSubheader, 
+  .altSpotlight .spotlightHeader, .altSpotlight .spotlightSubheader, .heroContent {
+    text-align: center;
+  }
+
+  .spotlightInfo {
+    width: 100%;
+    order: 1;
+  }
+
+  .tabbedSpotlightContent {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .tabbedImageContainer {
+    width: 100%;
+  }
+
+  .spotlightImage {
+    width: 100%;
+    order: 2;
+    cursor: inherit;
+    max-width: 500px;
+  }
+
+  .spotlightHeader {
+    font-size: 2rem;
+  }
+
+  .spotlightSubheader {
+    font-size: 1.5em;
+  }
+
+  .spotlightDescription {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 855px) {
+  .heroBanner {
+    padding: 2rem;
+    flex-direction: column; 
+  }
+
+  .heroContent, .heroVideo {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .heroVideo {
+    margin-top: 2rem; 
+  }
+}
+
+@media (min-width: 768px) and (max-width: 930px) {
+  .spotlightHeader {
+    font-size: 1.9rem;
+  }
+
+  .spotlightSubheader {
+    font-size: 1.4em;
+  }
+
+  .tabButton {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabbedImageContainer {
+    align-items: center;
+  }
+  
+  .tabs {
+    justify-content: center;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .spotlightHeader {
+    font-size: 1.5rem;
+  }
+
+  .spotlightSubheader {
+    font-size: 1.2em;
+  }
+
+  .spotlightDescription {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .heroTitle {
+    font-size: 1.4rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 431px) {
+  .heroTitle {
+    font-size: 1.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (min-width: 431px) and (max-width: 1183px) {
+  .heroTitle {
+    font-size: 1.8rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (min-width: 1184px) and (max-width: 1384px) {
+  .heroTitle {
+    font-size: 2.6rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .useCasesList {
+    grid-template-columns: 1fr;
+  }
+}

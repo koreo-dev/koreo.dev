@@ -1,0 +1,40 @@
+apiVersion: koreo.realkinetic.com/v1beta1
+kind: ResourceFunction
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-capacity-provider","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"aws.konfigurate.realkinetic.com/v1beta1","kind":"CapacityProvider","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":1},"postconditions":[{"assert":"=has(resource.status.state.aws.resourceId)","retry":{"delay":5,"message":"Waiting for capacity provider to become healthy"}}],"resource":{"spec":{"autoScalingGroupArn":"=inputs.auto_scaling_group.resource_arn","tags":"=inputs.resource_tags.tags","targetCapacity":"=inputs.config.auto_scaling_group.targetCapacity"}},"return":{"resource_arn":"=resource.status.state.aws.resourceArn","resource_id":"=resource.status.state.aws.resourceId"}}}
+  creationTimestamp: "2025-02-10T19:53:07Z"
+  generation: 1
+  name: aws-environment-capacity-provider
+  namespace: realkinetic-dev
+  resourceVersion: "43370004"
+  uid: 11ab273a-f417-4629-91e4-75813333a7b2
+spec:
+  apiConfig:
+    apiVersion: aws.konfigurate.realkinetic.com/v1beta1
+    kind: CapacityProvider
+    name: =inputs.metadata.name
+    namespace: =inputs.metadata.namespace
+    namespaced: true
+    owned: true
+    readonly: false
+  create:
+    delay: 1
+    enabled: true
+  postconditions:
+  - assert: =has(resource.status.state.aws.resourceId)
+    retry:
+      delay: 5
+      message: Waiting for capacity provider to become healthy
+  resource:
+    spec:
+      autoScalingGroupArn: =inputs.auto_scaling_group.resource_arn
+      tags: =inputs.resource_tags.tags
+      targetCapacity: =inputs.config.auto_scaling_group.targetCapacity
+  return:
+    resource_arn: =resource.status.state.aws.resourceArn
+    resource_id: =resource.status.state.aws.resourceId
+  update:
+    patch:
+      delay: 30
