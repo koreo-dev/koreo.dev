@@ -1,6 +1,7 @@
 ---
 id: glossary
 title: Glossary
+sidebar_position: 3
 ---
 
 This glossary defines key terms used in Koreo grouped by related concept.

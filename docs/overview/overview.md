@@ -33,35 +33,48 @@ toolkit"—it allows platform teams to build powerful abstractions.
 ## Background and Why
 
 The original motivation for creating Koreo was configuring modern, dynamic
-cloud infrastructure. The initial use case was configuring and managing
-scalable, ephemeral, serverless systems.
+cloud infrastructure. The initial use case, in particular, was configuring and
+managing scalable, ephemeral, serverless systems. Koreo is the engine that
+powers [Konfigurate](https://konfigurate.com), a batteries-included developer
+platform for startups and scaleups.
 
-Many existing IaC tools play very poorly, or are even dangerous to use, with
-dynamic infrastructure. Most infrastructure is dynamic–we just like to imagine
-that it is static. ­In practice, services crash, restart, need to scale, are
-rebalanced, and so forth. Infrastructure might be changed via a UI or CLI and
-the updates not made within the IaC, leading to drift. Ideally, our systems for
-managing infrastructure are able to perform the correct actions under changing
-conditions.
+Many existing Infrastructure as Code (IaC) tools play very poorly, or are even
+dangerous to use, with dynamic infrastructure. Most infrastructure is
+dynamic–we just like to imagine that it is static. ­In practice, services
+crash, restart, need to scale, are rebalanced, and so forth. Infrastructure
+might be changed via a UI or CLI and the updates not made within the IaC,
+leading to drift. Ideally, our systems for managing infrastructure are able to
+perform the correct actions under changing conditions.
 
 There is a pattern for implementing such systems: [Kubernetes
 controllers](https://kubernetes.io/docs/concepts/architecture/controller/). The
 underlying concept is using a control loop to continually pull resources closer
 to the specified configuration. Effectively, it is the automation of what a
 human should do: watch the state of the system, and if indicated, take some
-actions to alter the system state, moving it closer to the desired state.
+actions to alter the system state, moving it closer to the desired state. Tools
+like Crossplane offer an evolution of IaC that take a controller-based
+approach, but they introduce their own challenges and limitations.
 
 The second observation was that getting any one resource (meaning systems,
 services, or APIs) working once is usually straightforward. Integrating
 _multiple_ resources together is much harder. Making many resources work
 together in a way that is repeatable and pleasant to interact with is very
-hard.
-
-In modern software development, the integration of systems is the core
+hard. In modern software development, the integration of systems is the core
 challenge platform engineering teams face. The Koreo team has a background of
 applying a product engineering mindset to infrastructure engineering problems,
 and we've taken that approach to providing tools for platform engineering
 teams.
+
+Finally, tools like Helm and Kustomize, while useful for simpler
+configurations, become unwieldy when dealing with the complexity of modern
+Kubernetes deployments, going beyond simple value substitution or static
+patching. A more structured approach is needed. Koreo is a data structure
+orchestration engine. Although it’s primarily designed for Kubernetes resource
+orchestration, Koreo's core functionality can orchestrate and manage virtually
+any structured data.
+
+Koreo aims to provide a more robust, programmable, and scalable solution for
+these modern infrastructure challenges.
 
 ## Core Concepts
 
