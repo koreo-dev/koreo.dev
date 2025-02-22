@@ -39,7 +39,7 @@ const useCases = [
   },
   {
     title: "Policy as Code",
-    description: <p>Define and enforce organizational policies through code, ensuring compliance and consistency across all deployments and environments.</p>,
+    description: <p>Define and enforce organizational policies through code to ensure compliance and consistency in a declarative, testable way.</p>,
   },
 ];
 
