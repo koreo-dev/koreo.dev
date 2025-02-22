@@ -149,7 +149,7 @@ function HomepageHeader() {
         <p className={styles.heroSubtitle}>
           Koreo is a new approach to <strong>Kubernetes configuration management</strong> empowering developers and platform teams through programmable workflows and structured data
         </p>
-        <Link className={clsx("button button--lg actionButton")} to="#">
+        <Link className={clsx("button button--lg actionButton")} to="/docs/overview">
           Get Started
         </Link>
         <Link className={clsx("button button--lg secondaryActionButton")} to="#">
