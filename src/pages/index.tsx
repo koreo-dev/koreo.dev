@@ -147,7 +147,7 @@ function HomepageHeader() {
       <div className={styles.heroContent}>
         <Heading as="h1" className={styles.heroTitle}>The<br /><span className="heroHeaderHighlight">platform engineering toolkit</span><br />for Kubernetes</Heading>
         <p className={styles.heroSubtitle}>
-          Koreo is a new approach to <strong>Kubernetes configuration management</strong> empowering developers and platform teams through programmable workflows and structured data
+          Koreo is a new approach to <strong>Kubernetes configuration management and resource orchestration</strong> empowering developers through programmable workflows and structured data
         </p>
         <Link className={clsx("button button--lg actionButton")} to="/docs/overview">
           Get Started
