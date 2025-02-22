@@ -121,7 +121,7 @@ of robust, dynamic resource configurations.
 ### Workflows
 
 [Workflows](../workflow.md) define the relationship between Functions and other
-Workflows (together known as [Logic](./glossary.md#logic). Their job is to map,
+Workflows (together known as [Logic](./glossary.md#logic)). Their job is to map,
 and possibly transform, the outputs from one piece of Logic into another's
 inputs, then return an overall result.
 
