@@ -130,8 +130,8 @@ The second difference is that this step is provided a default label: "config".
 That means, unless changed, you may provide its return value as an input to
 other steps by setting a key within their `inputs` to `=steps.config`.
 
-Lastly, `spec.configStep` does not support `forEach` or `skipIf`. The remaining
-options share the same behavior as `spec.steps` values.
+Lastly, `spec.configStep` does not support `forEach`, `refSwitch`, or `skipIf`.
+The remaining options share the same behavior as `spec.steps` values.
 
 :::note
 The `spec.configStep` may run concurrently with other steps that do not depend
@@ -145,15 +145,21 @@ to be provided with, specifies an optional status condition, and optionally
 specifies any state you wish exposed within the parent resource's
 `status.state`.
 
-Each step must specify the Logic to be called using `ref`, which may be a
-ValueFunction, ResourceFunction, or Workflow. It also specifies `inputs`
-to be provided to the Logic. For Functions, the inputs are directly accessible
-within `inputs`. For Workflows, the inputs are exposed under `inputs.parent`.
-That enables a Workflow to be directly triggered via a `crdRef` _or_ it may
-be directly called as a sub-workflow. That makes reuse and testing of
-Workflows easier. Steps can depend on other steps by referencing them as an
-input value. This allows you to map outputs from one step into inputs of
-another step.
+Each step must specify the Logic to be called. Logic is defined by
+ValueFunction, ResourceFunction, or using a sub-Workflow to compose Functions.
+To _reference_ the Logic, you specify the `kind` and `name`. Logic may be
+statically specified using `ref`, which specifies exact Logic to run. Logic may
+be dynamically selected from a fixed set of references using `refSwitch`, which
+provides the ability to select between multiple Logics which implement a
+compatible interface—this is discussed in more detail below.
+
+Steps also specifies `inputs` to be provided to the Logic. For Functions, the
+inputs are directly accessible within `inputs`. For Workflows, the inputs are
+exposed under `inputs.parent`. That enables a Workflow to be directly triggered
+via a `crdRef` _or_ it may be directly called as a sub-Workflow. That makes
+reuse and testing of Workflows easier. Steps can depend on other steps by
+referencing them as an input value. This allows you to map outputs from one
+step into inputs of another step.
 
 :::tip[Steps may run concurrently]
 A step is run once all steps it references have been run. To help make
@@ -169,9 +175,22 @@ executed once per item in the `forEach.itemIn` list. Each item will be provided
 within `inputs` with the key name specified in `forEach.inputKey`. This makes
 using any Function within a `forEach` viable.
 
+Steps may be conditionally run using `skipIf`. When the `skipIf` evaluates to
+true, the step and its dependencies are [Skipped](overview/glossary.md#skip)
+without resulting in an error by stopping further evaluation of the step and
+its dependencies.
+
 `skipIf` enables the Workflow to dynamically determine which steps to run.
 This allows Logic to define a common interface, then for the Workflow to call
 the correct Logic. This enables _if_ or _switch_ statement semantics.
+
+Logic may be dynamically selected from a set of choices using `refSwitch`.
+`refSwitch` allows Logic to define a common interface, then for the
+Workflow to call the appropriate Logic based on input or computed values. The
+`switchOn` expression has access to the return values from prior steps within
+`steps`. It also has access to the `inputs` that will be provided to the Logic.
+Using `inputs` enables `refSwitch` to work with `forEach` and dispatch the
+correct Logic for each item.
 
 A step may expose a Condition on the parent resource using `condition`. The
 Condition's type will match `condition.type`, and this should be unique within
@@ -197,7 +216,7 @@ If multiple steps set the same state keys, the return values will be merged.
 This can lead to confusing values, so be cautious.
 :::
 
-```yaml {12-43}
+```yaml {12-49}
 apiVersion: koreo.realkinetic.com/v1beta1
 kind: Workflow
 metadata:
@@ -222,15 +241,21 @@ spec:
           nested_string: =value.nested.a_string
           empty_list: =value.empties.emptyList
 
-    - label: resource_reader
-      ref:
-        kind: ResourceFunction
-        name: resource-reader.v1
+    - label: switched_resource_reader
+      refSwitch:
+        switchOn: =inputs.result
+        cases:
+        - case: "1"
+          kind: ResourceFunction
+          name: resource-reader-1.v1
+        - case: "2"
+          kind: ResourceFunction
+          name: resource-reader-2.v1
+        - case: "3"
+          kind: ResourceFunction
+          name: resource-reader-3.v1
       inputs:
-        name: resource-function-test
-        values:
-          string: =steps.config.string
-          int: =steps.config.int
+        result: =steps.simple_return_value.result
 
     - label: resource_factory
       ref:

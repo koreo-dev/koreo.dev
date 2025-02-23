@@ -114,19 +114,6 @@ underscores.
         </td>
         <td>true</td>
       </tr><tr>
-        <td><b><a href="#specstepsindexref">ref</a></b></td>
-        <td>object</td>
-        <td>
-          The Function or Workflow to run as the Logic. No
-default `inputs` are provided to the Logic. For
-Workflows, `inputs` are passed to the workflow's
-`configStep` as `inputs.parent`, which allows
-workflows to be invoked as sub-workflows or by their
-`crdRef`.
-<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
         <td><b><a href="#specstepsindexcondition">condition</a></b></td>
         <td>object</td>
         <td>
@@ -162,6 +149,32 @@ steps (`steps.prior_step.sub.value`).
         </td>
         <td>false</td>
       </tr><tr>
+        <td><b><a href="#specstepsindexref">ref</a></b></td>
+        <td>object</td>
+        <td>
+          The Function or Workflow to run as the Logic. No
+default `inputs` are provided to the Logic. For
+Workflows, `inputs` are passed to the workflow's
+`configStep` as `inputs.parent`, which allows
+workflows to be invoked as sub-workflows or by their
+`crdRef`.
+<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b><a href="#specstepsindexrefswitch">refSwitch</a></b></td>
+        <td>object</td>
+        <td>
+          Dyanmically select the Function or Workflow to run as
+the step's Logic. No default `inputs` are provided to
+the Logic. For Workflows, `inputs` are passed to the
+workflow's `configStep` as `inputs.parent`, which
+allows workflows to be invoked as sub-workflows or by
+their `crdRef`.
+<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>skipIf</b></td>
         <td>string</td>
         <td>
@@ -185,43 +198,6 @@ run may overwrite earlier values.
 <br/>
         </td>
         <td>false</td>
-      </tr></tbody>
-</table>
-
-### spec.steps[index].ref
-
-The Function or Workflow to run as the Logic. No
-default `inputs` are provided to the Logic. For
-Workflows, `inputs` are passed to the workflow's
-`configStep` as `inputs.parent`, which allows
-workflows to be invoked as sub-workflows or by their
-`crdRef`.
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Required</th>
-        </tr>
-    </thead>
-    <tbody><tr>
-        <td><b>kind</b></td>
-        <td>enum</td>
-        <td>
-          <br/>
-          <br/>
-            <i>Enum</i>: ResourceFunction, ValueFunction, Workflow<br/>
-        </td>
-        <td>true</td>
-      </tr><tr>
-        <td><b>name</b></td>
-        <td>string</td>
-        <td>
-          <br/>
-        </td>
-        <td>true</td>
       </tr></tbody>
 </table>
 
@@ -301,6 +277,128 @@ passed under.
             <i>Validations</i>:<li>self.startsWith('='): must be an expression (start with '=').</li>
         </td>
         <td>true</td>
+      </tr></tbody>
+</table>
+
+### spec.steps[index].ref
+
+The Function or Workflow to run as the Logic. No
+default `inputs` are provided to the Logic. For
+Workflows, `inputs` are passed to the workflow's
+`configStep` as `inputs.parent`, which allows
+workflows to be invoked as sub-workflows or by their
+`crdRef`.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>kind</b></td>
+        <td>enum</td>
+        <td>
+          <br/>
+          <br/>
+            <i>Enum</i>: ResourceFunction, ValueFunction, Workflow<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          <br/>
+        </td>
+        <td>true</td>
+      </tr></tbody>
+</table>
+
+### spec.steps[index].refSwitch
+
+Dyanmically select the Function or Workflow to run as
+the step's Logic. No default `inputs` are provided to
+the Logic. For Workflows, `inputs` are passed to the
+workflow's `configStep` as `inputs.parent`, which
+allows workflows to be invoked as sub-workflows or by
+their `crdRef`.
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b><a href="#specstepsindexrefswitchcasesindex">cases</a></b></td>
+        <td>[]object</td>
+        <td>
+          <br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>switchOn</b></td>
+        <td>string</td>
+        <td>
+          <br/>
+          <br/>
+            <i>Validations</i>:<li>self.startsWith('='): must be an expression</li>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+### spec.steps[index].refSwitch.cases[index]
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>case</b></td>
+        <td>string</td>
+        <td>
+          <br/>
+          <br/>
+            <i>Validations</i>:<li>!self.startsWith('='): may not be an expression</li>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>kind</b></td>
+        <td>enum</td>
+        <td>
+          <br/>
+          <br/>
+            <i>Enum</i>: ResourceFunction, ValueFunction, Workflow<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>name</b></td>
+        <td>string</td>
+        <td>
+          <br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>default</b></td>
+        <td>boolean</td>
+        <td>
+          <br/>
+          <br/>
+            <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
       </tr></tbody>
 </table>
 
