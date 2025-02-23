@@ -270,6 +270,56 @@ required.
 In order to demonstrate FunctionTest, we will test a simple but representative
 ResourceFunction.
 
+<Tabs>
+  <TabItem value="resource-function" label="ResourceFunction" default>
+```yaml
+apiVersion: koreo.realkinetic.com/v1beta1
+kind: ResourceFunction
+metadata:
+  name: function-test-demo.v1
+  namespace: koreo-demo
+spec:
+  preconditions:
+  - assert: =inputs.int > 0
+    permFail:
+      message: ="`int` must be positive, received '" + string(inputs.int) + "'"
+
+  - assert: =inputs.enabled
+    skip:
+      message: User disabled the ResourceFunction
+
+  apiConfig:
+    apiVersion: koreo.realkinetic.com/v1beta1
+    kind: TestDummy
+    plural: testdummies
+
+    name: =inputs.metadata.name
+    namespace: =inputs.metadata.namespace
+
+  resource:
+    metadata: =inputs.metadata
+    spec:
+      value: =inputs.int
+      doubled: =inputs.int * 2
+      listed:
+      - =inputs.int + 1
+      - =inputs.int + 2
+
+  postconditions:
+    # Note, you must explicitly handle cases where the value might not be
+    # present.
+  - assert: =has(resource.status.ready) && resource.status.ready
+    retry:
+      message: Not ready yet
+      delay: 5
+
+  return:
+    ref: =resource.self_ref()
+    bigInt: =inputs.int * 100
+    ready: '=has(resource.status.ready) ? resource.status.ready : "not ready"'
+```
+  </TabItem>
+  <TabItem value="function-test" label="FunctionTest">
 ```yaml
 apiVersion: koreo.realkinetic.com/v1beta1
 kind: FunctionTest
@@ -404,53 +454,9 @@ spec:
         ready: true
     expectOutcome:
       ok: {}
----
-apiVersion: koreo.realkinetic.com/v1beta1
-kind: ResourceFunction
-metadata:
-  name: function-test-demo.v1
-  namespace: koreo-demo
-spec:
-  preconditions:
-  - assert: =inputs.int > 0
-    permFail:
-      message: ="`int` must be positive, received '" + string(inputs.int) + "'"
-
-  - assert: =inputs.enabled
-    skip:
-      message: User disabled the ResourceFunction
-
-  apiConfig:
-    apiVersion: koreo.realkinetic.com/v1beta1
-    kind: TestDummy
-    plural: testdummies
-
-    name: =inputs.metadata.name
-    namespace: =inputs.metadata.namespace
-
-  resource:
-    metadata: =inputs.metadata
-    spec:
-      value: =inputs.int
-      doubled: =inputs.int * 2
-      listed:
-      - =inputs.int + 1
-      - =inputs.int + 2
-
-  postconditions:
-    # Note, you must explicitly handle cases where the value might not be
-    # present.
-  - assert: =has(resource.status.ready) && resource.status.ready
-    retry:
-      message: Not ready yet
-      delay: 5
-
-  return:
-    ref: =resource.self_ref()
-    bigInt: =inputs.int * 100
-    ready: '=has(resource.status.ready) ? resource.status.ready : "not ready"'
-
 ```
+  </TabItem>
+</Tabs>
 
 ## Specification
 

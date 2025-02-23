@@ -39,8 +39,11 @@ by the ResourceFunction, so you need not specify them.
 ## Example
 
 The example below demonstrates a ResourceFunction which dynamically loads a
-ResourceTemplate based on a provided input.
+ResourceTemplate based on a provided input along with a corresponding
+[FunctionTest](./function-test.md).
 
+<Tabs>
+  <TabItem value="template-1" label="ResourceTemplate 1" default>
 ```yaml
 apiVersion: koreo.realkinetic.com/v1beta1
 kind: ResourceTemplate
@@ -63,7 +66,10 @@ spec:
       nested:
       - 1
       - 2
----
+```
+  </TabItem>
+  <TabItem value="template-2" label="ResourceTemplate 2">
+```yaml
 apiVersion: koreo.realkinetic.com/v1beta1
 kind: ResourceTemplate
 metadata:
@@ -83,7 +89,10 @@ spec:
       structure:
       - name: doc
       - name: examples
----
+```
+  </TabItem>
+  <TabItem value="resource-function" label="ResourceFunction">
+```yaml
 apiVersion: koreo.realkinetic.com/v1beta1
 kind: ResourceFunction
 metadata:
@@ -93,8 +102,6 @@ spec:
   locals:
     template_name: ="docs-template-" + inputs.template + ".v1"
 
-  # The apiConfig section remains the same. For security purposes, apiVersion,
-  # kind, name, and namespace will be overlaid onto the template.
   apiConfig:
     apiVersion: koreo.realkinetic.com/v1beta1
     kind: TestDummy
@@ -111,7 +118,10 @@ spec:
       spec:
         value: =inputs.value
         addedProperty: =inputs.value * 17
----
+```
+  </TabItem>
+  <TabItem value="function-test" label="FunctionTest">
+```yaml
 apiVersion: koreo.realkinetic.com/v1beta1
 kind: FunctionTest
 metadata:
@@ -171,6 +181,8 @@ spec:
         - name: doc
         - name: examples
 ```
+  </TabItem>
+</Tabs>
 
 ## Specification
 
