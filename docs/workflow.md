@@ -67,9 +67,13 @@ We refer to the _instance_ of the `spec.crdRef` resource which _triggers_ a
 Workflow as its "parent" or "trigger".
 
 :::warning
-Though it is possible, it is not advised to use a resource which is controlled
-by another controller. Instead, create your own CRDs. Koreo Developer Tooling
-provides a tool to generate a CRD from a Workflow.
+Any resource kind can be used as a Workflow trigger, but take care when using
+resources controlled by another controller. Koreo applies updates to the
+resource's status and annotations which could result in a dangerous interaction
+for resources with specific semantics used by another controller. For this
+reason, it's encouraged to create your own CRDs unless you understand what
+you are doing. Koreo Developer Tooling provides a tool to generate a CRD
+from a Workflow.
 :::
 
 Additionally, a Workflow can be triggered by _another_ Workflow as a
