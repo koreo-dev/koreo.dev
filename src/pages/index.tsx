@@ -26,8 +26,8 @@ const useCases = [
     description: <p>Build powerful, high-level abstractions that allow developers to focus on product development rather than infrastructure complexity.</p>,
   },
   {
-    title: "Multi-Cloud Orchestration",
-    description: <p>Combine operators like <a href="https://aws-controllers-k8s.github.io/community/docs/community/overview/" target="_blank">ACK</a>, <a href="https://cloud.google.com/config-connector/docs/overview" target="_blank">Config Connector</a>, and <a href="https://azure.github.io/azure-service-operator/" target="_blank">ASO</a> to manage resources across multiple cloud providers and platforms.</p>,
+    title: "Multi-Cloud IaC",
+    description: <p>Combine operators like <a href="https://aws-controllers-k8s.github.io/community/docs/community/overview/" target="_blank">ACK</a>, <a href="https://cloud.google.com/config-connector/docs/overview" target="_blank">Config Connector</a>, and <a href="https://azure.github.io/azure-service-operator/" target="_blank">ASO</a> to manage resources across multiple cloud providers and platforms through Infrastructure as Code.</p>,
   },
   {
     title: "Operator Composition",
