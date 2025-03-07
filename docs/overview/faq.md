@@ -43,14 +43,17 @@ Koreo was born out of the need to effectively configure and manage modern,
 dynamic cloud infrastructure, particularly the challenges associated with
 scalable, ephemeral, serverless systems. Traditional Infrastructure as Code
 (IaC) tools often struggle with the dynamic nature of these environments. While
-tools like Crossplane offer an evolution of IaC, they introduce their own
-complexities and limitations. Furthermore, tools like Helm and Kustomize, while
-useful for simpler configurations, become unwieldy when dealing with the
-complexity of modern Kubernetes deployments, going beyond simple value
-substitution or static patching. Koreo aims to provide a more robust,
-programmable, and scalable solution for these modern infrastructure challenges.
-It is the engine that powers [Konfigurate](https://konfigurate.com), a
-batteries-included developer platform for startups and scaleups.
+tools like Crossplane offer an evolution of IaC that is controller-based, they
+introduce their own complexities and limitations. For example, requiring
+resources to be cluster-scoped rather than namespaced or requiring
+infrastructure to live in the same cloud project or account as the control
+plane itself. Furthermore, tools like Helm and Kustomize, while useful for
+simpler configurations, become unwieldy when dealing with the complexity of
+modern Kubernetes deployments, going beyond simple value substitution or static
+patching. Koreo aims to provide a more robust, programmable, and scalable
+solution for these modern infrastructure challenges. It is the engine that
+powers [Konfigurate](https://konfigurate.com), a batteries-included developer
+platform for startups and scaleups.
 
 Read [Background and Why](./overview.md#background-and-why) for more on the
 motivation behind Koreo.

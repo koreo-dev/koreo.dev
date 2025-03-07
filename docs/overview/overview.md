@@ -51,9 +51,18 @@ controllers](https://kubernetes.io/docs/concepts/architecture/controller/). The
 underlying concept is using a control loop to continually pull resources closer
 to the specified configuration. Effectively, it is the automation of what a
 human should do: watch the state of the system, and if indicated, take some
-actions to alter the system state, moving it closer to the desired state. Tools
-like Crossplane offer an evolution of IaC that take a controller-based
-approach, but they introduce their own challenges and limitations.
+actions to alter the system state, moving it closer to the desired state.
+
+Tools like Crossplane offer an evolution of IaC that take a controller-based
+approach, but they introduce their own challenges and limitations. In
+particular, we really need the ability to compose arbitrary Kubernetes
+resources and controllers, not just specific provider APIs. What if we could
+treat _anything_ in Kubernetes as a referenceable object capable of acting as
+the input or output to an automated workflow, and without the need for building
+tons of CRDs or custom operators? Additionally, it's critical that resources
+can be namespaced rather than cluster-scoped to support multi-tenant
+environments and that the corresponding infrastructure can live in cloud
+projects or accounts separate from where the control plane itself lives.
 
 The second observation was that getting any one resource (meaning systems,
 services, or APIs) working once is usually straightforward. Integrating
