@@ -1,9 +1,9 @@
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-internet-gateway","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ec2.services.k8s.aws/v1alpha1","kind":"InternetGateway","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":1},"postconditions":[{"assert":"=has(resource.status.internetGatewayID)","retry":{"delay":5,"message":"Waiting for internet gateway to become healthy"}}],"resource":{"metadata":"=inputs.metadata","spec":{"tags":"=inputs.resource_tags.tags","vpcRef":{"from":{"name":"=inputs.vpc.name"}}}},"return":{"gateway_id":"=resource.status.internetGatewayID","name":"=inputs.metadata.name"}}}
+      {"apiVersion":"koreo.dev/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-internet-gateway","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ec2.services.k8s.aws/v1alpha1","kind":"InternetGateway","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":1},"postconditions":[{"assert":"=has(resource.status.internetGatewayID)","retry":{"delay":5,"message":"Waiting for internet gateway to become healthy"}}],"resource":{"metadata":"=inputs.metadata","spec":{"tags":"=inputs.resource_tags.tags","vpcRef":{"from":{"name":"=inputs.vpc.name"}}}},"return":{"gateway_id":"=resource.status.internetGatewayID","name":"=inputs.metadata.name"}}}
   creationTimestamp: "2025-02-10T19:53:12Z"
   generation: 1
   name: aws-environment-internet-gateway

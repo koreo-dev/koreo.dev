@@ -1,9 +1,9 @@
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-public-route-table","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ec2.services.k8s.aws/v1alpha1","kind":"RouteTable","name":"=locals.metadata.name","namespace":"=locals.metadata.namespace"},"create":{"delay":1},"locals":{"metadata":"=inputs.metadata.overlay({\"name\": inputs.metadata.name + \"-public\"})\n"},"postconditions":[{"assert":"=has(resource.status.routeTableID)","retry":{"delay":5,"message":"Waiting for route table to become healthy"}}],"resource":{"metadata":"=locals.metadata","spec":{"routes":[{"destinationCIDRBlock":"0.0.0.0/0","gatewayRef":{"from":{"name":"=inputs.internet_gateway.name"}}}],"tags":"=inputs.resource_tags.tags","vpcRef":{"from":{"name":"=inputs.vpc.name"}}}},"return":{"name":"=locals.metadata.name","route_table_id":"=resource.status.routeTableID"}}}
+      {"apiVersion":"koreo.dev/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-public-route-table","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ec2.services.k8s.aws/v1alpha1","kind":"RouteTable","name":"=locals.metadata.name","namespace":"=locals.metadata.namespace"},"create":{"delay":1},"locals":{"metadata":"=inputs.metadata.overlay({\"name\": inputs.metadata.name + \"-public\"})\n"},"postconditions":[{"assert":"=has(resource.status.routeTableID)","retry":{"delay":5,"message":"Waiting for route table to become healthy"}}],"resource":{"metadata":"=locals.metadata","spec":{"routes":[{"destinationCIDRBlock":"0.0.0.0/0","gatewayRef":{"from":{"name":"=inputs.internet_gateway.name"}}}],"tags":"=inputs.resource_tags.tags","vpcRef":{"from":{"name":"=inputs.vpc.name"}}}},"return":{"name":"=locals.metadata.name","route_table_id":"=resource.status.routeTableID"}}}
   creationTimestamp: "2025-02-10T19:53:17Z"
   generation: 1
   name: aws-environment-public-route-table

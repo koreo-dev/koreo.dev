@@ -1,9 +1,9 @@
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-github-access-provider","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"iam.services.k8s.aws/v1alpha1","kind":"OpenIDConnectProvider","name":"=locals.metadata.name","namespace":"=locals.metadata.namespace","plural":"openidconnectproviders"},"create":{"delay":1},"locals":{"metadata":"=inputs.metadata.overlay({\n  \"name\": inputs.metadata.name + \"-github\"\n})\n"},"postconditions":[{"assert":"=has(resource.status.ackResourceMetadata.arn)","retry":{"delay":5,"message":"Waiting for provider to become healthy"}}],"resource":{"metadata":"=locals.metadata","spec":{"clientIDs":["sts.amazonaws.com"],"tags":"=inputs.resource_tags.tags","thumbprints":["6938fd4d98bab03faadb97b34396831e3780aea1"],"url":"https://token.actions.githubusercontent.com"}},"return":{"arn":"=resource.status.ackResourceMetadata.arn"},"update":{"patch":{"delay":1}}}}
+      {"apiVersion":"koreo.dev/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-github-access-provider","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"iam.services.k8s.aws/v1alpha1","kind":"OpenIDConnectProvider","name":"=locals.metadata.name","namespace":"=locals.metadata.namespace","plural":"openidconnectproviders"},"create":{"delay":1},"locals":{"metadata":"=inputs.metadata.overlay({\n  \"name\": inputs.metadata.name + \"-github\"\n})\n"},"postconditions":[{"assert":"=has(resource.status.ackResourceMetadata.arn)","retry":{"delay":5,"message":"Waiting for provider to become healthy"}}],"resource":{"metadata":"=locals.metadata","spec":{"clientIDs":["sts.amazonaws.com"],"tags":"=inputs.resource_tags.tags","thumbprints":["6938fd4d98bab03faadb97b34396831e3780aea1"],"url":"https://token.actions.githubusercontent.com"}},"return":{"arn":"=resource.status.ackResourceMetadata.arn"},"update":{"patch":{"delay":1}}}}
   creationTimestamp: "2025-02-10T19:53:11Z"
   generation: 1
   name: aws-environment-github-access-provider

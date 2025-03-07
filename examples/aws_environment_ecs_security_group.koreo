@@ -1,9 +1,9 @@
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-ecs-security-group","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ec2.services.k8s.aws/v1alpha1","kind":"SecurityGroup","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":2},"postconditions":[{"assert":"=has(resource.status.id)","retry":{"delay":5,"message":"Waiting for security group to become healthy"}}],"resource":{"metadata":"=inputs.metadata","spec":{"description":"=\"ECS Security Group for \" + inputs.metadata.name","egressRules":[{"fromPort":443,"ipProtocol":"tcp","ipRanges":[{"cidrIP":"0.0.0.0/0","description":"internet"}],"toPort":443}],"ingressRules":[{"fromPort":443,"ipProtocol":"tcp","ipRanges":[{"cidrIP":"0.0.0.0/0","description":"internet"}],"toPort":443}],"name":"=inputs.metadata.name","tags":"=inputs.resource_tags.tags","vpcRef":{"from":{"name":"=inputs.vpc.name"}}}},"return":{"security_group_id":"=resource.status.id"}}}
+      {"apiVersion":"koreo.dev/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-ecs-security-group","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ec2.services.k8s.aws/v1alpha1","kind":"SecurityGroup","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":2},"postconditions":[{"assert":"=has(resource.status.id)","retry":{"delay":5,"message":"Waiting for security group to become healthy"}}],"resource":{"metadata":"=inputs.metadata","spec":{"description":"=\"ECS Security Group for \" + inputs.metadata.name","egressRules":[{"fromPort":443,"ipProtocol":"tcp","ipRanges":[{"cidrIP":"0.0.0.0/0","description":"internet"}],"toPort":443}],"ingressRules":[{"fromPort":443,"ipProtocol":"tcp","ipRanges":[{"cidrIP":"0.0.0.0/0","description":"internet"}],"toPort":443}],"name":"=inputs.metadata.name","tags":"=inputs.resource_tags.tags","vpcRef":{"from":{"name":"=inputs.vpc.name"}}}},"return":{"security_group_id":"=resource.status.id"}}}
   creationTimestamp: "2025-02-10T19:53:10Z"
   generation: 1
   name: aws-environment-ecs-security-group

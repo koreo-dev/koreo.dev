@@ -1,9 +1,9 @@
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-ecs-cluster","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ecs.services.k8s.aws/v1alpha1","kind":"Cluster","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":1},"postconditions":[{"assert":"=has(resource.status.ackResourceMetadata.arn)","retry":{"delay":5,"message":"Waiting for cluster to become healthy"}}],"resource":{"metadata":"=inputs.metadata","spec":{"name":"=inputs.metadata.name","tags":"=inputs.resource_tags.tags"}},"return":{"arn":"=resource.status.ackResourceMetadata.arn","id":"=inputs.metadata.name"}}}
+      {"apiVersion":"koreo.dev/v1beta1","kind":"ResourceFunction","metadata":{"annotations":{},"name":"aws-environment-ecs-cluster","namespace":"realkinetic-dev"},"spec":{"apiConfig":{"apiVersion":"ecs.services.k8s.aws/v1alpha1","kind":"Cluster","name":"=inputs.metadata.name","namespace":"=inputs.metadata.namespace"},"create":{"delay":1},"postconditions":[{"assert":"=has(resource.status.ackResourceMetadata.arn)","retry":{"delay":5,"message":"Waiting for cluster to become healthy"}}],"resource":{"metadata":"=inputs.metadata","spec":{"name":"=inputs.metadata.name","tags":"=inputs.resource_tags.tags"}},"return":{"arn":"=resource.status.ackResourceMetadata.arn","id":"=inputs.metadata.name"}}}
   creationTimestamp: "2025-02-10T19:53:09Z"
   generation: 1
   name: aws-environment-ecs-cluster

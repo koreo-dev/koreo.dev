@@ -1,9 +1,9 @@
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"koreo.realkinetic.com/v1beta1","kind":"ValueFunction","metadata":{"annotations":{},"name":"aws-environment-metadata","namespace":"realkinetic-dev"},"spec":{"return":{"labels":{"app.kubernetes.io/managed-by":"konfig","konfig-domain":"=inputs.config.domain_resource_name","konfig-environment":"=inputs.config.environment_resource_name","konfig-organization":"=inputs.config.organization_resource_name","konfig-platform":"=inputs.config.platform_resource_name","konfig.realkinetic.com/domain":"=inputs.config.domain_resource_name","konfig.realkinetic.com/environment":"=inputs.config.environment_resource_name","konfig.realkinetic.com/organization":"=inputs.config.organization_resource_name","konfig.realkinetic.com/platform":"=inputs.config.platform_resource_name"},"name":"=inputs.config.environment_resource_name","namespace":"=inputs.config.environment_namespace"}}}
+      {"apiVersion":"koreo.dev/v1beta1","kind":"ValueFunction","metadata":{"annotations":{},"name":"aws-environment-metadata","namespace":"realkinetic-dev"},"spec":{"return":{"labels":{"app.kubernetes.io/managed-by":"konfig","konfig-domain":"=inputs.config.domain_resource_name","konfig-environment":"=inputs.config.environment_resource_name","konfig-organization":"=inputs.config.organization_resource_name","konfig-platform":"=inputs.config.platform_resource_name","konfig.realkinetic.com/domain":"=inputs.config.domain_resource_name","konfig.realkinetic.com/environment":"=inputs.config.environment_resource_name","konfig.realkinetic.com/organization":"=inputs.config.organization_resource_name","konfig.realkinetic.com/platform":"=inputs.config.platform_resource_name"},"name":"=inputs.config.environment_resource_name","namespace":"=inputs.config.environment_namespace"}}}
   creationTimestamp: "2025-02-10T19:53:14Z"
   generation: 1
   name: aws-environment-metadata
