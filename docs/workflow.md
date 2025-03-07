@@ -50,14 +50,14 @@ instance may optionally report its conditions and state within this resource's
 `status` block.
 
 ```yaml {7-10}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: simple-example.v1
   namespace: koreo-demo
 spec:
   crdRef:
-    apiGroup: demo.koreo.realkinetic.com
+    apiGroup: demo.koreo.dev
     version: v1beta1
     kind: TriggerDummy
   # ...
@@ -82,7 +82,7 @@ sub-Workflow. This is done by specifying a
 Workflow.
 
 ```yaml {8-14}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: simple-example.v1
@@ -106,7 +106,7 @@ define the entry point for a Workflow. `spec.configStep` shares most of the
 same options as other [`spec.steps`](#specstepsindex).
 
 ```yaml {7-10}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: simple-example.v1
@@ -217,7 +217,7 @@ This can lead to confusing values, so be cautious.
 :::
 
 ```yaml {12-49}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: simple-example.v1
@@ -275,7 +275,7 @@ The following Workflow demonstrates some of the capabilities. Refer to the
 configurations.
 
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: simple-example.v1
@@ -287,7 +287,7 @@ spec:
   # this resource type. An instance of this resource type is referred to as the
   # "parent" resource for a Workflow.
   crdRef:
-    apiGroup: demo.koreo.realkinetic.com
+    apiGroup: demo.koreo.dev
     version: v1beta1
     kind: TriggerDummy
 

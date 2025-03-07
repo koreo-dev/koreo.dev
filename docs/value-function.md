@@ -32,7 +32,7 @@ allows conditions to be _asserted_, and if the assertion fails, then the
 Function will return a specified outcome.
 
 ```yaml {7-14}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
   name: simple-example.v1
@@ -69,7 +69,7 @@ construct the return value, used within Koreo Expressions, or directly
 returned.
 
 ```yaml {7-12}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
   name: simple-example.v1
@@ -97,7 +97,7 @@ The keys of the object may be constant values, data structures, or Koreo
 Expressions which reference inputs (`inputs.`) or locals (`locals`).
 
 ```yaml {14-19}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
   name: simple-example.v1
@@ -125,7 +125,7 @@ The following ValueFunction demonstrates some of the capabilities. Refer to the
 configurations.
 
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
   name: simple-example.v1
@@ -174,7 +174,7 @@ FunctionTest documentation for information on their capabilities.
 Below is an example FunctionTest used to test the ValueFunction shown above.
 
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: simple-example.v1

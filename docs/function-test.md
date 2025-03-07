@@ -33,7 +33,7 @@ Function in a realistic manner and makes detecting conditions such as
 update-loops possible.
 
 ```yaml {7-9}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: function-test-demo.v1
@@ -52,7 +52,7 @@ base case using [`spec.inputs`](#spec). To test bad-input cases, make use of
 both specific variants and the "happy path" case easier and more reliable.
 
 ```yaml {11-16}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: function-test-demo.v1
@@ -95,7 +95,7 @@ The `label` is used within the test report. If omitted the (1-indexed) position
 is used.
 
 ```yaml {18-44}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: function-test-demo.v1
@@ -115,7 +115,7 @@ spec:
   testCases:
   - label: Initial Create
     expectResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo
@@ -273,7 +273,7 @@ ResourceFunction.
 <Tabs>
   <TabItem value="resource-function" label="ResourceFunction" default>
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: function-test-demo.v1
@@ -289,7 +289,7 @@ spec:
       message: User disabled the ResourceFunction
 
   apiConfig:
-    apiVersion: koreo.realkinetic.com/v1beta1
+    apiVersion: koreo.dev/v1beta1
     kind: TestDummy
     plural: testdummies
 
@@ -321,7 +321,7 @@ spec:
   </TabItem>
   <TabItem value="function-test" label="FunctionTest">
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: function-test-demo.v1
@@ -345,7 +345,7 @@ spec:
   # matches our expections
   - label: Initial Create
     expectResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo
@@ -394,7 +394,7 @@ spec:
       bigInt: 6400
       ready: true
       ref:
-        apiVersion: koreo.realkinetic.com/v1beta1
+        apiVersion: koreo.dev/v1beta1
         kind: TestDummy
         name: test-demo
         namespace: tests
@@ -404,7 +404,7 @@ spec:
     inputOverrides:
       int: 22
     expectResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo
@@ -423,7 +423,7 @@ spec:
   # We can simulate a full replacement of the resource and ensure it is patched.
   - label: Resource Replacement
     currentResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo
@@ -435,7 +435,7 @@ spec:
         - 3
         - 4
     expectResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo

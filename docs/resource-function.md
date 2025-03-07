@@ -44,7 +44,7 @@ might need checked to assert that it is within an allowed range.
 _asserted_, and if they are not met, specifies an outcome to be returned.
 
 ```yaml {7-17}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: simple-resource-function.v1
@@ -71,7 +71,7 @@ improve readability of the return value expression and help with maintenance of
 a Function.
 
 ```yaml {7-12}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: simple-resource-function.v1
@@ -99,14 +99,14 @@ specified. These are always overlaid onto the materialized resource view before
 it is applied to the cluster.
 
 ```yaml {7-14}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: simple-resource-function.v1
   namespace: koreo-demo
 spec:
   apiConfig:
-    apiVersion: koreo.realkinetic.com/v1beta1
+    apiVersion: koreo.dev/v1beta1
     kind: TestDummy
     plural: testdummies
     name: =inputs.metadata.name + "-docs"
@@ -149,7 +149,7 @@ but with the benefit that string manipulation directives are not required to
 correctly structure the resource.
 
 ```yaml {14-20}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: simple-resource-function.v1
@@ -188,7 +188,7 @@ to be dynamically loaded, and then overlays (which may contain Koreo
 Expressions) to be applied using [`spec.resourceTemplateRef`](#specresourcetemplateref).
 
 ```yaml {10-16}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: docs-template-function.v1
@@ -234,7 +234,7 @@ and `locals` make it possible to ensure only allowed values are applied via
 `spec.overlays`, and only when appropriate.
 
 ```yaml {18-39}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: s3-bucket-factory.v1
@@ -299,7 +299,7 @@ exist, then the Function will cause the Workflow to wait for the resource to
 exist.
 
 ```yaml {7-8}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: s3-bucket-factory.v1
@@ -342,7 +342,7 @@ delay is similar to that for the create delay: set to median time-to-ready +
 10% in order to reduce API server load.
 
 ```yaml {7-9}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: s3-bucket-factory.v1
@@ -416,7 +416,7 @@ order to pass them into other Functions, such as with VPCs where the subnets
 may only be known at runtime.
 
 ```yaml {7-11}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: s3-bucket-factory.v1
@@ -448,7 +448,7 @@ use constant values, data structures, or Koreo Expressions which have access to
 is contained within `resource`, allowing for processing of any values needed.
 
 ```yaml {7-17}
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: s3-bucket-factory.v1
@@ -480,7 +480,7 @@ the [ResourceFunction spec](#specification) for the complete set of
 ResourceFunction configurations.
 
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: simple-resource-function.v1
@@ -515,7 +515,7 @@ spec:
   # This could be read-only, in which case the Function can only read
   # configuration from an existing resource.
   apiConfig:
-    apiVersion: koreo.realkinetic.com/v1beta1
+    apiVersion: koreo.dev/v1beta1
     kind: TestDummy
     plural: testdummies
 
@@ -570,7 +570,7 @@ FunctionTest documentation for information on their capabilities.
 Below is an example FunctionTest used to test the ResourceFunction shown above.
 
 ```yaml
-apiVersion: koreo.realkinetic.com/v1beta1
+apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: simple-resource-function.v1
@@ -596,7 +596,7 @@ spec:
   # The first test creates the resource, and we verify it matches expections.
   - label: Initial Create
     expectResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo-docs
@@ -636,7 +636,7 @@ spec:
     # Check a return value, which indicates no changes are made.
     expectReturn:
       ref:
-        apiVersion: koreo.realkinetic.com/v1beta1
+        apiVersion: koreo.dev/v1beta1
         kind: TestDummy
         name: test-demo-docs
         namespace: tests
@@ -664,7 +664,7 @@ spec:
       values:
         int: 30
     expectResource:
-      apiVersion: koreo.realkinetic.com/v1beta1
+      apiVersion: koreo.dev/v1beta1
       kind: TestDummy
       metadata:
         name: test-demo-docs

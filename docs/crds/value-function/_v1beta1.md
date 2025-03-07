@@ -10,7 +10,7 @@
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>koreo.realkinetic.com/v1beta1</td>
+      <td>koreo.dev/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -209,7 +209,6 @@ message to provide information to correct the issue.
         <td>true</td>
       </tr></tbody>
 </table>
-
 
 ### spec.preconditions[index].retry
 
