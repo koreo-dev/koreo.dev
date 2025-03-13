@@ -10,17 +10,17 @@ import TabItem from '@theme/TabItem';
 There are just three core concepts involved in building automated workflows in
 Koreo: [Workflows](../workflow.md), [ValueFunctions](../value-function.md), and
 [ResourceFunctions](../resource-function.md). This Quick Start guide will walk
-you through building and deploying your first Workflow. As part of this, we
-will also see how [FunctionTests](../function-test.md) act as an integral
-component for building Functions by providing rapid feedback through unit
-testing.
+you through building, deploying, and running your first Workflow. As part of
+this, we will also see how [FunctionTests](../function-test.md) act as an
+integral component for building Functions by providing rapid feedback through
+unit testing.
 
 ## Hello Koreo
 
 We will build a Workflow that will do a very simple task: "stamp" every
 Kubernetes Deployment with a `hello` label whose value will be the Deployment
-name. It's a contrived example, but it will demonstrate some of the key aspects
-of Koreo.
+name. While it's a contrived example, it will demonstrate some of the key
+aspects of Koreo.
 
 ### Writing a ValueFunction
 
@@ -36,7 +36,6 @@ apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
   name: get-metadata
-  namespace: default
 spec:
   return:
     name: =inputs.parent.metadata.name
@@ -49,7 +48,6 @@ apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: get-metadata-test
-  namespace: default
 spec:
   functionRef:
     kind: ValueFunction
@@ -123,7 +121,6 @@ apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
   name: stamp-deployment
-  namespace: default
 spec:
   apiConfig:
     apiVersion: apps/v1
@@ -147,7 +144,6 @@ apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
   name: stamp-deployment-test
-  namespace: default
 spec:
   functionRef:
     kind: ResourceFunction
@@ -165,7 +161,7 @@ spec:
       namespace: default
 
   testCases:
-    - label: Stamps annotation
+    - label: Stamps label
       expectResource:
         apiVersion: apps/v1
         kind: Deployment
@@ -181,27 +177,27 @@ spec:
 The `stamp-deployment` ResourceFunction updates a Deployment by adding a
 `hello` label to the resource's metadata. First, we specify the resource we
 want to interface with using `apiConfig`. This configures the resource
-`apiVersion`, `kind`, `name`, and `namespace`. Notice that `namespace` is set
-to `=inputs.namespace`, which is a Koreo Expression that evaluates to the
-`namespace` input passed into the Function. Additionally, we set `owned` to
-`false`, indicating that we do not want Koreo to add the parent Deployment to
-the resource's `metadata.ownerReferences`. This would be a circular reference
-since the parent Deployment is also the resource we are updating.
+`apiVersion`, `kind`, `name`, and `namespace`. Notice that `name` and
+`namespace` are set to `=inputs.name` and `=inputs.namespace`, respectively.
+These are Koreo Expressions that evaluate to the `name` and `namespace` inputs
+passed into the Function. Additionally, we set `owned` to `false`, indicating
+that we do not want Koreo to add the parent Deployment to the resource's
+`metadata.ownerReferences`. This would be a circular reference since the parent
+Deployment is also the resource we are updating.
 
 We specify the update to the resource we want to apply in `resource`.
 Specifically, we are adding a new `hello` metadata label whose value is
-`=inputs.name`. This is a Koreo expression that will evaluate to the `name`
-input passed into the Function.
+`=inputs.name`.
 
 Lastly, we disable `create`, indicating that we do not want the resource to be
 created in the event that it's missing. Instead, we are only interested in
 updating existing Deployments.
 
 :::note
-The definition provided to `resource` acts as a _patch_, meaning Kubernetes
-will merge the values when updating the resource. For instance, if the
-Deployment has existing labels, these will be preserved when the `hello` label
-is added.
+By default, the definition provided to `resource` acts as a _patch_, meaning
+Kubernetes will merge the values when updating the resource. For instance, if
+the Deployment has existing labels, these will be preserved when the `hello`
+label is added.
 :::
 
 The corresponding FunctionTest shows how we can validate the behavior of
@@ -211,7 +207,7 @@ simulate the current state of the resource in the cluster. We don't need to
 include a full Deployment definition but rather just the parts relevant to our
 ResourceFunction. Our test case then validates the update to be applied to the
 resource with `expectResource`, in particular asserting that the `hello` label
-is present and with the correct value.
+is present and has the correct value.
 
 Apply `stamp-deployment` to the cluster:
 
@@ -236,7 +232,6 @@ apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: hello-koreo
-  namespace: default
 spec:
   crdRef:
     apiGroup: apps
@@ -263,14 +258,17 @@ spec:
 Let's walk through the different parts. First, we specify the parent resource
 with `crdRef`. The parent resource is what acts as a "trigger" for the
 Workflow. While it's called `crdRef`, this can in fact be _any_ resource kind.
+Though conceptually the parent resource acts as a trigger, in practice a
+Workflow will run repeatedly as part of Kubernetes' reconciliation process.
+This is known as a _control loop_. By default, the reconcile process will run
+on create, update, and delete events pertaining to the parent resource.
+ResourceFunctions can [configure the behavior](../resource-function.md#flexible-update-handling)
+for these different events.
+
+:::warning
 It's important to take care when using resources managed by another controller
 because there can be unintended interactions in some situations. As a result,
 it's encouraged to create your own CRDs for more advanced use cases.
-
-:::tip
-While conceptually the parent resource acts as a trigger, in practice a
-Workflow will run repeatedly as part of Kubernetes' reconciliation process.
-This is known as a _control loop_.
 :::
 
 Next, we specify the `configStep`. If you recall, this is a special Workflow
@@ -314,7 +312,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: default
 spec:
   replicas: 1
   selector:
