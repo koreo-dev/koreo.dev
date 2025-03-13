@@ -27,7 +27,7 @@ blocks, or default values for use within other functions or Workflows.
 It is important to check preconditions in order to determine if it is possible
 to evaluate a Function. For instance, it might be important to check that a
 number falls within an allowed range or a that a string meets requirements
-such as length or only contains allowed characters. [`spec.preconditions`](#specpreconditionsindex)
+such as length or only contains allowed characters. [`preconditions`](#specpreconditionsindex)
 allows conditions to be _asserted_, and if the assertion fails, then the
 Function will return a specified outcome.
 
@@ -49,7 +49,7 @@ spec:
 ```
 
 :::tip
-You may leverage a ValueFunction purely to run its `spec.preconditions`. This
+You may leverage a ValueFunction purely to run its `preconditions`. This
 can be helpful to cause a Workflow to `Retry` or `PermFail` due to some
 condition. Note that in order to block other steps, they should express a
 dependency on the ValueFunction via their inputs—otherwise those steps will
@@ -59,11 +59,11 @@ run.
 ## Static and Interim Values
 
 Because Koreo Expressions are often used to extract values or reshape data
-structures, they can be rather long. [`spec.locals`](#spec)
+structures, they can be rather long. [`locals`](#spec)
 provides a means of naming expressions, which can improve readability of the
 return value expression.
 
-`spec.locals` is also useful for defining constant values, which may be complex
+`locals` is also useful for defining constant values, which may be complex
 structures, such as lists or objects, or simple values. Locals are used to help
 construct the return value, used within Koreo Expressions, or directly
 returned.
@@ -85,14 +85,14 @@ spec:
 ```
 
 :::note
-Currently, `spec.locals` may not reference other `locals`.
+Currently, `locals` may not reference other `locals`.
 :::
 
 
 ## Returned Value
 
 The primary use cases of ValueFunction is to reshape or compute a return
-value expression. The expression in [`spec.return`](#spec) must be an object.
+value expression. The expression in [`return`](#spec) must be an object.
 The keys of the object may be constant values, data structures, or Koreo
 Expressions which reference inputs (`inputs.`) or locals (`locals`).
 
@@ -154,7 +154,7 @@ spec:
     constantList: [NORTH, SOUTH, EAST, WEST]
 
   # The return value of a ValueFunction must be an object. Koreo Expressions
-  # have access to the `spec.locals` values.
+  # have access to the `locals` values.
   return:
     allowedRange:
       lower: =locals.computedValues.halfed

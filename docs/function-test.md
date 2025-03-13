@@ -24,7 +24,7 @@ cause errors or easily testing other variant behaviors.
 
 ## Defining the Function Under Test
 
-Specify the Function to be tested with [`spec.functionRef`](#specfunctionref).
+Specify the Function to be tested with [`functionRef`](#specfunctionref).
 Functions define a control loop, and hence are executed many times. In order to
 make testing easier and less repetitive, the Function will be evaluated once
 per test case. Any mutations the Function makes will be carried forward to the
@@ -47,7 +47,7 @@ spec:
 ## Base Inputs and Overrides
 
 If a Function requires input values, they should be fully specified for the
-base case using [`spec.inputs`](#spec). To test bad-input cases, make use of
+base case using [`inputs`](#spec). To test bad-input cases, make use of
 [`inputOverrides`](#spectestcasesindex) within a test case. This makes testing
 both specific variants and the "happy path" case easier and more reliable.
 
@@ -72,9 +72,12 @@ spec:
 
 ## Initial Resource State
 
-If you would like to test creation, do not specify [`spec.currentResource`](#spec)
-and instead omit it. Once it has been created by the first non-variant test
-case, it will be available to subsequent test cases.
+The initial resource state can be specified using [`currentResource`](#spec).
+This can also be set on individual test cases which will carry forward to subsequent
+test cases if `variant` is not enabled. If you would like to test resource creation,
+do not specify `currentResource` and instead omit it. Once it has been
+created by the first non-variant test case, it will be available to subsequent
+test cases.
 
 However, for some tests it is desirable to specify a base resource state, then
 mutate it within test cases (using [`overlayResource`](#spectestcasesindex)).
@@ -83,13 +86,15 @@ conditions may be tests, such as spec changes or conditions the managed
 resource's controller may make or set. It makes it easy to test many variant
 cases without a lot of boilerplate.
 
-:::info
-`spec.currentResource` may not be specified for ValueFunctions.
+:::note
+`currentResource` and `overlayResource` allow you to simulate _external_ modifications
+so that you can test interactions with the other systems. Note that these may not be
+specified for ValueFunctions.
 :::
 
 ## Defining Test Cases
 
-Test cases are defined in [`spec.testCases`](#spec). An optional `label` may be
+Test cases are defined in [`testCases`](#spec). An optional `label` may be
 specified to help you identify or understand the intention of the test case.
 The `label` is used within the test report. If omitted the (1-indexed) position
 is used.
@@ -170,6 +175,15 @@ Specification. The full resource should be provided, and will be compared
 exactly. If no resource modifications (create or update) are attempted, an
 `expectResource` assertion fails.
 
+:::note
+`expectResource` tests a ResourceFunction's _patch_, meaning it only tests the
+fields set by the Function. For instance, if there are other fields present on
+the resource specified by `currentResource` but not modified by the
+ResourceFunction under test, `expectResource` will not assert them. This is
+because the ResourceFunction patches the resource and relies on Kubernetes'
+merge logic.
+:::
+
 For cases where list order should be ignored or treating a list as a map is
 required, you may use the compare directives to alter the resource validation.
 These are not typically required within tests, but are sometimes helpful.
@@ -181,7 +195,7 @@ The directives behave as describes within the ResourceFunction documentation.
 Place them within the `expectResource` body, just as for the Target Resource
 Specification.
 
-:::info
+:::note
 `expectResource` may not be specified for ValueFunctions.
 :::
 
@@ -192,7 +206,7 @@ if differences are detected. Use [`expectDelete`](#spectestcasesindex) in order
 to assert that the difference is detected and the resource deleted. If this is
 not a _variant_ test case, the next test case will create the resource.
 
-:::info
+:::note
 `expectDelete` may not be specified for ValueFunctions.
 :::
 
@@ -225,7 +239,7 @@ will match any value.
 
 ## Modeling Reconciliation
 
-Each item in the `spec.testCases` array defines a test case to be run. They are
+Each item in the `testCases` array defines a test case to be run. They are
 run sequentially so that you may correctly model the executions of the Function
 over time. ValueFunctions are pure—there is no external interaction or state—
 so the tests are effectively _unit tests_. ResourceFunctions are far more
@@ -250,9 +264,9 @@ tests, you may safely insert these tests within the happy-path flow.
 
 ### Base with Variants
 
-Specify a starting point with good `spec.inputs` values. For creation or
-precondition checks, omit specifying `spec.currentResource`. For update or post
-condition tests, specify `spec.currentResource`. Generally a good state, in
+Specify a starting point with good `inputs` values. For creation or
+precondition checks, omit specifying `currentResource`. For update or post
+condition tests, specify `currentResource`. Generally a good state, in
 stable condition is preferable to ensure each test is validating the correct
 behavior. One the base state is defined, add test cases (using `inputOverrides`
 or `overlayResource`) to simulate various inputs, conditions, errors, or

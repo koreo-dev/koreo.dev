@@ -29,7 +29,7 @@ Function only to apply dynamic values.
 
 ## Static Resource Specification
 
-The [`spec.template`](#spec) is a static
+The [`template`](#spec) is a static
 [Target Resource Specification](./overview/glossary.md#target-resource-specification).
 Both `apiVersion` and `kind` must be provided, but everything else is optional.
 This static template will be (optionally) overlaid within the ResourceFunction.

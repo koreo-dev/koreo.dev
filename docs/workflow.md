@@ -44,7 +44,7 @@ interactions.
 ## Running a Workflow
 
 A Workflow may be _externally_ triggered to run, and have its _configuration_
-provided by a resource specified using [`spec.crdRef`](#speccrdref).
+provided by a resource specified using [`crdRef`](#speccrdref).
 This resource serves to provide the Workflow's configuration and the Workflow
 instance may optionally report its conditions and state within this resource's
 `status` block.
@@ -63,7 +63,7 @@ spec:
   # ...
 ```
 
-We refer to the _instance_ of the `spec.crdRef` resource which _triggers_ a
+We refer to the _instance_ of the `crdRef` resource which _triggers_ a
 Workflow as its "parent" or "trigger".
 
 :::warning
@@ -101,9 +101,9 @@ spec:
 
 ## Defining the Entry Point
 
-The [`spec.configStep`](#specconfigstep) is a special step intended to
-define the entry point for a Workflow. `spec.configStep` shares most of the
-same options as other [`spec.steps`](#specstepsindex).
+The [`configStep`](#specconfigstep) is a special step intended to
+define the entry point for a Workflow. `configStep` shares most of the
+same options as other [`steps`](#specstepsindex).
 
 ```yaml {7-10}
 apiVersion: koreo.dev/v1beta1
@@ -130,11 +130,11 @@ The second difference is that this step is provided a default label: "config".
 That means, unless changed, you may provide its return value as an input to
 other steps by setting a key within their `inputs` to `=steps.config`.
 
-Lastly, `spec.configStep` does not support `forEach`, `refSwitch`, or `skipIf`.
-The remaining options share the same behavior as `spec.steps` values.
+Lastly, `configStep` does not support `forEach`, `refSwitch`, or `skipIf`.
+The remaining options share the same behavior as `steps` values.
 
 :::note
-The `spec.configStep` may run concurrently with other steps that do not depend
+The `configStep` may run concurrently with other steps that do not depend
 on it.
 :::
 
@@ -166,7 +166,7 @@ A step is run once all steps it references have been run. To help make
 the sequencing clearer, you are required to list steps after any step(s) they
 reference. Note that steps may run concurrently as their dependencies complete,
 so you should not depend on the order in which they are listed. The special
-[`spec.configStep`](#specconfigstep) entry point can also run concurrently if
+[`configStep`](#specconfigstep) entry point can also run concurrently if
 other steps do not depend on it.
 :::
 
