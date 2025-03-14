@@ -3,15 +3,11 @@ id: installing
 title: Installing
 sidebar_position: 1
 ---
-### Core
-
-...
-
-
 ### Language Server
 
-...
-
+```
+pip install -g koreo
+```
 
 ### VS Code Extension
 
@@ -22,14 +18,22 @@ You can install the latest-published version of the Koreo Language Server VS Cod
 It will assume your language server is at `/usr/local/bin/koreo-ls`, if you want to override it at `Preferences → Settings → Koreo Language Server` or setting it in your settings.json file.
 
 
-### PyCharm
+### Intellij
+
+Install [LSP4J](https://plugins.jetbrains.com/plugin/23257-lsp4ij) as a plugin into your IDE. 
+
+Download the lsp configuration [here](/downloads/lsp4j-koreo.zip).
+
+From within the LSP4J plugin, add a new server. 
+
+`New Language Server -> Template -> Import from custom template... -> Select ~/Downloads/lsp4j-koreo.zip`.
+
+Adjust the koreo-ls entrypoint as needed.
+
+### CoC
 
 ...
 
-### Vim / CoC
-
-...
-
-### NeoVim / LSP Config
+### LSP Config
 
 ...
