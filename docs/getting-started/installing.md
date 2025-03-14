@@ -32,8 +32,60 @@ Adjust the koreo-ls entrypoint as needed.
 
 ### CoC
 
-...
+```
+autocmd BufNewFile,BufRead *.koreo set filetype=koreo
+```
+
+Add this following to your coc-settings.
+
+``` json
+"koreo-ls": {
+  "command": "koreo-ls",
+  "filetypes": ["koreo"],
+  "root_dir": ["*.git"],
+  "settings": {
+    "semanticTokens.filetypes": ["*"]
+  }
+}
+```
 
 ### LSP Config
 
-...
+Add the following to your init.lua. 
+
+``` lua
+vim.filetype.add {
+  extension = {
+    koreo = 'koreo',
+  },
+}
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'koreo',
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.autoindent = true
+    vim.opt_local.smartindent = true
+    vim.lsp.start {
+      name = 'koreo_ls',
+      cmd = { 'koreo-ls' }, -- Ensure this command is correct and accessible
+      root_dir = vim.fn.getcwd(),
+    }
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*.koreo',
+  callback = function()
+    local clients = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf() }
+    for _, client in ipairs(clients) do
+      if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true)
+      end
+    end
+  end,
+})
+```
