@@ -24,45 +24,43 @@ aspects of Koreo.
 
 ### Writing a ValueFunction
 
-First, we will write a ValueFunction called `get-metadata` that extracts the
-metadata from a Deployment. In particular, we care about the `namespace` and
-`name`, which we will use later. We'll also include an accompanying
-FunctionTest that validates the expected behavior.
+First, we will write a ValueFunction called `get-labels` that returns the
+labels we want to stamp on the Deployment. Specifically, this is just the
+`hello` label which we will set to the `name` on the triggering resource's
+metadata. We'll also include an accompanying FunctionTest that validates the
+expected behavior.
 
 <Tabs>
-  <TabItem value="get-metadata" label="get-metadata.koreo" default>
+  <TabItem value="get-labels" label="get-labels.koreo" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
 metadata:
-  name: get-metadata
+  name: get-labels
 spec:
   return:
-    name: =inputs.parent.metadata.name
-    namespace: =inputs.parent.metadata.namespace
+    labels:
+      hello: =inputs.name
 ```
   </TabItem>
-  <TabItem value="get-metadata-test" label="get-metadata-test.koreo">
+  <TabItem value="get-labels-test" label="get-labels-test.koreo">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
-  name: get-metadata-test
+  name: get-labels-test
 spec:
   functionRef:
     kind: ValueFunction
-    name: get-metadata
+    name: get-labels
 
   inputs:
-    parent:
-      metadata:
-        name: test
-        namespace: default
+    name: test
 
   testCases:
     - expectReturn:
-        name: test
-        namespace: default
+        labels:
+          hello: test
 ```
   </TabItem>
 </Tabs>
@@ -74,12 +72,10 @@ Functions and FunctionTests in the _same_ file separated by YAML document
 separators (`---`).
 :::
 
-This ValueFunction will be used as the `configStep` in our Workflow. This is a
-special step that receives the trigger resource, or _parent_, as an input. This
-is why our `get-metadata` Function references `=inputs.parent`. This Koreo
-Expression is referencing the resource that will trigger our Workflow, in this
-case a Deployment. Our Function simply returns the `name` and `namespace` from
-the parent resource's metadata.
+This ValueFunction will be used as the first step in our Workflow. It uses a
+Koreo Expression, `=inputs.name`, to reference the resource name which is
+passed in as an input to the Function. Our Function simply returns a `labels`
+object with the `hello` label set.
 
 ValueFunctions are _pure_ functions, meaning they are side-effect free. They
 provide a way to validate data and build or reshape data structures to be
@@ -91,16 +87,16 @@ tasks that ends up being quite powerful.
 The accompanying FunctionTest demonstrates how we can unit test our
 ValueFunction. In it, we specify the Function under test, the inputs to it, and
 a test case that validates the expected return values. There's not much to this
-one because `get-metadata` is such a simple Function, but we will look at more
+one because `get-labels` is such a simple Function, but we will look at more
 sophisticated FunctionTests later. The Koreo Tooling will run these tests
-automatically as you are writing your Koreo components. Try changing `name` to
+automatically as you are writing your Koreo components. Try changing `hello` to
 a different value in `expectReturn` and see how the test breaks.
 
 Congratulations, you've written your first Koreo ValueFunction and
 FunctionTest! Go ahead and apply it to the cluster:
 
 ```
-kubectl apply -f get-metadata.koreo
+kubectl apply -f get-labels.koreo
 ```
 
 Unfortunately, on its own this Function does nothing, but in a
@@ -115,12 +111,12 @@ ResourceFunctions provide a way to interact with Kubernetes APIs by interfacing
 with resources. In our case, we will be patching existing Deployment resources.
 
 <Tabs>
-  <TabItem value="stamp-deployment" label="stamp-deployment.koreo" default>
+  <TabItem value="set-deployment-labels" label="set-deployment-labels.koreo" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
-  name: stamp-deployment
+  name: set-deployment-labels
 spec:
   apiConfig:
     apiVersion: apps/v1
@@ -131,27 +127,29 @@ spec:
 
   resource:
     metadata:
-      labels:
-        hello: =inputs.name
+      labels: =inputs.labels
 
   create:
     enabled: false
 ```
   </TabItem>
-  <TabItem value="stamp-deployment-test" label="stamp-deployment-test.koreo">
+  <TabItem value="set-deployment-labels-test" label="set-deployment-labels-test.koreo">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
 metadata:
-  name: stamp-deployment-test
+  name: set-deployment-labels-test
 spec:
   functionRef:
     kind: ResourceFunction
-    name: stamp-deployment
+    name: set-deployment-labels
 
   inputs:
     name: test-deployment
     namespace: default
+    labels:
+      foo: bar
+      baz: qux
 
   currentResource:
     apiVersion: apps/v1
@@ -161,7 +159,7 @@ spec:
       namespace: default
 
   testCases:
-    - label: Stamps label
+    - label: Sets labels
       expectResource:
         apiVersion: apps/v1
         kind: Deployment
@@ -169,13 +167,14 @@ spec:
           name: test-deployment
           namespace: default
           labels:
-            hello: test-deployment
+            foo: bar
+            baz: qux
 ```
   </TabItem>
 </Tabs>
 
-The `stamp-deployment` ResourceFunction updates a Deployment by adding a
-`hello` label to the resource's metadata. First, we specify the resource we
+The `set-deployment-labels` ResourceFunction updates a Deployment by adding the
+passed in labels to the resource's metadata. First, we specify the resource we
 want to interface with using `apiConfig`. This configures the resource
 `apiVersion`, `kind`, `name`, and `namespace`. Notice that `name` and
 `namespace` are set to `=inputs.name` and `=inputs.namespace`, respectively.
@@ -186,8 +185,7 @@ that we do not want Koreo to add the parent Deployment to the resource's
 Deployment is also the resource we are updating.
 
 We specify the update to the resource we want to apply in `resource`.
-Specifically, we are adding a new `hello` metadata label whose value is
-`=inputs.name`.
+Specifically, we are setting the labels on the Deployment's metadata.
 
 Lastly, we disable `create`, indicating that we do not want the resource to be
 created in the event that it's missing. Instead, we are only interested in
@@ -201,18 +199,18 @@ label is added.
 :::
 
 The corresponding FunctionTest shows how we can validate the behavior of
-`stamp-deployment`. As before, we specify our `functionRef` and `inputs`.
+`set-deployment-labels`. As before, we specify our `functionRef` and `inputs`.
 What's different this time is we also specify a `currentResource`. This lets us
 simulate the current state of the resource in the cluster. We don't need to
 include a full Deployment definition but rather just the parts relevant to our
 ResourceFunction. Our test case then validates the update to be applied to the
-resource with `expectResource`, in particular asserting that the `hello` label
-is present and has the correct value.
+resource with `expectResource`, in particular asserting that the expected
+labels are present.
 
-Apply `stamp-deployment` to the cluster:
+Apply `set-deployment-labels` to the cluster:
 
 ```
-kubectl apply -f stamp-deployment.koreo
+kubectl apply -f set-deployment-labels.koreo
 ```
 
 Our ResourceFunction is now ready to be used.
@@ -220,10 +218,11 @@ Our ResourceFunction is now ready to be used.
 ### Writing a Workflow
 
 With our ValueFunction and ResourceFunction in place, we're now ready to put
-everything together in a Workflow. Workflows implement multi-step processes by
-orchestrating ValueFunctions, ResourceFunctions, and other sub-Workflows. The
-Workflow we're building is quite simple: read the metadata from a Deployment,
-compute a label to be applied, and update the Deployment with the new label.
+everything together into a Workflow. Workflows implement multi-step processes
+by orchestrating ValueFunctions, ResourceFunctions, and other sub-Workflows.
+The Workflow we're building is quite simple: read the metadata from a
+Deployment, compute a label to be applied, and update the Deployment with the
+new label.
 
 <Tabs>
   <TabItem value="hello-koreo" label="hello-koreo.koreo" default>
@@ -237,20 +236,21 @@ spec:
     apiGroup: apps
     version: v1
     kind: Deployment
-
-  configStep:
-    ref:
-      kind: ValueFunction
-      name: get-metadata
- 
   steps:
-    - label: stamp_deployment
+    - label: get_labels
+      ref:
+        kind: ValueFunction
+        name: get-labels
+      inputs:
+        name: =parent.metadata.name
+    - label: set_labels
       ref:
         kind: ResourceFunction
-        name: stamp-deployment
+        name: set-deployment-labels
       inputs:
-        name: =steps.config.name
-        namespace: =steps.config.namespace
+        name: =parent.metadata.name
+        namespace: =parent.metadata.namespace
+        labels: =steps.get_labels.labels
 ```
   </TabItem>
 </Tabs>
@@ -271,23 +271,12 @@ because there can be unintended interactions in some situations. As a result,
 it's encouraged to create your own CRDs for more advanced use cases.
 :::
 
-Next, we specify the `configStep`. If you recall, this is a special Workflow
-step that receives the parent resource as an input. It's intended to act as the
-entry point for a Workflow. This step is provided a default label `config`
-unless otherwise specified which allows it to be referenced by other Workflow
-steps. The `configStep` enables validation of Workflow inputs and provides the
-ability to build a well-structured configuration that is available to other
-steps. It also helps to prevent tight coupling of Workflow logic to a specific
-parent resource, which results in more maintainable and reusable Functions. In
-our Workflow, the `configStep` will invoke our `get-metadata` Function to
-extract the `name` and `namespace` from a Deployment.
-
-After the `configStep`, we specify our Workflow steps. In this case, we have
-just a single step to execute, `stamp_deployment`, which will run the
-`stamp-deployment` ResourceFunction. We specify the `inputs` for the Function
-and pass in the `name` and `namespace` by referencing the output of the
-`config` step with `=steps.config.name` and `=steps.config.namespace`,
-respectively.
+Next, we specify our Workflow steps. The first step executes our `get-labels`
+ValueFunction. We pass in the Deployment name with the Koreo Expression
+`=parent.metadata.name` where `=parent` references the Deployment that
+triggered our Workflow. The next step then invokes the `set-deployment-labels`
+ResourceFunction, taking in the `name` and `namespace` from the parent
+resource's metadata and the `labels` from the previous step's output.
 
 That's it. Now we can deploy our Workflow and test it out.
 

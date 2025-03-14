@@ -99,45 +99,6 @@ spec:
   # ...
 ```
 
-## Defining the Entry Point
-
-The [`configStep`](#specconfigstep) is a special step intended to
-define the entry point for a Workflow. `configStep` shares most of the
-same options as other [`steps`](#specstepsindex).
-
-```yaml {7-10}
-apiVersion: koreo.dev/v1beta1
-kind: Workflow
-metadata:
-  name: simple-example.v1
-  namespace: koreo-demo
-spec:
-  configStep:
-    ref:
-      kind: ValueFunction
-      name: simple-example-config.v1
-  # ...
-```
-
-The most important difference is that the parent will be provided to this step
-as `inputs.parent`. This enables validation of configuration and provides the
-ability to construct a well-structured, validated configuration that will be
-available to other steps. It also helps to prevent accidental tight-coupling of
-logic to a specific CRD. In practice, we have found this to result in more
-maintainable and reusable Functions.
-
-The second difference is that this step is provided a default label: "config".
-That means, unless changed, you may provide its return value as an input to
-other steps by setting a key within their `inputs` to `=steps.config`.
-
-Lastly, `configStep` does not support `forEach`, `refSwitch`, or `skipIf`.
-The remaining options share the same behavior as `steps` values.
-
-:::note
-The `configStep` may run concurrently with other steps that do not depend
-on it.
-:::
-
 ## Defining the Logic
 
 Each step defines some Logic to be called, specifies the inputs the Logic is
@@ -153,21 +114,27 @@ be dynamically selected from a fixed set of references using `refSwitch`, which
 provides the ability to select between multiple Logics which implement a
 compatible interface—this is discussed in more detail below.
 
-Steps also specifies `inputs` to be provided to the Logic. For Functions, the
-inputs are directly accessible within `inputs`. For Workflows, the inputs are
-exposed under `inputs.parent`. That enables a Workflow to be directly triggered
-via a `crdRef` _or_ it may be directly called as a sub-Workflow. That makes
-reuse and testing of Workflows easier. Steps can depend on other steps by
-referencing them as an input value. This allows you to map outputs from one
-step into inputs of another step.
-
 :::tip[Steps may run concurrently]
 A step is run once all steps it references have been run. To help make
 the sequencing clearer, you are required to list steps after any step(s) they
 reference. Note that steps may run concurrently as their dependencies complete,
-so you should not depend on the order in which they are listed. The special
-[`configStep`](#specconfigstep) entry point can also run concurrently if
-other steps do not depend on it.
+so you should not depend on the order in which they are listed.
+:::
+
+Steps also specifies `inputs` to be provided to the Logic. Within Functions,
+the inputs are directly accessible within `inputs`. Within Workflows, the
+inputs are exposed under `parent`. This enables a Workflow to be directly
+triggered via a `crdRef` _or_ it may be directly called as a sub-Workflow.
+That makes reuse and testing of Workflows easier. Steps can depend on other
+steps by referencing them as an input value. This allows you to map outputs
+from one step into inputs of another step.
+
+:::tip[Avoiding tight coupling]
+The parent resource can be passed as an input to steps from a Workflow with
+`=parent`. However, rather than passing the entire parent resource to steps,
+it's recommended to pass only what is needed from the parent to avoid tightly
+coupling Logic to triggering resources. For example, `=parent.metadata` rather
+than `=parent` if only the metadata is needed by a Function.
 :::
 
 A step may also specify a `forEach` block, which will cause the Logic to be
@@ -216,19 +183,21 @@ If multiple steps set the same state keys, the return values will be merged.
 This can lead to confusing values, so be cautious.
 :::
 
-```yaml {12-49}
+```yaml {7-51}
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
 metadata:
   name: simple-example.v1
   namespace: koreo-demo
 spec:
-  configStep:
-    ref:
-      kind: ValueFunction
-      name: simple-example-config.v1
-
   steps:
+    - label: config
+      ref:
+        kind: ValueFunction
+        name: simple-example-config.v1
+      inputs:
+        metadata: =parent.metadata
+
     - label: simple_return_value
       ref:
         kind: ValueFunction
@@ -291,14 +260,6 @@ spec:
     version: v1beta1
     kind: TriggerDummy
 
-  # The "parent" resource's metadata and spec will be passed to this
-  # ValueFunction as `inputs.parent`, and the return value of this Function
-  # will be available to other steps as `steps.config`.
-  configStep:
-    ref:
-      kind: ValueFunction
-      name: simple-example-config.v1
-
   # Steps may be run once all steps they reference have been run. To help make
   # the sequencing clearer, you are required to list steps after any step(s)
   # they reference. Note that steps may run concurrently as their dependencies
@@ -309,17 +270,27 @@ spec:
     # `steps.simple_return_value`. If a step does not return successfully, then
     # any step referencing it will automatically be skipped and marked as
     # `depSkip`.
-    - label: simple_return_value
+    - label: config
 
-      # The Logic to be run.
+      # The logic to be run.
+      ref:
+        kind: ValueFunction
+        name: simple-example-config.v1
+
+      # The inputs are available within the Logic under `=inputs.`
+      # `step.inputs` must be a mapping, but these may be Koreo Expressions,
+      # simple values, lists, or objects. The parent resource can be accessed
+      # with `=parent`.
+      inputs:
+        name: =parent.metadata.name
+        namespace: =parent.metadata.namespace
+
+    - label: simple_return_value
       ref:
         kind: ValueFunction
         name: simple-return-value.v1
 
-      # The inputs are available within the Logic under `=inputs.`
-      # `step.inputs` must be a mapping, but these may be Koreo Expressions,
-      # simple values, lists, or objects. Use an expression to pass the return
-      # value from another step.
+      # Use an expression to pass the return value from another step.
       inputs:
         string: =steps.config.string
         int: =steps.config.int

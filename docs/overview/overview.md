@@ -134,21 +134,17 @@ Workflows (together known as [Logic](./glossary.md#logic)). Their job is to map,
 and possibly transform, the outputs from one piece of Logic into another's
 inputs, then return an overall result.
 
-Workflows specify an entry point, the Logic to be run, how they should be run,
-and map values between the Logic of each step.
+Workflows specify a trigger resource, the Logic to be run, how they should be
+run, and map values between the Logic of each step. The Logic to be run is
+specified within "steps". Each Workflow step may provide input values to the
+Logic it references and may map return values from previous steps into another
+step's inputs. The input mappings are analyzed to automatically determine the
+execution order for Logic, and the steps may run concurrently where possible.
+Steps may specify conditions and state to be surfaced into the trigger
+resource's status.
 
-The Logic to be run is specified within "steps". The Workflow entry point is
-specified as a special `configStep`. It is unique in that it receives the
-triggering values as an input. This allows context to be passed into a
-Workflow, but discourages tightly coupling steps to the configuration
-structure.
-
-Additional Logic is specified as a list of steps. Each Workflow step may
-provide input values to the Logic it references, and may map return values from
-previous steps into another step's inputs. The input mappings are analyzed to
-automatically determine the execution order for Logic, and the steps may run
-concurrently where possible. Steps may specify conditions and state to be
-surfaced into the trigger resource's status.
+Workflows can also be _nested_ as sub-Workflows to construct composable
+processes.
 
 ### FunctionTest
 
