@@ -1,7 +1,7 @@
 ---
-id: installing
-title: Installing
-sidebar_position: 1
+id: tooling-installation
+title: Tooling Installation
+sidebar_position: 2
 ---
 ### Language Server
 

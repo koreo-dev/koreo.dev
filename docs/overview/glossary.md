@@ -99,8 +99,15 @@ from (for `readonly` functions).
 ### Target Resource Specification
 The specification that a resource is expected to match after all [Koreo
 Expressions](#koreo-expression) have been evaluated and all overlays applied.
-The is the fully materialized resource view that will be applied to the
+This is the fully materialized resource view that will be applied to the
 cluster.
+
+The Target Resource Specification can be assembled in a ResourceFunction with
+variety of ways: `resource` provides a way to specify an [inline static configuration](../resource-function.md#inline-target-resource-specification),
+`resourceTemplateRef` allows [dynamically loading a static "base" configuration](../resource-function.md#dynamically-loaded-target-resource-specification),
+and `overlays` provide a mechanism to apply [overlays as atomic units](../resource-function.md#atomic-overlays-to-encapsulate-logic)
+onto the Target Resource Specification. These methods can be combined to create
+a "layered" approach to resource materialization in a deterministic manner.
 
 ### Parent Resource  
 A Kubernetes resource which is used to trigger [Workflow](#workflow)
