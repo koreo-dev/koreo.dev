@@ -1505,7 +1505,7 @@ kubectl apply -f hello-workload.koreo
 
 The Workflow will look like the following:
 
-<div className="docImage-100">
+<div className="docImage">
 ![hello-workload Workflow](/img/docs/quick-start/hello-workload-workflow.png)
 </div>
 
