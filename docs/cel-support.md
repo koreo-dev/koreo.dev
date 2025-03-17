@@ -65,7 +65,7 @@ CEL supports various data types:
 | `>`       | Greater than              | `a > b`     |
 | `>=`      | Greater than or equal     | `a >= b`    |
 
-### **Logical Operators
+### Logical Operators
 | Operator | Description | Example  |
 |----------|-------------|----------|
 | `&&`     | Logical AND | `a && b` |
