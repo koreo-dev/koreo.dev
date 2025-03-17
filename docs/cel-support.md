@@ -5,7 +5,7 @@ sidebar_position: 7
 ---
 # CEL Expressions
 
-The **Common Expression Language (CEL)** is a powerful, efficient, and portable expression language used for policy evaluation, rule enforcement, and data validation. It provides a rich set of features for working with primitive types, collections, and custom functions.
+The [Common Expression Language (CEL)](https://github.com/google/cel-spec/blob/master/doc/langdef.md) is a powerful, efficient, and portable expression language used for policy evaluation, rule enforcement, and data validation. It provides a rich set of features for working with primitive types, collections, and custom functions.
 
 ---
 
