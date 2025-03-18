@@ -3,57 +3,90 @@ id: tooling-installation
 title: Tooling Installation
 sidebar_position: 2
 ---
-### Language Server
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Language Server
+
+First install the Koreo Core library and Language Server which is used by IDE
+integrations:
 
 ```
 pip install -g koreo
 ```
 
-### VS Code Extension
+## VS Code
 
-After you have installed Core and the Language Server, using VS Code is as simple as installing the plugin.
+After you have installed Koreo Core and the Language Server, using VS Code is
+as simple as installing the [koreo-ls extension](https://marketplace.visualstudio.com/items?itemName=RealKineticLLC.koreo-ls).
 
-You can install the latest-published version of the Koreo Language Server VS Code extension directly from VS Code. Simply open the extensions panel and search for “koreo-ls”.
+You can install the latest-published version of the Koreo Language Server VS
+Code extension directly from VS Code. Simply open the extensions panel and
+search for “koreo-ls”.
 
-It will assume your language server is at `/usr/local/bin/koreo-ls`, if you want to override it at `Preferences → Settings → Koreo Language Server` or setting it in your settings.json file.
+It will assume your language server is at `/usr/local/bin/koreo-ls`. You can
+override this by going to `Preferences → Settings → Koreo Language Server` or
+setting it in your settings.json file.
 
 
-### Intellij
+## IntelliJ IDEA
 
-Install [LSP4J](https://plugins.jetbrains.com/plugin/23257-lsp4ij) as a plugin into your IDE. 
+Install [LSP4IJ](https://plugins.jetbrains.com/plugin/23257-lsp4ij) as a plugin
+into your IDE. 
 
 Download the lsp configuration [here](/downloads/lsp4j-koreo.zip).
 
-From within the LSP4J plugin, add a new server. 
+From within the LSP4IJ plugin, add a new server: 
 
-`New Language Server -> Template -> Import from custom template... -> Select ~/Downloads/lsp4j-koreo.zip`.
+`New Language Server -> Template -> Import from custom template... -> Select ~/Downloads/lsp4j-koreo.zip`
 
 Adjust the koreo-ls entrypoint as needed.
 
+## Vim/Neovim
+
 ### CoC
 
+Add the following to your Vim/Neovim configuration:
+
+<Tabs>
+  <TabItem value="vimscript" label="Vimscript" default>
 ```
 autocmd BufNewFile,BufRead *.koreo set filetype=koreo
 ```
+  </TabItem>
+  <TabItem value="lua" label="Lua">
+```lua
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = "*.koreo",
+  command = "set filetype=koreo",
+})
+```
+  </TabItem>
+</Tabs>
 
-Add this following to your coc-settings.
+Next, add the following to your coc-settings.json:
 
-``` json
-"koreo-ls": {
-  "command": "koreo-ls",
-  "filetypes": ["koreo"],
-  "root_dir": ["*.git"],
-  "settings": {
-    "semanticTokens.filetypes": ["*"]
+```json
+"languageserver": {
+  "koreo-ls": {
+    "command": "koreo-ls",
+    "filetypes": ["koreo"],
+    "root_dir": ["*.git"],
+    "settings": {
+      "semanticTokens.filetypes": ["*"]
+    }
   }
 }
 ```
 
-### LSP Config
+Ensure `command` points to the appropriate `koreo-ls` executable.
 
-Add the following to your init.lua. 
+### LSP
 
-``` lua
+Add the following to your Neovim's init.lua:
+
+```lua
 vim.filetype.add {
   extension = {
     koreo = 'koreo',
