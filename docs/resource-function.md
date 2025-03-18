@@ -115,12 +115,12 @@ spec:
     readonly: false
 ```
 
-`name` and `namespace` are also required to be defined, but they may be Koreo
-Expressions with access to `inputs` and `locals` at evaluation time. Similar to
-`apiVersion` and `kind`, these values are always overlaid onto the materialized
-resource view before it is applied to the cluster. This prevents accidental
-resource definitions or overlays that might inadvertently change the desired
-name/namespace.
+`name` and `namespace` are also required to be defined, but they may be
+[Koreo Expressions](./expressions.md) with access to `inputs` and `locals` at
+evaluation time. Similar to `apiVersion` and `kind`, these values are always
+overlaid onto the materialized resource view before it is applied to the
+cluster. This prevents accidental resource definitions or overlays that might
+inadvertently change the desired name/namespace.
 
 `plural` is required only for resources whose plural form is not a simple
 pluralization. This is due to a design decision of the Kubernetes API server
@@ -142,11 +142,11 @@ read-only ResourceFunction in contrast to a manager ResourceFunction.
 For cases where only one "static" configuration is desired, _inline_
 [Target Resource Specification](./overview/glossary.md#target-resource-specification)
 may be used with [`resource`](#spec). It allows the Function
-author to inline [Koreo Expressions](./overview/glossary.md#koreo-expression)
-into the resource body, removing the need for an additional overlay step. This
-can make creating a managed resource feel similar to other template solutions,
-but with the benefit that string manipulation directives are not required to
-correctly structure the resource.
+author to inline Koreo Expressions into the resource body, removing the need
+for an additional overlay step. This can make creating a managed resource feel
+similar to other template solutions, but with the benefit that string
+manipulation directives are not required to correctly structure the
+resource.
 
 ```yaml {14-20}
 apiVersion: koreo.dev/v1beta1

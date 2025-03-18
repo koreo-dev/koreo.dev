@@ -80,9 +80,9 @@ separators (`---`).
 :::
 
 This ValueFunction will be used as the first step in our Workflow. It uses a
-[Koreo Expression](../overview/glossary.md#koreo-expression), `=inputs.name`,
-to reference the resource name which is passed in as an input to the Function.
-Our Function simply returns a `labels` object with the `hello` label set.
+CEL-based [Koreo Expression](../expressions.md), `=inputs.name`, to reference
+the resource name which is passed in as an input to the Function. Our Function
+simply returns a `labels` object with the `hello` label set.
 
 ValueFunctions are _pure_ functions, meaning they are side-effect free. They
 provide a way to validate data and build or reshape data structures to be

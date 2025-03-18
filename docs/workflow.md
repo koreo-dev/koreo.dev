@@ -172,11 +172,11 @@ Be careful not to accidentally step on the `condition.type` value as it makes
 debugging much harder and reduces visibility into a Workflow's status.
 :::
 
-The Logic's results may be exposed via the `state` key. The Koreo Expressions
-within the Workflow step may access the Logic's return value within `value`.
-If specified, `state` must be a mapping and it will be _merged_ with other
-`step.state` values. This allows for fine control over what and how state is
-exposed.
+The Logic's results may be exposed via the `state` key. The
+[Koreo Expressions](./expressions.md) within the Workflow step may access the
+Logic's return value within `value`. If specified, `state` must be a mapping
+and it will be _merged_ with other `step.state` values. This allows for fine
+control over what and how state is exposed.
 
 :::warning
 If multiple steps set the same state keys, the return values will be merged.

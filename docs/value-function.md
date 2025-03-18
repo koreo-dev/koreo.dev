@@ -58,8 +58,8 @@ run.
 
 ## Static and Interim Values
 
-Because Koreo Expressions are often used to extract values or reshape data
-structures, they can be rather long. [`locals`](#spec)
+Because [Koreo Expressions](./expressions.md) are often used to extract values
+or reshape data structures, they can be rather long. [`locals`](#spec)
 provides a means of naming expressions, which can improve readability of the
 return value expression.
 

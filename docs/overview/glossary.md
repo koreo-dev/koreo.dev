@@ -40,7 +40,8 @@ to be run as a [Workflow](#workflow) [step](#step).
 A simple expression language that is modeled after
 [CEL](https://github.com/google/cel-spec/blob/master/doc/langdef.md), provides
 capabilities needed for basic logic, arithmetic, string manipulation, and data
-reshaping used in [Workflows](#workflow) and [Functions](#function).
+reshaping used in [Workflows](#workflow) and [Functions](#function). Learn more
+about Koreo Expressions [here](../expressions.md).
 
 ### ResourceTemplate
 Provides a simple means of specifying static values as a base [Target Resource
