@@ -3,9 +3,9 @@ entries:
   koreo:
   - apiVersion: v2
     appVersion: v0.0.1
-    created: "2025-03-18T11:23:44.778368-05:00"
+    created: "2025-03-18T11:33:27.915859-05:00"
     description: A Helm chart for Koreo
-    digest: 00874732c059e31a39532c8430a28764e9b173382bf21c7ed3bc79e87c5e0b31
+    digest: d193c3b87a08c3afc7571a919edaef0cdb3363cd79b547d0de98651a1df74037
     home: https://github.com/koreo.dev/koreo
     icon: https://koreo.dev/img/koreo-logo.png
     maintainers:
@@ -18,4 +18,4 @@ entries:
     urls:
     - https://koreo.dev/helm/koreo-0.0.1.tgz
     version: 0.0.1
-generated: "2025-03-18T11:23:44.777616-05:00"
+generated: "2025-03-18T11:33:27.914972-05:00"
