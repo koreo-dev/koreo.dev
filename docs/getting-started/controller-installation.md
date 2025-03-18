@@ -15,6 +15,9 @@ Koreo controller.
 helm repo add koreo https://koreo.dev/helm
 helm repo update
 helm install koreo-controller koreo/koreo --set=crds.install=<true,false>
+
+# By default the user interface is installed and exposed with a service, you can connect to it using the following
+kubectl port-forward svc/koreo-controller-ui 8080:8080
 ```
 
 ### Uninstalling
