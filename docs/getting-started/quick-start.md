@@ -291,7 +291,7 @@ That's it. Now we can deploy our Workflow and test it out.
 kubectl apply -f hello-koreo.koreo
 ```
 
-In the Koreo UI, this Workflow looks like the following:
+In the [Koreo UI](../koreo-ui.md), this Workflow looks like the following:
 
 <div className="docImage-100">
 ![hello-koreo Workflow](/img/docs/quick-start/hello-koreo-workflow.png)
