@@ -72,8 +72,8 @@ resources controlled by another controller. Koreo applies updates to the
 resource's status and annotations which could result in a dangerous interaction
 for resources with specific semantics used by another controller. For this
 reason, it's encouraged to create your own CRDs unless you understand what
-you are doing. Koreo Developer Tooling provides a tool to generate a CRD
-from a Workflow.
+you are doing. [Koreo Tooling](./getting-started/tooling-installation.md)
+provides a tool to generate a CRD from a Workflow.
 :::
 
 Additionally, a Workflow can be triggered by _another_ Workflow as a
