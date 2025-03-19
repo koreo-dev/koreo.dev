@@ -19,8 +19,8 @@ show how Koreo enables the construction of custom abstractions that can
 encapsulate complex Kubernetes workflows and expose them through simple APIs.
 
 Before we begin, ensure you have followed the installation instructions for the
-Koreo [controller](./controller-installation.md) and
-[tooling](./tooling-installation.md).
+Koreo [Controller](./controller-installation.md) and
+[Tooling](./tooling-installation.md).
 
 ## Hello Koreo
 
@@ -95,9 +95,10 @@ The accompanying FunctionTest demonstrates how we can unit test our
 ValueFunction. In it, we specify the Function under test, the inputs to it, and
 a test case that validates the expected return values. There's not much to this
 one because `get-labels` is such a simple Function, but we will look at more
-sophisticated FunctionTests later. The Koreo Tooling will run these tests
-automatically as you are writing your Koreo components. Try changing `hello` to
-a different value in `expectReturn` and see how the test breaks.
+sophisticated FunctionTests later. The [Koreo Tooling](./tooling-installation.md)
+will run these tests automatically as you are writing your Koreo components.
+Try changing `hello` to a different value in `expectReturn` and see how the
+test breaks.
 
 Congratulations, you've written your first Koreo ValueFunction and
 FunctionTest! Go ahead and apply it to the cluster:
@@ -943,6 +944,11 @@ spec:
 ```
   </TabItem>
 </Tabs>
+
+:::tip[Generating CRDs from Workflows]
+[Koreo Tooling](./tooling-installation.md) provides a tool for generating a
+Custom Resource Definition from a Workflow.
+:::
 
 Let's go ahead and apply our Workload CRD to the cluster:
 
