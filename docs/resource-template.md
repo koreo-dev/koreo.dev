@@ -113,8 +113,9 @@ spec:
   resourceTemplateRef:
     name: =locals.template_name
 
-    overlay:
-      metadata: =template.metadata.overlay(inputs.metadata)
+  overlays:
+  - overlay:
+      metadata: =resource.metadata.overlay(inputs.metadata)
       spec:
         value: =inputs.value
         addedProperty: =inputs.value * 17
