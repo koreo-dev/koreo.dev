@@ -233,10 +233,10 @@ spec:
 
 ## Specification
 
-import V1alpha8 from './crds/value-function/_v1beta1.md';
+import V1beta1 from './crds/value-function/_v1beta1.md';
 
 <Tabs groupId="crdVersion">
   <TabItem value="v1beta1" label="v1beta1" default>
-    <V1alpha8 />
+    <V1beta1 />
   </TabItem>
 </Tabs>
