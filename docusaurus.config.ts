@@ -57,6 +57,22 @@ const config: Config = {
   ],
 
   themeConfig: {
+    metadata: [
+      { name: 'keywords', content: 'YAML, Infrastructure as Code, IaC, Platform Engineering, DevOps, Kubernetes, Configuration Management, Resource Orchestration, Helm, Kustomize, Koreo' },
+
+      { property: 'og:type', content: 'website' },
+      { property: 'og:title', content: 'Koreo' },
+      { property: 'og:description', content: 'A new approach to Kubernetes configuration management and resource orchestration.' },
+      { property: 'og:url', content: 'https://koreo.dev' },
+      { property: 'og:image', content: 'https://koreo.dev/img/og-image.jpg' },
+
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'Koreo' },
+      { name: 'twitter:description', content: 'A new approach to Kubernetes configuration management and resource orchestration.' },
+      { name: 'twitter:image', content: 'https://koreo.dev/img/og-image.jpg' },
+      { name: 'twitter:site', content: '@real_kinetic' }
+    ],
+
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,
