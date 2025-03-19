@@ -209,6 +209,7 @@
   height: auto;
   border-radius: 8px;
   border-top: 8px solid #0e101b;
+  border-bottom: 8px solid #0e101b;
 }
 
 .spotlightImage {

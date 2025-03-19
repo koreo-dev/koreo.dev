@@ -7,12 +7,14 @@ spec:
     apiGroup: acme.example.com
     kind: AcmeAwsEnvironment
     version: v1beta1
-  configStep:
-    label: config
+  steps:
+  - label: config
     ref:
       kind: ValueFunction
       name: aws-environment-config
-  steps:
+    inputs:
+      metadata: =parent.metadata
+      spec: =parent.spec
   - label: metadata
     ref:
       kind: ValueFunction
