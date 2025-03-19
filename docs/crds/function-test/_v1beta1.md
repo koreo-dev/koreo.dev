@@ -187,11 +187,11 @@ and that the function returned this exact object.
         <td><b>inputOverrides</b></td>
         <td>object</td>
         <td>
-          Fully *replace* input values with those provided. If
-this is a non-variant test case, these will carry
-forward to subsequent test cases. This must be an
-object, but the values may be simple values, lists,
-or objects. Koreo Expressions are not allowed.
+          Patch input values with those provided. If this is a
+non-variant test case, these will carry forward to
+subsequent test cases. This must be an object, but
+the values may be simple values, lists, or objects.
+Koreo Expressions are not allowed.
 <br/>
         </td>
         <td>false</td>
