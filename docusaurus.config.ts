@@ -122,7 +122,12 @@ const config: Config = {
           position: 'left'
         },
         {
-          label: 'Konfigurate Platform',
+          label: 'The YAML Engineer',
+          to: 'https://theyamlengineer.com',
+          position: 'right',
+        },
+        {
+          label: 'Konfigurate',
           to: 'https://konfigurate.com',
           position: 'right'
         },
@@ -184,6 +189,10 @@ const config: Config = {
             {
               label: 'Who we are',
               to: 'https://realkinetic.com',
+            },
+            {
+              label: 'The YAML Engineer',
+              to: 'https://theyamlengineer.com',
             },
             {
               label: 'Konfigurate Platform',
