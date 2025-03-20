@@ -545,3 +545,22 @@ spec:
 ```
   </TabItem>
 </Tabs>
+
+## Example Trigger Workload
+
+<Tabs>
+  <TabItem value="hello-lambda-workload" label="hello-lambda-workload.yaml" default>
+```yaml
+apiVersion: example.koreo.dev/v1
+kind: LambdaWorkload
+metadata:
+  name: hello-lambda-workload
+  namespace: koreo-examples
+spec:
+  image: my-lambda-image:0.0.2
+  role: writer
+  bucketName: my-unique-bucket-name
+  generateBucketSuffix: true
+```
+  </TabItem>
+</Tabs>
