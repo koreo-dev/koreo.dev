@@ -28,7 +28,7 @@ toolkit"—it allows platform teams to build powerful abstractions.
 
 Read the [Koreo Overview](./overview.md) for more background on the project.
 
-## What problems does Koreo solve?
+## What problems does it solve?
 
 Koreo addresses the challenges of building and managing complex
 Kubernetes-based platforms or control planes, including managing resources
@@ -58,7 +58,12 @@ platform for startups and scaleups.
 Read [Background and Why](./overview.md#background-and-why) for more on the
 motivation behind Koreo.
 
-## Who is Koreo for?
+## What does the name mean?
+
+Koreo provides a means of programming control loops and orchestrating
+resources, so the name is a play on _choreographing_ Kubernetes.
+
+## Who is it for?
 
 Koreo is designed for platform engineering teams, DevOps engineers, and anyone
 responsible for building and managing Kubernetes-based platforms, control
@@ -66,7 +71,7 @@ planes, or automations. It empowers them to create self-service platforms for
 developers, automate complex infrastructure operations, and enforce
 organizational policies.
 
-## How does Koreo compare to Helm/Kustomize/Argo Workflows/Crossplane?
+## How does it compare to Helm/Kustomize/Argo Workflows/Crossplane?
 
 In short, Koreo builds on some of the strengths of these tools while addressing
 their limitations. It provides a more unified and programmable approach to
@@ -83,7 +88,7 @@ For more on each, see the comparison pages:
 - [Comparing Argo Workflows](/compare/argo)
 - [Comparing Crossplane](/compare/crossplane)
 
-## What is the learning curve for Koreo?
+## What is the learning curve?
 
 Koreo's approach to configuration and resource management is very much inspired
 by functional programming principles. Koreo itself _is_ a programming language
@@ -129,3 +134,12 @@ creation. There are two types of Functions,
 [ValueFunctions](../value-function.md), which are pure functions used to shape
 data or apply business logic, and [ResourceFunctions](../resource-function.md),
 which correspond to a managed Kubernetes resource.
+
+## Is it production-ready?
+
+The current version of the Koreo CRDs is `v1beta1` to indicate this is a
+nascent project. However, these APIs are solidified and only
+backward-compatible changes are expected. Tooling is still evolving to better
+support the operation of Koreo and the observability and debugging of
+Workflows. Koreo is used in production by
+[Konfigurate](https://konfigurate.com).
