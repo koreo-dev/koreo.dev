@@ -10,7 +10,8 @@ import TabItem from '@theme/TabItem';
 This example demonstrates a Workflow that implements a simple Lambda workload
 which creates an S3 bucket, an IAM policy with read/write permissions on the
 bucket, a Lambda execution role that uses the policy, and a Lambda function
-which uses the role. See the [examples repository](https://github.com/koreo-dev/examples/tree/main/aws/lambda-workload)
+which uses the role. It uses [ACK](https://aws-controllers-k8s.github.io/community/docs/community/overview/)
+for provisioning AWS resources. See the [examples repository](https://github.com/koreo-dev/examples/tree/main/aws/lambda-workload)
 in GitHub for complete instructions for running this example.
 
 ## hello-lambda-workload Workflow
