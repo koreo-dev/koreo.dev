@@ -956,14 +956,13 @@ Let's go ahead and apply our Workload CRD to the cluster:
 kubectl apply -f workload-crd.yaml
 ```
 
-:::note[Role-Based Access Control]
+:::info[Role-Based Access Control]
 Kubernetes uses [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 to ensure that cluster users and workloads have only the access to resources
 required to execute their roles. Both the Koreo controller and Koreo UI rely on
-RBAC to access resources in the cluster. These provide default ClusterRoles
-with base permissions but can be customized to your needs. For this example,
-ensure your deployed Koreo controller has the appropriate permissions for the
-CRD.
+RBAC to access resources in the cluster. These provide default Roles with base
+permissions but can be customized to your needs. For this example, ensure your
+deployed Koreo controller has the appropriate permissions for the CRD.
 :::
 
 ### Deployment ResourceTemplate
