@@ -7,10 +7,12 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This example demonstrates a Workflow that implements a simple Lambda workload
-which creates an S3 bucket, an IAM policy with read/write permissions on the
-bucket, a Lambda execution role that uses the policy, and a Lambda function
-which uses the role. It uses [ACK](https://aws-controllers-k8s.github.io/community/docs/community/overview/)
+In this example, we will create a Workflow that provisions four key AWS
+resources in sequence. First, we define a simple KRM object to create an S3
+bucket. Next, we generate a policy that grants read and write access to that
+specific bucket. Third, we create a Lambda execution role that can assume this
+policy. Finally, we attach the role to a Lambda function, which writes event
+payloads as JSON files to the bucket. It uses [ACK](https://aws-controllers-k8s.github.io/community/docs/community/overview/)
 for provisioning AWS resources. See the [examples repository](https://github.com/koreo-dev/examples/tree/main/aws/lambda-workload)
 in GitHub for complete instructions for running this example.
 
