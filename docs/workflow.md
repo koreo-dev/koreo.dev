@@ -266,7 +266,10 @@ indicating the step pertains to a sub-Workflow.
 **Array of Kubernetes resources and/or managed resources objects**
 
 This indicates the step pertains to a ResourceFunction or sub-Workflow within a
-`forEach`.
+`forEach`. This array can contain _both_ Kubernetes resources and managed
+resources objects because the step may be a `refSwitch` which could result in
+both ResourceFunctions _and_ sub-Workflows executing for different iterations
+of the loop, depending on which `refSwitch` cases are selected.
 
 **null**
 
