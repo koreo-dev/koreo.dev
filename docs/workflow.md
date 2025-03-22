@@ -237,6 +237,123 @@ spec:
         name: resource-function-test
 ```
 
+## Managed Resources
+
+Workflows write a metadata annotation called `koreo.dev/managed-resources` on
+the parent resource which triggered them. This annotation is a recursive JSON
+structure which contains two top-level keys: `workflow`, which is the name of
+the Workflow that processed the parent, and `resources`, which is a mapping of
+Workflow steps to _managed resources_. This resource mapping can be recursive
+depending on the structure of the Workflow step. In this context, a "managed
+resource" can be one of four things:
+
+**Kubernetes resource**
+
+This is a true [managed resource](./overview/glossary.md#managed-resource),
+indicating the step pertains to a ResourceFunction. This is an object
+containing several keys pertaining to the Kubernetes resource: `apiVersion`,
+`kind`, `name`, `namespace` (optional), `plural` (optional),
+`resourceFunction`, and `readonly`. `resourceFunction` is the name of the
+ResourceFunction interfacing with the resource. `readonly` indicates if the
+ResourceFunction only _reads_ the resource or if it is a _manager_ of the
+resource.
+
+**Managed resources object**
+
+This is a recursive object containing the `workflow` and `resources` keys,
+indicating the step pertains to a sub-Workflow.
+
+**Array of Kubernetes resources and/or managed resources objects**
+
+This indicates the step pertains to a ResourceFunction or sub-Workflow within a
+`forEach`.
+
+**null**
+
+A `null` value indicates the step does not pertain to a resource. Examples
+include the step is a ValueFunction, a ResourceFunction with a `skipIf`, or a
+`forEach` on an empty list.
+
+An example of a `koreo.dev/managed-resources` annotation value is shown below.
+In this example, the `config`, `metadata`, and `resource_tags` steps on
+`aws-workload-workflow` are ValueFunctions, which is why they map to `null`
+values. `environment_metadata` corresponds to a _read-only_ ResourceFunction.
+The `resources` step is a `forEach`, which is why it's an _array_. `runtime` is
+a sub-Workflow called `lambda-workflow` with four steps which ultimately
+produces three Kubernetes resources. Lastly, the `triggers` step is a `forEach`
+whose `itemIn` expression evaluated to an empty list, meaning the sub-Workflow
+the step pertains to did not execute.
+
+```json
+{
+  "workflow": "aws-workload-workflow",
+  "resources": {
+    "config": null,
+    "metadata": null,
+    "resource_tags": null,
+    "environment_metadata": {
+      "apiVersion": "aws.konfigurate.realkinetic.com/v1beta1",
+      "kind": "AwsEnvironment",
+      "plural": "awsenvironments",
+      "name": "dev",
+      "readonly": true,
+      "namespace": "realkinetic-dev",
+      "resourceFunction": "aws-environment"
+    },
+    "resources": [
+      {
+        "apiVersion": "s3.services.k8s.aws/v1alpha1",
+        "kind": "Bucket",
+        "plural": "buckets",
+        "name": "test-1312e8",
+        "readonly": false,
+        "namespace": "realkinetic-dev",
+        "resourceFunction": "aws-s3-bucket-factory"
+      }
+    ],
+    "runtime": {
+      "workflow": "lambda-workflow",
+      "resources": {
+        "config": null,
+        "lambda_policy": {
+          "apiVersion": "iam.services.k8s.aws/v1alpha1",
+          "kind": "Policy",
+          "plural": "policies",
+          "name": "test-lambda",
+          "readonly": false,
+          "namespace": "realkinetic-dev",
+          "resourceFunction": "lambda-policy"
+        },
+        "lambda_role": {
+          "apiVersion": "iam.services.k8s.aws/v1alpha1",
+          "kind": "Role",
+          "plural": "roles",
+          "name": "test-lambda",
+          "readonly": false,
+          "namespace": "realkinetic-dev",
+          "resourceFunction": "lambda-role"
+        },
+        "lambda_resource": {
+          "apiVersion": "lambda.services.k8s.aws/v1alpha1",
+          "kind": "Function",
+          "plural": "functions",
+          "name": "test",
+          "readonly": false,
+          "namespace": "realkinetic-dev",
+          "resourceFunction": "lambda-resource"
+        }
+      }
+    },
+    "triggers": null
+  }
+}
+```
+
+This managed resources data is exposed for consumption by tooling as well as to
+aid with operations and debugging. For example, this data is leveraged by
+[Koreo UI](./koreo-ui.md) in order to render Workflow instance graphs and
+surface other information about Workflows.
+
 ## Example
 
 The following Workflow demonstrates some of the capabilities. Refer to the
