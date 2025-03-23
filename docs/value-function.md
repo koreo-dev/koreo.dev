@@ -94,7 +94,7 @@ Currently, `locals` may not reference other `locals`.
 The primary use cases of ValueFunction is to reshape or compute a return
 value expression. The expression in [`return`](#spec) must be an object.
 The keys of the object may be constant values, data structures, or Koreo
-Expressions which reference inputs (`inputs.`) or locals (`locals`).
+Expressions which reference `inputs` or `locals`.
 
 ```yaml {14-19}
 apiVersion: koreo.dev/v1beta1
@@ -118,7 +118,7 @@ spec:
     lowerWords: =locals.constantList.map(word, word.lower())
 ```
 
-## Example
+## ValueFunction Example
 
 The following ValueFunction demonstrates some of the capabilities. Refer to the
 [ValueFunction spec](#specification) for the complete set of ValueFunction

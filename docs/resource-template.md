@@ -15,17 +15,17 @@ dynamically compute the ResourceTemplate name, making it easy to support a
 range of use cases and configurations for a
 [managed resource](./overview/glossary#managed-resource). By allowing the
 statically defined resource to be dynamically loaded, it reduces the need to
-create complex or verbose functions.
+create complex or verbose Functions.
 
 For instance, ResourceTemplates may be provided for different environments,
 for specific resource types, or dynamically supplied configuration values.
-Templates are also useful for simple static templates to provide common
+ResourceTemplates are also useful for simple static templates to provide common
 configuration, such as regions. This allows the ResourceFunction to be
-responsible for defining the interface and applying the values, but templates
-to supply the bulk of static configuration.
+responsible for defining the interface and applying the values while
+ResourceTemplates supply the bulk of static configuration.
 
-This model makes it easy to turn existing resources into templates, then use a
-Function only to apply dynamic values.
+This model makes it easy to turn existing resources into ResourceTemplates,
+then use a Function only to apply dynamic values.
 
 ## Static Resource Specification
 
@@ -36,7 +36,7 @@ This static template will be (optionally) overlaid within the ResourceFunction.
 The `metadata.name` and `metadata.namespace` properties are _always_ overlaid
 by the ResourceFunction, so you need not specify them.
 
-## Example
+## ResourceTemplate Example
 
 The example below demonstrates a ResourceFunction which dynamically loads a
 ResourceTemplate based on a provided input along with a corresponding

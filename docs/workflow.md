@@ -26,13 +26,12 @@ language" because Workflows and Functions provide controller-based primitives
 for managing other controllers.
 
 In general, Workflow definitions are simple. They specify the resource type
-that will cause the Workflow to run, i.e. the "trigger", provide configuration
-values to the entry point, perform a set of steps, and optionally surface
-conditions or state. Think of a Workflow as a specification which is
-_instantiated_ with configuration. Once instantiated, an instance of the
-Workflow will run according to its configuration. Many instances of a Workflow
-may exist and run concurrently. Many Workflows may be defined within one
-system, and Workflows themselves may be composed.
+that will cause the Workflow to run, i.e. the "trigger", perform a set of
+steps, and optionally surface conditions or state. Think of a Workflow as a
+specification which is _instantiated_ with configuration. Once instantiated, an
+instance of the Workflow will run according to its configuration. Many
+instances of a Workflow may exist and run concurrently. Many Workflows may be
+defined within one system, and Workflows themselves may be composed.
 
 A Workflow is responsible for running [Logic](./overview/glossary.md#logic), which is a
 [ValueFunction](./value-function.md),
@@ -47,7 +46,8 @@ A Workflow may be _externally_ triggered to run, and have its _configuration_
 provided by a resource specified using [`crdRef`](#speccrdref).
 This resource serves to provide the Workflow's configuration and the Workflow
 instance may optionally report its conditions and state within this resource's
-`status` block.
+`status` block. The Workflow also [writes information about the resources it manages](#managed-resources)
+to an annotation on this resource.
 
 ```yaml {7-10}
 apiVersion: koreo.dev/v1beta1
@@ -106,28 +106,59 @@ to be provided with, specifies an optional status condition, and optionally
 specifies any state you wish exposed within the parent resource's
 `status.state`.
 
-Each step must specify the Logic to be called. Logic is defined by
-ValueFunction, ResourceFunction, or using a sub-Workflow to compose Functions.
-To _reference_ the Logic, you specify the `kind` and `name`. Logic may be
-statically specified using `ref`, which specifies exact Logic to run. Logic may
-be dynamically selected from a fixed set of references using `refSwitch`, which
-provides the ability to select between multiple Logics which implement a
-compatible interface—this is discussed in more detail below.
+Logic is defined by ValueFunction, ResourceFunction, or using a sub-Workflow to
+compose Functions. To _reference_ the Logic, you specify the `kind` and `name`.
+Logic may be statically specified using `ref`, which specifies the exact Logic
+to run. It may also be _dynamically_ selected from a fixed set of references
+using `refSwitch`, which provides the ability to select between multiple Logics
+which implement a compatible interface—this is discussed in more detail below.
 
 :::tip[Steps may run concurrently]
-A step is run once all steps it references have been run. To help make
-the sequencing clearer, you are required to list steps after any step(s) they
+A step is run once all steps it references have completed. To help make the
+sequencing clearer, you are required to list steps after any step(s) they
 reference. Note that steps may run concurrently as their dependencies complete,
 so you should not depend on the order in which they are listed.
 :::
 
-Steps also specifies `inputs` to be provided to the Logic. Within Functions,
+Steps also specify `inputs` to be provided to the Logic. Within Functions,
 the inputs are directly accessible within `inputs`. Within Workflows, the
 inputs are exposed under `parent`. This enables a Workflow to be directly
 triggered via a `crdRef` _or_ it may be directly called as a sub-Workflow.
 That makes reuse and testing of Workflows easier. Steps can depend on other
 steps by referencing them as an input value. This allows you to map outputs
 from one step into inputs of another step.
+
+<Tabs>
+  <TabItem value="ref" label="ref step" default>
+```yaml
+- label: static_get_value
+  ref:
+    kind: ValueFunction
+    name: get-value.v1
+  inputs:
+    input: =steps.config.output
+```
+  </TabItem>
+  <TabItem value="refSwitch" label="refSwitch step">
+```yaml
+- label: dynamic_get_value
+  refSwitch:
+    switchOn: =inputs.input
+    cases:
+    - case: "1"
+      kind: ValueFunction
+      name: get-value-1.v1
+    - case: "2"
+      kind: ValueFunction
+      name: get-value-2.v1
+    - case: "3"
+      kind: ValueFunction
+      name: get-value-3.v1
+  inputs:
+    input: =steps.config.output
+```
+  </TabItem>
+</Tabs>
 
 :::tip[Avoiding tight coupling]
 The parent resource can be passed as an input to steps from a Workflow with
@@ -137,6 +168,8 @@ coupling Logic to triggering resources. For example, `=parent.metadata` rather
 than `=parent` if only the metadata is needed by a Function.
 :::
 
+### Control Flow
+
 A step may also specify a `forEach` block, which will cause the Logic to be
 executed once per item in the `forEach.itemIn` list. Each item will be provided
 within `inputs` with the key name specified in `forEach.inputKey`. This makes
@@ -145,11 +178,10 @@ using any Function within a `forEach` viable.
 Steps may be conditionally run using `skipIf`. When the `skipIf` evaluates to
 true, the step and its dependencies are [Skipped](overview/glossary.md#skip)
 without resulting in an error by stopping further evaluation of the step and
-its dependencies.
-
-`skipIf` enables the Workflow to dynamically determine which steps to run.
-This allows Logic to define a common interface, then for the Workflow to call
-the correct Logic. This enables _if_ or _switch_ statement semantics.
+its dependencies. `skipIf` enables the Workflow to dynamically determine which
+steps to run. This allows Logic to define a common interface, then for the
+Workflow to call the correct Logic. This enables _if_ or _switch_ statement
+semantics.
 
 Logic may be dynamically selected from a set of choices using `refSwitch`.
 `refSwitch` allows Logic to define a common interface, then for the
@@ -158,6 +190,8 @@ Workflow to call the appropriate Logic based on input or computed values. The
 `steps`. It also has access to the `inputs` that will be provided to the Logic.
 Using `inputs` enables `refSwitch` to work with `forEach` and dispatch the
 correct Logic for each item.
+
+### State
 
 A step may expose a Condition on the parent resource using `condition`. The
 Condition's type will match `condition.type`, and this should be unique within
@@ -182,6 +216,8 @@ control over what and how state is exposed.
 If multiple steps set the same state keys, the return values will be merged.
 This can lead to confusing values, so be cautious.
 :::
+
+### Logic Example
 
 ```yaml {7-51}
 apiVersion: koreo.dev/v1beta1
@@ -357,7 +393,7 @@ aid with operations and debugging. For example, this data is leveraged by
 [Koreo UI](./koreo-ui.md) in order to render Workflow instance graphs and
 surface other information about Workflows.
 
-## Example
+## Workflow Example
 
 The following Workflow demonstrates some of the capabilities. Refer to the
 [Workflow spec](#specification) for the complete set of Workflow

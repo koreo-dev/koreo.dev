@@ -9,16 +9,16 @@ import TabItem from '@theme/TabItem';
 
 Koreo provides FunctionTest to make validating the behavior of [Function](./overview/glossary.md#function)
 control loops easier. FunctionTest provides a direct means of simulating
-changing inputs and external state between iterations. It includes built-in
-contract testing in addition to return value testing. This allows for the
-testing of the full lifecycle, including error handling.
+changing inputs and external state between iterations of a control loop. It
+includes built-in contract testing in addition to return-value testing. This
+allows for the testing of the full lifecycle, including error handling.
 
 Within a FunctionTest, inputs and an initial state may be provided along with
 a set of test cases. The test cases are run sequentially so that changing
 conditions may be precisely simulated and assertions about the behavior made.
 Mutations to the resource or inputs (by the Function or test setup) are
 preserved between each test case, allowing for realistic testing without the
-need for complex setup. To make testing more robust, `variant` tests do not
+need for complex setup. To make testing more robust, `variant` tests do _not_
 preserve mutations across tests. This allows for testing conditions that may
 cause errors or easily testing other variant behaviors.
 
@@ -42,6 +42,7 @@ spec:
   functionRef:
     kind: ResourceFunction
     name: function-test-demo.v1
+  # ...
 ```
 
 ## Base Inputs and Overrides
@@ -68,6 +69,7 @@ spec:
       namespace: tests
     enabled: true
     int: 64
+  # ...
 ```
 
 ## Initial Resource State
@@ -82,7 +84,7 @@ test cases.
 However, for some tests it is desirable to specify a base resource state, then
 mutate it within test cases (using [`overlayResource`](#spectestcasesindex)).
 This is especially useful when combined with `variant` so that various
-conditions may be tests, such as spec changes or conditions the managed
+conditions may be tested, such as spec changes or conditions the managed
 resource's controller may make or set. It makes it easy to test many variant
 cases without a lot of boilerplate.
 
@@ -162,18 +164,19 @@ expectations for various inputs.
 In order to test behavior with different current resource states, there are two
 options available. To simulate external controller (or user) modifications by
 updating specific fields, replacing specific values, or adding status
-conditions, `overlayResource` should be used. This is very useful for
-simulating interactions with a controller that is reporting back status
-information. Alternatively, to _fully replace_ the current resource,
-`currentResource` may be used. The resource must be specified in its entirety.
+conditions, `overlayResource` should be used. This is useful for simulating
+interactions with a controller that is reporting back status information.
+Alternatively, to _fully replace_ the current resource, `currentResource` may
+be used. The resource must be specified in its entirety.
 
 ### Resource Mutation Assertion
 
 When resource mutations are expected, [`expectResource`](#spectestcasesindex)
-may be used to validate that the resource exactly matches a Target Resource
-Specification. The full resource should be provided, and will be compared
-exactly. If no resource modifications (create or update) are attempted, an
-`expectResource` assertion fails.
+may be used to validate that the resource exactly matches a
+[Target Resource Specification](./overview/glossary.md#target-resource-specification).
+The full resource should be provided and will be compared exactly. If no
+resource modifications (create or update) are attempted, an `expectResource`
+assertion fails.
 
 :::note
 `expectResource` tests a ResourceFunction's _patch_, meaning it only tests the
@@ -185,13 +188,14 @@ merge logic.
 :::
 
 For cases where list order should be ignored or treating a list as a map is
-required, you may use the compare directives to alter the resource validation.
-These are not typically required within tests, but are sometimes helpful.
+required, you may use the [compare directives](./resource-function.md#compare-directives)
+to alter the resource validation. These are not typically required within tests
+but are sometimes helpful:
 
     - `x-koreo-compare-as-set`
     - `x-koreo-compare-as-map`
 
-The directives behave as describes within the ResourceFunction documentation.
+The directives behave as described within the [ResourceFunction documentation](./resource-function.md#compare-directives).
 Place them within the `expectResource` body, just as for the Target Resource
 Specification.
 
@@ -279,7 +283,7 @@ handling, with lots of pre or post condition checks, or with very involved
 return values. It allows for validating lots of cases with minimal boilerplate
 required.
 
-## Example
+## FunctionTest Example
 
 In order to demonstrate FunctionTest, we will test a simple but representative
 ResourceFunction.

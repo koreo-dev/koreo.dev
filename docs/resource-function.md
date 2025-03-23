@@ -10,11 +10,10 @@ import TabItem from '@theme/TabItem';
 A ResourceFunction interfaces with one resource in order to _manage_ it or to
 _read values_ from it. The default behavior is to manage the resource. A
 _manager_ ResourceFunction's task is to ensure the resource's configuration
-matches the target specification. _Read-only_ ResourceFunctions are used to
-wait for a resource to exist, wait for it to match some conditions, or to
-extract values from the resource. The resource that corresponds to a
-ResourceFunction is referred to as a ["managed
-resource"](#managed-resource-configuration).
+matches the [Target Resource Specification](./overview/glossary.md#target-resource-specification).
+_Read-only_ ResourceFunctions are used to wait for a resource to exist, wait
+for it to match some conditions, or to extract values from the resource. The
+resource that corresponds to a ResourceFunction is referred to as a ["managed resource"](#managed-resource-configuration).
 
 :::note
 The default behavior is to act as a _manager_ of the resource. All of the
@@ -26,15 +25,15 @@ _Manager_ ResourceFunctions define a
 [controller](https://kubernetes.io/docs/concepts/architecture/controller/). If
 the resource's configuration does not match expectations, it will take actions
 to bring it into alignment with the target specification. There are several
-configuration options which allow the developer to control how ResourceFunction
-will manage its resource.
+configuration options which allow the developer to control how a
+ResourceFunction will manage its resource.
 
 ResourceFunction provides the same capabilities and interface as
-[ValueFunction](./value-function.md), so that
+[ValueFunction](./value-function.md), meaning
 [preconditions](#performing-validation) may be checked and a [return
 value](#returned-value) computed.
 
-### Performing Validation
+## Performing Validation
 
 Preconditions are used in order to determine if it is possible to evaluate a
 Function or if it should be evaluated. For instance, configuration may allow
@@ -63,12 +62,12 @@ spec:
       message: User disabled the ResourceFunction
 ```
 
-### Static and Interim Values
+## Static and Interim Values
 
-[`locals`](#spec) is useful for defining constant values (primitive types,
-lists, or objects). Locals also allow expressions to be named, which can
-improve readability of the return value expression and help with maintenance of
-a Function.
+Like ValueFunctions, [`locals`](#spec) is useful for defining constant values
+(primitive types, lists, or objects). Locals also allow expressions to be
+named, which can improve readability of the return value expression and help
+with maintenance of a Function.
 
 ```yaml {7-12}
 apiVersion: koreo.dev/v1beta1
@@ -90,13 +89,14 @@ spec:
 Currently, `locals` may not reference other `locals`.
 :::
 
-### Managed Resource Configuration
+## Managed Resource Configuration
 
-ResourceFunctions are meant to manage an external resource. That resource is
-defined by [`apiConfig`](#specapiconfig). In order to prevent dangerous
-escapes, `apiVersion` and `kind` are static strings and must always be
-specified. These are always overlaid onto the materialized resource view before
-it is applied to the cluster.
+ResourceFunctions are meant to manage (or, in the case of a read-only Function,
+_consume_) an external resource. That resource is defined by
+[`apiConfig`](#specapiconfig). In order to prevent dangerous escapes,
+`apiVersion` and `kind` are static strings and must always be specified. These
+are always overlaid onto the materialized resource view before it is applied to
+the cluster.
 
 ```yaml {7-14}
 apiVersion: koreo.dev/v1beta1
@@ -135,16 +135,16 @@ readonly is `false`.
 `readonly` indicates that the resource is not being managed. This is useful
 when a resource needs checked for existence or values extracted from a resource
 which is managed by the user or another controller. This is referred to as a
-read-only ResourceFunction in contrast to a manager ResourceFunction.
+_read-only_ ResourceFunction in contrast to a _manager_ ResourceFunction.
 
-### Inline Target Resource Specification
+## Inline Target Resource Specification
 
-For cases where only one "static" configuration is desired, _inline_
+For cases where only one "static" configuration is desired, an _inline_
 [Target Resource Specification](./overview/glossary.md#target-resource-specification)
-may be used with [`resource`](#spec). It allows the Function
+may be used with [`resource`](#spec). This allows the Function
 author to inline Koreo Expressions into the resource body, removing the need
 for an additional overlay step. This can make creating a managed resource feel
-similar to other template solutions, but with the benefit that string
+similar to other templating solutions, but with the benefit that string
 manipulation directives are not required to correctly structure the
 resource.
 
@@ -185,15 +185,17 @@ Alternatively, the resource can be recreated by specifying the
 [update behavior](#flexible-update-handling).
 :::
 
-### Dynamically Loaded Target Resource Specification
+## Dynamically Loaded Target Resource Specification
 
 When there are multiple "static" configurations of a resource, but there is a
 desire to expose a common interface or configuration options, using _dynamic_
-Target Resource Specification saves repetition by allowing the static component
-to be dynamically loaded, and then overlays (which may contain Koreo
-Expressions) to be applied using [`resourceTemplateRef`](#specresourcetemplateref).
+Target Resource Specification with [`resourceTemplateRef`](#specresourcetemplateref)
+saves repetition by allowing the static component to be dynamically loaded and
+then overlays (which may contain Koreo Expressions) to be applied for further
+customization. `resourceTemplateRef` allows statically or, with Koreo
+Expressions, dynamically loading a [ResourceTemplate](./resource-template.md).
 
-```yaml {10-16}
+```yaml {10-18}
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
 metadata:
@@ -205,8 +207,10 @@ spec:
 
   resourceTemplateRef:
     name: =locals.template_name
-    overlay:
-      metadata: =template.metadata.overlay(inputs.metadata)
+
+  overlays:
+  - overlay:
+      metadata: =resource.metadata.overlay(inputs.metadata)
       spec:
         value: =inputs.value
         addedProperty: =inputs.value * 17
@@ -215,25 +219,30 @@ spec:
 
 The template `name` is a Koreo Expression, with access to `inputs` and `locals`
 at evaluation time. This allows templates to be loaded dynamically. Conventions
-should be used to make the names clear and consistent, for instance: `name:
-="deployment-service-account-" + locals.templateName` to indicate that the
-template is for a Deployment's service account.
+should be used to make the names clear and consistent. For instance, the
+example below indicates that the template is for a Deployment's service
+account:
+
+```yaml
+name: ="deployment-service-account-" + locals.templateName
+```
 
 The `apiVersion`, `kind`, `metadata.name`, and `metadata.namespace` are always
 computed and overlaid onto the Target Resource Specification, so these may be
 omitted.
 
-### Atomic Overlays to Encapsulate Logic
+## Atomic Overlays to Encapsulate Logic
 
 [`overlays`](#specoverlaysindex) provides a mechanism to apply overlays as
 atomic units onto the Target Resource Specification. Each overlay may be either
-inline `overlay` or dynamic `overlayRef` and may be conditionally skipped
-`skipIf`. This allows full Target Resource Specifications to be gradually built
-by composing layers that encapsulate intention and logic into testable units.
+an inline `overlay` or a dynamic `overlayRef` and may be conditionally skipped
+with `skipIf`. This allows full Target Resource Specifications to be gradually
+built by composing layers that encapsulate intention and logic into small,
+reusable, and testable units.
 
 `overlays` may be used with both inline `resource` definitions or combined with
-static `ResourceTempates` using `resourceTemplateRef`. When combined with
-`ResourceTemplate` it creates a very flexible, but simple, mechanism for
+static ResourceTemplates using `resourceTemplateRef`. When combined with
+ResourceTemplate, it creates a very flexible, but simple, mechanism for
 swapping out static (and often verbose) base configurations and then
 customizing them for a given use case. The ResourceFunction's `preconditions`
 and `locals` make it possible to ensure only allowed values are applied via
@@ -289,15 +298,13 @@ available if needed.
 Dynamic overlays may be provided using ValueFunctions. This allows for the
 use of all ValueFunction capabilities, such as `preconditions` and `locals`.
 The `return` value defines the overlays to be applied. Koreo Expressions within
-the ValueFunction have access to `inputs`, `locals`, and the current Target
-Resource Specification as `resource` so that static values are available if
-needed.
+the ValueFunction have access to `inputs` and `locals`.
 
 The `apiVersion`, `kind`, `metadata.name`, and `metadata.namespace` are always
 computed and overlaid onto the Target Resource Specification, so these may be
 omitted.
 
-### Customizing Creation
+## Customizing Creation
 
 Within [`create`](#speccreate), creation may be turned on and off using
 `enabled`. If creation is not enabled, and the managed resource does not
@@ -331,14 +338,14 @@ that it is an object which may contain Koreo Expressions. The expressions have
 access to `inputs`, `locals`, and `resource` at evaluation time. `resource` is
 set to the current Target Resource Specification.
 
-### Flexible Update Handling
+## Flexible Update Handling
 
 When resource differences are detected, there are three options to correct
-them via [`update`](#specupdate). There are also two directives which may
-be used to alter the difference detection behavior for special cases.
+them via [`update`](#specupdate). There are also [two directives](#compare-directives)
+which may be used to alter the difference detection behavior for special cases.
 
 The default behavior is to `patch` the differences in order to align them to
-the Target Resource Specification. This is the most common, and the simplest
+the Target Resource Specification. This is the most common, and simplest,
 behavior. The Target Resource Specification is simply re-applied in order to
 "correct" it. If there are any _immutable_ properties or properties which
 should not be patched or monitored, use `create.overlay` to set those only at
@@ -367,8 +374,10 @@ be made. Set `delay` to the time it takes for the deletion and any finalizers
 to run.
 
 The final option is to simply ignore any differences, this is done using
-`update.never`. In some cases this is the only option, in others the precise
-resource specification does not matter—only that it exists.
+`update.never`. In some cases this is the only option, and in others, the
+precise resource specification does not matter—only that it exists.
+
+### Compare Directives
 
 Some resource _controllers_ may update properties within the spec. Typically
 this is not an issue as the values should match what was provided. For
@@ -378,19 +387,19 @@ flattened into an array with the key contained as a property within the list
 objects. To handle these cases, Koreo provides two directives to configure the
 difference detection logic for arrays:
 
-    x-koreo-compare-as-set
-    x-koreo-compare-as-map
+- `x-koreo-compare-as-set`
+- `x-koreo-compare-as-map`
 
 These are embedded into the Target Resource Specification and will be stripped
 prior to sending to the API. `x-koreo-compare-as-set` takes an array of
 property names which should be treated as _sets_ rather than ordered arrays; it
-may only be used on "simple" (boolean, numeric, and string) types.
+may only be used on primitive (boolean, numeric, and string) types.
 `x-koreo-compare-as-map` takes a map of "arrays to treat as collections" and an
-array of properties to use as the key within each mapping. See the examples
-below for usage.
+array of properties to use as the key within each mapping. See the
+[example below](#resourcefunction-example) for usage.
 
 
-### Cleanup Behavior
+## Cleanup Behavior
 
 As a Workflow definition changes, an instance configuration changes, or a
 Workflow instance is deleted, managed resources may no longer be created. In
@@ -400,26 +409,24 @@ in [`delete`](#specdelete).
 There are currently two options available: `abandon` or `destroy`. For
 resources which contain data, `abandon` is recommended for production
 environments. In the future, abandoned resources will be labeled to make them
-easy to identify.
-
-For stateless or fast-to-create resources, `destroy` will delete the managed
-resource.
+easy to identify. For stateless or fast-to-create resources, `destroy` will
+delete the managed resource.
 
 Note that in some cases, these options are in addition to the capabilities of
 the underlying managed resource's controller configuration. Be sure to
 carefully review the controller's documentation to ensure the desired behavior.
 
-### Performing Post-CRUD Validation
+## Performing Post-CRUD Validation
 
-Postconditions within [`postconditions`](#specpostconditionsindex) are used to
+Predicates within [`postconditions`](#specpostconditionsindex) are used to
 assert the managed resource is ready and meets some set of conditions. The
 _assertion_ is a Koreo Expression which has access to `inputs`, `locals`, and
-`resource` at evaluation time. `resource` contains the actual resource object,
-allowing for inspection of values within `status`. This is useful for examining
-the resource's `status.conditions`, for example, to ensure the resource is
-ready before continuing. It is also useful when values need to be extracted in
-order to pass them into other Functions, such as with VPCs where the subnets
-may only be known at runtime.
+`resource` at evaluation time. `resource` contains the _actual_ resource
+object, allowing for inspection of values within `status`. This is useful for
+examining the resource's `status.conditions`, for example, to ensure the
+resource is ready before continuing. It is also useful when values need to be
+extracted in order to pass them into other Functions, such as with VPCs, where
+the subnets may only be known at runtime.
 
 ```yaml {7-11}
 apiVersion: koreo.dev/v1beta1
@@ -446,7 +453,7 @@ You must ensure that any values used on `resource` are present. Use `has(...)`
 in order to assert the presence of a property.
 :::
 
-### Returned Value
+## Returned Value
 
 The return expression in [`return`](#spec) must be an object. It may
 use constant values, data structures, or Koreo Expressions which have access to
@@ -479,7 +486,7 @@ Like postconditions, you must ensure that any values used on `resource` are
 present. Use `has(...)` in order to assert the presence of a property.
 :::
 
-### Example
+## ResourceFunction Example
 
 The following ResourceFunction demonstrates some of the capabilities. Refer to
 the [ResourceFunction spec](#specification) for the complete set of
@@ -564,7 +571,7 @@ spec:
     ref: =resource.self_ref()
 ```
 
-### Testing
+## Testing
 
 [FunctionTests](./function-test.md) provide a solution for testing the logic
 and error handling in a ResourceFunction and for validating managed resources
