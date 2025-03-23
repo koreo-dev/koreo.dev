@@ -24,8 +24,9 @@ but effective means of performing computation for the purposes of structuring,
 transforming, or validating data. Not all implementations of CEL are the same.
 For instance, some execution environments may support certain functions while
 others do not. For this reason, and to avoid confusion, we refer to these
-expressions as _Koreo Expressions_. The documentation below is the definitive
-reference for Koreo Expressions CEL implementation.
+expressions as [_Koreo Expressions_](./overview/glossary.md#koreo-expression).
+The documentation below is the definitive reference for Koreo Expressions CEL
+implementation.
 
 ## Data Types
 
