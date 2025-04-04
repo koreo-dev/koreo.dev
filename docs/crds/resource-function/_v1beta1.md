@@ -195,6 +195,15 @@ Expressions with access to `inputs`, `locals`, and
         </td>
         <td>true</td>
       </tr><tr>
+        <td><b>deleteIfExists</b></td>
+        <td>boolean</td>
+        <td>
+          <br/>
+          <br/>
+            <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>namespace</b></td>
         <td>string</td>
         <td>
@@ -838,6 +847,8 @@ it will be recreated.
         <td>false</td>
       </tr></tbody>
 </table>
+
+### spec.update.patch
 
 If differences are found, patch the resource to correct
 the difference.

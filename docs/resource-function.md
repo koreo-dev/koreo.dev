@@ -137,6 +137,11 @@ when a resource needs checked for existence or values extracted from a resource
 which is managed by the user or another controller. This is referred to as a
 _read-only_ ResourceFunction in contrast to a _manager_ ResourceFunction.
 
+ResourceFunctions also support the ability to _delete_ resources rather than
+creating, updating, or reading them. Currently, this is supported with
+`apiConfig.deleteIfExists`. Setting `deleteIfExists` to `true` will cause the
+corresponding resource to be deleted any time it is found to be present.
+
 ## Inline Target Resource Specification
 
 For cases where only one "static" configuration is desired, an _inline_
