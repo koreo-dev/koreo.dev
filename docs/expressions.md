@@ -155,6 +155,7 @@ Expressions support.
 | `from_json(string)`                | Decodes a JSON string into a CEL value. Returns an error if JSON decoding fails.                                                                                                                 | `from_json(value)`               |
 | `b64encode(string)`                | Encodes a value into a Base64 string. Returns an error if Base64 encoding fails.                                                                                                                 | `b64encode(value)`               |
 | `b64decode(string)`                | Decodes a Base64-encoded string into its original value. Returns an error if Base64 decoding fails.                                                                                              | `b64decode(value)`               |
+| `replace(string, string, string)`  | Replace a string with a string on a string, equivalent to a Python string replace                                                                                                                | `replace(string, value, value)`  |
 
 ## Variables and Attributes
 
