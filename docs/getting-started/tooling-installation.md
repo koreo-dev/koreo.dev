@@ -7,19 +7,36 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Language Server
+Koreo Developer Tooling provides a language server and CLI. The language server
+is used by IDE integrations to facilitate the development and testing of Koreo
+resources. The CLI provides additional functionality for interacting with
+Koreo.
 
-First install the Koreo Core library and Language Server which is used by IDE
-integrations:
+## Installing Koreo Developer Tooling
+
+Koreo Developer Tooling can be installed with [pip](https://pypi.org/project/pip/).
+This will install both the language server and CLI:
 
 ```
-pip install -g koreo
+pip install koreo
 ```
 
-## VS Code
+:::note
+Koreo Developer Tooling requires a minimum of Python 3.13, meaning pip will not
+be able to locate the `koreo` package with versions older than this.
+:::
 
-After you have installed Koreo Core and the Language Server, using VS Code is
-as simple as installing the [koreo-ls extension](https://marketplace.visualstudio.com/items?itemName=RealKineticLLC.koreo-ls).
+## Installing IDE Integrations
+
+To actually use Koreo Developer Tooling's language server, you need an IDE
+integration that connects to it. Currently, Koreo provides integrations for VS
+Code, IntelliJ IDEA, and Vim/Neovim. See the steps below for installing the
+respective integrations.
+
+### VS Code
+
+After you have installed Koreo Developer Tooling, using VS Code is as simple as
+installing the [koreo-ls extension](https://marketplace.visualstudio.com/items?itemName=RealKineticLLC.koreo-ls).
 
 You can install the latest-published version of the Koreo Language Server VS
 Code extension directly from VS Code. Simply open the extensions panel and
@@ -30,7 +47,7 @@ override this by going to `Preferences → Settings → Koreo Language Server` o
 setting it in your settings.json file.
 
 
-## IntelliJ IDEA
+### IntelliJ IDEA
 
 Install [LSP4IJ](https://plugins.jetbrains.com/plugin/23257-lsp4ij) as a plugin
 into your IDE. 
@@ -43,9 +60,9 @@ From within the LSP4IJ plugin, add a new server:
 
 Adjust the koreo-ls entrypoint as needed.
 
-## Vim/Neovim
+### Vim/Neovim
 
-### CoC
+#### CoC
 
 Add the following to your Vim/Neovim configuration:
 
@@ -82,7 +99,7 @@ Next, add the following to your coc-settings.json:
 
 Ensure `command` points to the appropriate `koreo-ls` executable.
 
-### LSP
+#### LSP
 
 Add the following to your Neovim's init.lua:
 
