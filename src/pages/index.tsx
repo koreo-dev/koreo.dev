@@ -112,7 +112,7 @@ const spotlightItems: SpotlightItem[] = [
     description: (
       <>
         <p>
-          Compose Kubernetes resources that align with organizational standards and policies using <strong>configuration layers and pluggable logic</strong>. Provide developers with high-level platform abstractions, allowing them to focus on product development rather than infrastructure complexity. With Koreo, you can combine base templates, overlays, and custom functions to materialize resources. Pull configurations from different sources, apply business logic, and enforce consistency across environments. Automate complex provisioning workflows, ensure compliance, and quickly adapt to evolving infrastructure needs.
+          Compose Kubernetes resources that align with organizational standards and policies using <strong>configuration layers and pluggable logic</strong>. Provide developers with high-level platform abstractions, allowing them to focus on product development rather than infrastructure complexity. With Koreo, you can combine base templates, overlays, and custom functions to materialize resources. Pull configurations from different sources, apply business logic, and enforce consistency across environments.
         </p>
         <p>
           With Koreo's tooling and first-class testing support, working with Kubernetes configuration feels more like actual programming—<em>because it is</em>.
