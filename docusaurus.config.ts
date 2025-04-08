@@ -3,22 +3,6 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  plugins: [
-    async function webpackSourceMapsPlugin() {
-      return {
-        name: 'custom-webpack-source-maps',
-        configureWebpack(config, isServer) {
-          if (!isServer) {
-            return {
-              devtool: 'source-map',
-            };
-          }
-          return {};
-        },
-      };
-    },
-  ],
-
   title: 'Koreo',
   tagline: 'The platform engineering toolkit for Kubernetes',
   favicon: 'img/favicon.ico',
