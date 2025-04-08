@@ -156,7 +156,7 @@ Expressions with access to `inputs`, `locals`, and
         <td>
           Specify how differences should be resolved.<br/>
           <br/>
-            <i>Default</i>: map[patch:map[delay:30]]<br/>
+            <i>Default</i>: map[patch\:map[delay:30]]<br/>
         </td>
         <td>false</td>
       </tr></tbody>
