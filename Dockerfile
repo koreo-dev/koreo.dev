@@ -21,10 +21,9 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy built static files to Nginx serve directory
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=builder /app/build /app/build
 
-# Copy custom Nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port
 EXPOSE 8080
