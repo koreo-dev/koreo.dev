@@ -21,6 +21,9 @@ This will install both the language server and CLI:
 pip install koreo
 ```
 
+This will place `koreo-ls` and `koreo-inspector` executables in your system
+path.
+
 :::note
 Koreo Developer Tooling requires a minimum of Python 3.13, meaning pip will not
 be able to locate the `koreo` package with versions older than this.
