@@ -1,15 +1,16 @@
+import { ReactNode } from 'react';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import CodeCompareIcon from '@site/static/img/code-compare-light.svg';
 
-export default function Comparison({name, subtitle, content, imageSrc, additionalContent}): JSX.Element {
-  const Svg = require('@site/static/img/code-compare-light.svg').default;
+export default function Comparison({name, subtitle, content, imageSrc, additionalContent}): ReactNode {
   return (
     <section className={styles.backgroundContainer}>
       <div>
         <div className={styles.compareHero}>
           <div className={styles.compareInfo}>
             <Heading as="h3" className={styles.compareLabel}>
-              <Svg stroke="currentColor" fill="currentColor" className={styles.compareIcon} role="img"/>
+              <CodeCompareIcon stroke="currentColor" fill="currentColor" className={styles.compareIcon} role="img"/>
               <span className={styles.gradientText}>comparing</span>
             </Heading>
             <Heading as="h1" className={styles.compareName}>
