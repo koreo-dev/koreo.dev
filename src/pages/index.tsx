@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -57,16 +57,17 @@ const UseCasesList = () => {
 };
 
 export type SpotlightItem = {
-  header: JSX.Element,
-  subheader?: JSX.Element,
-  description: JSX.Element,
+  header: ReactNode,
+  subheader?: ReactNode,
+  description: ReactNode,
   imageSrc?: string,
+  imageAltText?: string,
 };
 
 export type TabbedSpotlightItem = {
-  header: JSX.Element,
-  subheader?: JSX.Element,
-  description: JSX.Element,
+  header: ReactNode,
+  subheader?: ReactNode,
+  description: ReactNode,
   imageSrcs: string[],
   imageTitles: string[]
 };
@@ -103,6 +104,7 @@ const spotlightItems: SpotlightItem[] = [
     </>
     ),
     imageSrc: "/img/home/koreo.png",
+    imageAltText: "Powerful configuration management",
   },
   {
     header: <>Dynamic resource materialization</>,
@@ -118,6 +120,7 @@ const spotlightItems: SpotlightItem[] = [
       </>
     ),
     imageSrc: "/img/home/hero.gif",
+    imageAltText: "Dynamic resource materialization",
   },
   {
     header: <>Automate. Abstract. Orchestrate.</>,
@@ -138,6 +141,7 @@ const spotlightItems: SpotlightItem[] = [
     </>
     ),
     imageSrc: "/img/home/real_kinetic_konfigurate.png",
+    imageAltText: "The team behind Koreo",
   },
 ];
 
@@ -163,7 +167,14 @@ function HomepageHeader() {
   );
 }
 
-export function Spotlight({ header, subheader, description, imageSrc, alt = false }) {
+export function Spotlight({
+  header,
+  subheader,
+  description,
+  imageSrc,
+  imageAltText,
+  alt = false,
+}: SpotlightItem & { alt?: boolean }) {
   return (
     <>
       <section className={styles.spotlight}>
@@ -174,7 +185,7 @@ export function Spotlight({ header, subheader, description, imageSrc, alt = fals
                 <>
                   <img
                     src={imageSrc}
-                    alt={header}
+                    alt={imageAltText}
                     className={styles.spotlightImage}
                   />
                   <div className={styles.spotlightInfo}>
@@ -196,7 +207,7 @@ export function Spotlight({ header, subheader, description, imageSrc, alt = fals
                   </div>
                   <img
                     src={imageSrc}
-                    alt={header}
+                    alt={imageAltText}
                     className={styles.spotlightImage}
                   />
                 </>
@@ -217,7 +228,14 @@ export function Spotlight({ header, subheader, description, imageSrc, alt = fals
   );
 }
 
-export function TabbedSpotlight({ header, subheader, description, imageSrcs, imageTitles, alt = false }) {
+export function TabbedSpotlight({
+  header,
+  subheader,
+  description,
+  imageSrcs,
+  imageTitles,
+  alt = false,
+}: TabbedSpotlightItem & { alt?: boolean }) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -285,7 +303,7 @@ export function TabbedSpotlight({ header, subheader, description, imageSrcs, ima
   ); 
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
