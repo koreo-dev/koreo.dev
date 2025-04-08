@@ -1,20 +1,33 @@
+# Build stage
 FROM node:18 AS builder
+
+# Set working directory
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+
+# Copy package files and install dependencies
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+    elif [ -f package-lock.json ]; then npm ci; \
+    elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+    else npm i; fi
+
+# Copy application code
 COPY . .
-RUN yarn build
 
-FROM node:18-alpine
-WORKDIR /app
+# Build the Docusaurus site
+RUN npm run build
 
-RUN yarn global add serve
+# Production stage with Nginx
+FROM nginx:alpine
 
-COPY --from=builder /app/build /app/build
+# Copy built static files to Nginx serve directory
+COPY --from=builder /app/build /usr/share/nginx/html
 
-ENV PORT=8080
+# Copy custom Nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Expose port
 EXPOSE 8080
 
-CMD ["serve", "-s", "build", "-l", "8080"]
-
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
