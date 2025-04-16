@@ -7,10 +7,10 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Koreo Developer Tooling provides a language server and CLI. The language server
-is used by IDE integrations to facilitate the development and testing of Koreo
-resources. The CLI provides additional functionality for interacting with
-Koreo.
+Koreo Developer Tooling provides a language server and [CLI](../koreo-cli.md).
+The language server is used by IDE integrations to facilitate the development
+and testing of Koreo resources. The CLI provides additional functionality for
+interacting with Koreo.
 
 ## Installing Koreo Developer Tooling
 
@@ -21,8 +21,8 @@ This will install both the language server and CLI:
 pip install koreo
 ```
 
-This will place `koreo-ls` and `koreo-inspector` executables in your system
-path.
+This will place `koreo-ls` and `koreo` executables in your system path. You can
+verify this by running `koreo -h`.
 
 :::note
 Koreo Developer Tooling requires a minimum of Python 3.13, meaning pip will not

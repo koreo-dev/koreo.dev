@@ -1,7 +1,7 @@
 ---
 id: koreo-ui
 title: Koreo UI
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 [Koreo UI](https://github.com/koreo-dev/koreo-ui) is a lightweight, read-only
