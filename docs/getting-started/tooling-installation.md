@@ -22,7 +22,8 @@ pip install koreo
 ```
 
 This will place `koreo-ls` and `koreo` executables in your system path. You can
-verify this by running `koreo -h`.
+verify this by running `koreo -h`. Refer to the [CLI documentation](../koreo-cli.md)
+for more information on using Koreo CLI.
 
 :::note
 Koreo Developer Tooling requires a minimum of Python 3.13, meaning pip will not
