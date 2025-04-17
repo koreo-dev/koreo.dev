@@ -61,7 +61,7 @@ The `--namespace` flag will apply the Koreo resources to the specified
 namespace, overriding any namespace in the .koreo.
 
 ```
-kubectl apply --namespace my-namespace .
+koreo apply --namespace my-namespace .
 ```
 
 ### koreo inspect
