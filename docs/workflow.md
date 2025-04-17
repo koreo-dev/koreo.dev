@@ -66,7 +66,7 @@ spec:
 We refer to the _instance_ of the `crdRef` resource which _triggers_ a
 Workflow as its "parent" or "trigger".
 
-:::warning
+:::warning[Workflow trigger kinds]
 Any resource kind can be used as a Workflow trigger, but take care when using
 resources controlled by another controller. Koreo applies updates to the
 resource's status and annotations which could result in a dangerous interaction
@@ -98,6 +98,13 @@ spec:
         int: =steps.config.int
   # ...
 ```
+
+:::warning[Multiple Workflows with the same trigger]
+A Koreo Controller does not allow multiple Workflows to trigger off the same
+`crdRef` resource because this can result in unpredictable behavior that is
+difficult to reason about. If you need multiple Workflows to act on a resource,
+use sub-Workflows instead.
+:::
 
 ## Defining the Logic
 
