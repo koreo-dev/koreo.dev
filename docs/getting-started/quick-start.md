@@ -339,6 +339,15 @@ This will trigger our `hello-koreo` Workflow to run, which will apply the
 kubectl get deployment nginx-deployment -o yaml
 ```
 
+Let's clean up the resources before moving on to the next example:
+
+```
+kubectl delete -f deployment.yaml
+kubectl delete -f hello-koreo.koreo
+kubectl delete -f set-deployment-labels.koreo
+kubectl delete -f get-labels.koreo
+```
+
 We've built a simple Workflow comprised of a ValueFunction and
 ResourceFunction. We also saw how we can unit test Functions with FunctionTest.
 In the next example, we'll build on this by creating a slightly more
@@ -725,6 +734,11 @@ We're now ready to apply our Workflow to the cluster:
 kubectl apply -f hello-service.koreo
 ```
 
+:::warning[Multiple Workflows with the same trigger]
+A Koreo Controller does not allow multiple Workflows to trigger off the same
+resource. Ensure you've cleaned up the previous hello-koreo example Workflow.
+:::
+
 ### Running the Workflow
 
 There are a couple cases we will try with our Workflow: a Deployment that
@@ -871,6 +885,16 @@ status:
 You'll note that the Service has an `ownerReferences` referencing the parent
 Deployment. This is because we did not set `owned: false` in the
 `service-factory` ResourceFunction.
+
+As before, let's clean up the resources before moving on to the final Quick
+Start example:
+
+```
+kubectl delete -f deployment-with-label.yaml
+kubectl delete -f hello-service.koreo
+kubectl delete -f service-factory.koreo
+kubectl delete -f get-service-config.koreo
+```
 
 This slightly more advanced Workflow has shown how we can orchestrate resource
 creation while also exploring some additional Koreo features. In the final
@@ -1562,6 +1586,19 @@ Workflow steps along with the Service's `clusterIP` in its `status`:
 
 ```
 kubectl get workload my-app -o yaml
+```
+
+You can run the following to clean up the resources from this example:
+
+```
+kubectl delete -f workload.yaml
+kubectl delete -f hello-workload.koreo
+kubectl delete -f service-factory-v2.koreo
+kubectl delete -f service-template.koreo
+kubectl delete -f deployment-factory.koreo
+kubectl delete -f get-deployment-config.koreo
+kubectl delete -f deployment-template.koreo
+kubectl delete -f workload-crd.yaml
 ```
 
 Well done for making it this far! You've now built your own custom workload
