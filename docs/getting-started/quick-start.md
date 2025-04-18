@@ -269,8 +269,8 @@ Workflow. While it's called `crdRef`, this can in fact be _any_ resource kind.
 Though conceptually the parent resource acts as a trigger, in practice a
 Workflow will run repeatedly as part of Kubernetes' reconciliation process.
 This is known as a _control loop_. By default, the reconcile process will run
-on create, update, and delete events pertaining to the parent resource.
-ResourceFunctions can [configure the behavior](../resource-function.md#flexible-update-handling)
+on create, update, and delete events pertaining to the parent resource as well
+as every 20 minutes. ResourceFunctions can further [configure the behavior](../resource-function.md#flexible-update-handling)
 for these different events.
 
 :::warning[Workflow triggers]

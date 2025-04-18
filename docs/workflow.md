@@ -42,6 +42,12 @@ interactions.
 
 ## Running a Workflow
 
+There are two ways a Workflow is run, either via a triggering resource
+(resulting from a CRUD event or reconcile loop) or as a sub-Workflow. We'll
+discuss both of these below.
+
+### Workflow Trigger
+
 A Workflow may be _externally_ triggered to run, and have its _configuration_
 provided by a resource specified using [`crdRef`](#speccrdref).
 This resource serves to provide the Workflow's configuration and the Workflow
@@ -76,6 +82,22 @@ you are doing. [Koreo Tooling](./getting-started/tooling-installation.md)
 provides a tool to generate a CRD from a Workflow.
 :::
 
+A Workflow will run repeatedly as part of Kubernetes' reconciliation process.
+This is known as a _control loop_. It's important to keep this in mind when
+designing Workflows. By default, the reconcile process will run on create,
+update, and delete events pertaining to the parent resource as well as every 20
+minutes. This interval can be configured on the controller if more frequent or
+less frequent reconciles is desired.
+
+:::warning[Multiple Workflows with the same trigger]
+A Koreo Controller does not allow multiple Workflows to trigger off the same
+`crdRef` resource because this can result in unpredictable behavior that is
+difficult to reason about. If you need multiple Workflows to act on a resource,
+use sub-Workflows instead.
+:::
+
+### Sub-Workflows
+
 Additionally, a Workflow can be triggered by _another_ Workflow as a
 sub-Workflow. This is done by specifying a
 [`ref`](#specstepsindexref) with `kind: Workflow` on a step in the parent
@@ -98,13 +120,6 @@ spec:
         int: =steps.config.int
   # ...
 ```
-
-:::warning[Multiple Workflows with the same trigger]
-A Koreo Controller does not allow multiple Workflows to trigger off the same
-`crdRef` resource because this can result in unpredictable behavior that is
-difficult to reason about. If you need multiple Workflows to act on a resource,
-use sub-Workflows instead.
-:::
 
 ## Defining the Logic
 
