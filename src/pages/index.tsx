@@ -99,7 +99,7 @@ const spotlightItems: SpotlightItem[] = [
         Koreo is a platform engineering toolkit that introduces a new approach to configuration management and resource orchestration in Kubernetes. It builds upon the best aspects of tools like Helm, Kustomize, Argo, Crossplane, and kro while addressing some of their limitations.
       </p>
       <p>
-      <strong>It serves as a meta-controller programming language and runtime</strong> that allows you to compose off-the-shelf operators into cohesive platforms by orchestrating Kubernetes controllers. Through powerful primitives, Koreo enables DevOps and platform engineers to create dynamic workflows that automate everything from simple deployments to entire internal developer platforms. Its layered configuration management enables teams like security, compliance, or SRE to enforce consistent standards and practices for resources within your organization.
+      <strong>It serves as a meta-controller programming language and runtime</strong> that allows you to compose off-the-shelf operators into cohesive platforms by orchestrating Kubernetes controllers. Connect any resource by mapping the outputs of one to the inputs of another. Through powerful primitives, Koreo enables DevOps and platform engineers to create dynamic workflows that automate everything from simple deployments to entire internal developer platforms. Its layered configuration management enables teams like security, compliance, or SRE to enforce consistent standards and practices for resources within your organization.
       </p>
     </>
     ),
