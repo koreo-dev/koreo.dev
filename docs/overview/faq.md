@@ -43,17 +43,19 @@ Koreo was born out of the need to effectively configure and manage modern,
 dynamic cloud infrastructure, particularly the challenges associated with
 scalable, ephemeral, serverless systems. Traditional Infrastructure as Code
 (IaC) tools often struggle with the dynamic nature of these environments. While
-tools like Crossplane offer an evolution of IaC that is controller-based, they
-introduce their own complexities and limitations. For example, requiring
-resources to be cluster-scoped rather than namespaced or requiring
-infrastructure to live in the same cloud project or account as the control
-plane itself. Furthermore, tools like Helm and Kustomize, while useful for
-simpler configurations, become unwieldy when dealing with the complexity of
-modern Kubernetes deployments, going beyond simple value substitution or static
-patching. Koreo aims to provide a more robust, programmable, and scalable
-solution for these modern infrastructure challenges. It is the engine that
-powers [Konfigurate](https://konfigurate.com), a batteries-included developer
-platform for startups and scaleups.
+tools like Crossplane and kro offer an evolution of IaC that is
+controller-based, they introduce their own complexities and limitations.
+Crossplane, for example, requires resources to be cluster-scoped rather than
+namespaced and for infrastructure to live in the same cloud project or account
+as the control plane itself. kro provides a compelling alternative to Helm but
+is really centered around the packaging of static sets of resources rather than
+providing a flexible orchestration engine. Furthermore, tools like Helm and
+Kustomize, while useful for simpler configurations, become unwieldy when
+dealing with the complexity of modern Kubernetes deployments, going beyond
+simple value substitution or static patching. Koreo aims to provide a more
+robust, programmable, and scalable solution for these modern infrastructure
+challenges. It is the engine that powers [Konfigurate](https://konfigurate.com),
+a batteries-included developer platform for startups and scaleups.
 
 Read [Background and Why](./overview.md#background-and-why) for more on the
 motivation behind Koreo.
@@ -71,15 +73,17 @@ planes, or automations. It empowers them to create self-service platforms for
 developers, automate complex infrastructure operations, and enforce
 organizational policies.
 
-## How does it compare to Helm/Kustomize/Argo Workflows/Crossplane?
+## How does it compare to...?
 
-In short, Koreo builds on some of the strengths of these tools while addressing
-their limitations. It provides a more unified and programmable approach to
-Kubernetes platform engineering, including advanced workflow orchestration,
-dynamic resource materialization, and built-in testing. Note that some of these
-tools can be used in combination and are not mutually exclusive. For instance,
-Koreo could be used in conjunction with Helm or Kustomize. Similarly, it could
-be used to manage the configuration for Argo or Crossplane resources.
+Koreo shares some similarities with tools like Helm, Kustomize, Argo Workflows,
+Crossplane, and kro. In short, Koreo builds on some of the strengths of these
+tools while addressing their limitations. It provides a more unified and
+programmable approach to Kubernetes platform engineering, including advanced
+workflow orchestration, dynamic resource materialization, and built-in testing.
+Note that some of these tools can be used in combination and are not mutually
+exclusive. For instance, Koreo could be used in conjunction with Helm or
+Kustomize. Similarly, it could be used to manage the configuration for Argo or
+Crossplane resources.
 
 For more on each, see the comparison pages:
 
@@ -87,6 +91,7 @@ For more on each, see the comparison pages:
 - [Comparing Kustomize](/compare/kustomize)
 - [Comparing Argo Workflows](/compare/argo)
 - [Comparing Crossplane](/compare/crossplane)
+- [Comparing kro](/compare/kro)
 
 ## What is the learning curve?
 
