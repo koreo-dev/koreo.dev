@@ -19,7 +19,7 @@ const featureList: FeatureItem[] = [
     Svg: require('@site/static/img/file-lines-thin.svg').default,
     description: (
       <>
-        Manage Kubernetes configurations the way they were intended—as structured data, not just templated strings. This allows you to easily validate, transform, and combine configurations from multiple sources in a manageable and scalable way.
+        Manage Kubernetes configurations the way they were intended—as structured data, not just templated strings. This allows you to easily validate, transform, and combine configurations from multiple sources in a manageable and scalable way. Connect any resource by mapping the outputs of one to the inputs of another.
       </>
     ),
   },
