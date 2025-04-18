@@ -104,6 +104,10 @@ const config: Config = {
               label: 'Crossplane',
               to: '/compare/crossplane',
             },
+            {
+              label: 'kro',
+              to: '/compare/kro',
+            },
           ]
         },
         {
@@ -180,6 +184,10 @@ const config: Config = {
             {
               label: 'Crossplane',
               href: '/compare/crossplane',
+            },
+            {
+              label: 'kro',
+              href: '/compare/kro',
             },
           ]
         },
