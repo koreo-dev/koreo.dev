@@ -64,6 +64,14 @@ namespace, overriding any namespace in the .koreo.
 koreo apply --namespace my-namespace .
 ```
 
+### koreo prune
+
+`koreo prune` cleans up unused / unreferenced ValueFunctions and 
+ResourceFunctions. Providing the `--dry-run` or `-d` flag, the command will 
+list which resources it would delete. The `--namespace`
+or `-n` flag specifies the namespace to prune, otherwise all namespaces will 
+be pruned.
+
 ### koreo inspect
 
 _coming soon_
