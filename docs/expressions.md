@@ -120,15 +120,15 @@ implementation.
 
 CEL provides built-in **macros** for reducing boilerplate expressions:
 
-| Macro                           | Description                                                                              | Example                                      |
-|---------------------------------|------------------------------------------------------------------------------------------|----------------------------------------------|
-| `has(field)`                    | Checks if a field exists                                                                 | `has(resource.owner)`                        |
-| `all(list, x, cond)`            | Returns `true` if all elements match a condition                                         | `[1, 2, 3].all(x, x > 0)`                    |
-| `exists(list, x, cond)`         | Returns `true` if any element matches a condition                                        | `[1, 2, 3].exists(x, x == 2)`                |
-| `exists_one(list, x, cond)`     | Returns `true` if exactly one element matches a condition                                | `[1, 2, 3].exists_one(x, x == 2)`            |
-| `filter(list, x, cond)`         | Returns a list of elements matching a condition                                          | `[1, 2, 3, 4].filter(x, x > 2)`              |
-| `map(list, x, expr)`            | Transforms list elements using an expression                                             | `[1, 2, 3].map(x, x * 2)`                    |
-| `reduce(list, acc, x, op_expr)` | Iterates over list, applying expr to accumulate a value acc (initial accumulator value). | `[1, 2, 3, 4].reduce(0, x, acc + x)` -> `10` |
+| Macro                                     | Description                                                                                      | Example                                           |
+|-------------------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------|
+| `has(field)`                              | Checks if a field exists                                                                         | `has(resource.owner)`                             |
+| `all(list, x, cond)`                      | Returns `true` if all elements match a condition                                                 | `[1, 2, 3].all(x, x > 0)`                         |
+| `exists(list, x, cond)`                   | Returns `true` if any element matches a condition                                                | `[1, 2, 3].exists(x, x == 2)`                     |
+| `exists_one(list, x, cond)`               | Returns `true` if exactly one element matches a condition                                        | `[1, 2, 3].exists_one(x, x == 2)`                 |
+| `filter(list, x, cond)`                   | Returns a list of elements matching a condition                                                  | `[1, 2, 3, 4].filter(x, x > 2)`                   |
+| `map(list, x, expr)`                      | Transforms list elements using an expression                                                     | `[1, 2, 3].map(x, x * 2)`                         |
+| `reduce(list, acc, x, init_acc, op_expr)` | Iterates over list, applying `op_expr` to accumulate a value `acc` (initially set to `init_acc`) | `[1, 2, 3, 4].reduce(acc, x, 0, acc + x)` -> `10` |
 
 ### Extensions
 
