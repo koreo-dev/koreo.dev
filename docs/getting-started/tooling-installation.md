@@ -64,7 +64,36 @@ From within the LSP4IJ plugin, add a new server:
 
 Adjust the koreo-ls entrypoint as needed.
 
-### NeoVim Lua LSPConfig via LazyDev
+### Coc
+
+Vim Script
+``` vim
+augroup koreo_filetypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.k,*.koreo,*.k.yaml,*.k.yml setfiletype koreo
+augroup END
+
+augroup koreo_filetype_settings
+  autocmd!
+  autocmd FileType koreo setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 autoindent smartindent
+augroup END
+```
+
+coc-settings.json
+``` json
+{
+  "languageserver": {
+    "koreo": {
+      "command": "koreo-ls",
+      "filetypes": ["koreo"],
+      "rootPatterns": [".git", "."],
+      "trace.server": "verbose"
+    }
+  }
+}
+```
+
+### NeoVim Lua LSPConfig via Lazy
 
 Add the following to your Neovim's plugins dir e.g. ~/.config/nvim/lua/plugins/koreo-ls.lua
 and add `require 'plugins.koreo-ls'` to your init.lua file.
