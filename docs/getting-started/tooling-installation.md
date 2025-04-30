@@ -66,32 +66,44 @@ Adjust the koreo-ls entrypoint as needed.
 
 ### Coc
 
-Vim Script
-``` vim
+Add the following to your Vim/Neovim configuration:
+
+<Tabs>
+  <TabItem value="vimscript" label="Vimscript" default>
+```
 augroup koreo_filetypes
   autocmd!
   autocmd BufRead,BufNewFile *.k,*.koreo,*.k.yaml,*.k.yml setfiletype koreo
 augroup END
-
 augroup koreo_filetype_settings
   autocmd!
   autocmd FileType koreo setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 autoindent smartindent
 augroup END
 ```
+  </TabItem>
+  <TabItem value="lua" label="Lua">
+``` lua
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = { "*.k", "*.koreo", "*.k.yaml", "*.k.yml" },
+  command = "set filetype=koreo",
+})
+```
+  </TabItem>
+</Tabs>
 
-coc-settings.json
-``` json
-{
-  "languageserver": {
-    "koreo": {
-      "command": "koreo-ls",
-      "filetypes": ["koreo"],
-      "rootPatterns": [".git", "."],
-      "trace.server": "verbose"
+Next, add the following to your coc-settings.json:
+
+```json
+"languageserver": {
+  "koreo-ls": {
+    "command": "koreo-ls",
+    "filetypes": ["koreo"],
+    "root_dir": ["*.git"],
+    "settings": {
+      "semanticTokens.filetypes": ["*"]
     }
   }
 }
-```
 
 ### NeoVim Lua LSPConfig via Lazy
 
