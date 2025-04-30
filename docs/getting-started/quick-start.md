@@ -104,7 +104,7 @@ Congratulations, you've written your first Koreo ValueFunction and
 FunctionTest! Go ahead and apply it to the cluster:
 
 ```
-kubectl apply -f get-labels.koreo
+kubectl apply -f get-labels.k.yaml
 ```
 
 Unfortunately, on its own this Function does nothing, but in a
@@ -218,7 +218,7 @@ labels are present.
 Apply `set-deployment-labels` to the cluster:
 
 ```
-kubectl apply -f set-deployment-labels.koreo
+kubectl apply -f set-deployment-labels.k.yaml
 ```
 
 Our ResourceFunction is now ready to be used.
@@ -289,7 +289,7 @@ resource's metadata and the `labels` from the previous step's output.
 That's it. Now we can deploy our Workflow and test it out.
 
 ```
-kubectl apply -f hello-koreo.koreo
+kubectl apply -f hello-koreo.k.yaml
 ```
 
 In the [Koreo UI](../koreo-ui.md), this Workflow looks like the following:
@@ -518,7 +518,7 @@ changing a precondition predicate and see how the test breaks.
 Let's apply `get-service-config` to the cluster:
 
 ```
-kubectl apply -f get-service-config.koreo
+kubectl apply -f get-service-config.k.yaml
 ```
 
 ### Creating the Service
@@ -656,7 +656,7 @@ returned when the business rules are violated.
 Let's apply `service-factory` to the cluster:
 
 ```
-kubectl apply -f service-factory.koreo
+kubectl apply -f service-factory.k.yaml
 ```
 
 ### Building the Workflow
@@ -731,7 +731,7 @@ they manage.
 We're now ready to apply our Workflow to the cluster:
 
 ```
-kubectl apply -f hello-service.koreo
+kubectl apply -f hello-service.k.yaml
 ```
 
 :::warning[Multiple Workflows with the same trigger]
@@ -1043,7 +1043,7 @@ in a bit how this gets used to materialize a Deployment.
 Apply the `deployment-template` to the cluster:
 
 ```
-kubectl apply -f deployment-template.koreo
+kubectl apply -f deployment-template.k.yaml
 ```
 
 ### ValueFunctions as Overlays
@@ -1107,7 +1107,7 @@ resource configurations into small, reusable components.
 Apply `get-deployment-config` to the cluster:
 
 ```
-kubectl apply -f get-deployment-config.koreo
+kubectl apply -f get-deployment-config.k.yaml
 ```
 
 Next, we'll see how the ResourceTemplate and overlay are used in a
@@ -1291,7 +1291,7 @@ to apply _layers_ of configuration to a resource based on business logic.
 Let's apply the ResourceFunction to the cluster:
 
 ```
-kubectl apply -f deployment-factory.koreo
+kubectl apply -f deployment-factory.k.yaml
 ```
 
 ### Service ResourceTemplate
@@ -1326,7 +1326,7 @@ spec:
 Deploy the ResourceTemplate:
 
 ```
-kubectl apply -f service-template.koreo
+kubectl apply -f service-template.k.yaml
 ```
 
 ### Materializing the Service
@@ -1463,7 +1463,7 @@ returned from the Function with `expectReturn`.
 Go ahead and apply `service-factory.v2` to the cluster:
 
 ```
-kubectl apply -f service-factory-v2.koreo
+kubectl apply -f service-factory-v2.k.yaml
 ```
 
 ### Building the Workflow
@@ -1533,7 +1533,7 @@ returned `clusterIP` from the Service on the parent Workload.
 Let's apply the Workflow and then test it out:
 
 ```
-kubectl apply -f hello-workload.koreo
+kubectl apply -f hello-workload.k.yaml
 ```
 
 The Workflow will look like the following:
