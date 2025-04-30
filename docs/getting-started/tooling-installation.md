@@ -46,7 +46,7 @@ You can install the latest-published version of the Koreo Language Server VS
 Code extension directly from VS Code. Simply open the extensions panel and
 search for “koreo-ls”.
 
-It will assume your language server is at `koreo-ls`. You can
+It will assume the `koreo-ls` language server executable is in your system path. You can
 override this by going to `Preferences → Settings → Koreo Language Server` or
 setting it in your settings.json file.
 
@@ -113,27 +113,27 @@ return {
 ### NeoVim LSPConfig via VimScript
 
 ``` vim
-  " Ensure filetype is detected for .k, .koreo, .k.yaml, .k.yml
-  augroup koreo_filetype
-    autocmd!
-    autocmd BufRead,BufNewFile *.k,*.koreo,*.k.yaml,*.k.yml set filetype=koreo
-  augroup END
+" Ensure filetype is detected for .k, .koreo, .k.yaml, .k.yml
+augroup koreo_filetype
+  autocmd!
+  autocmd BufRead,BufNewFile *.k,*.koreo,*.k.yaml,*.k.yml set filetype=koreo
+augroup END
 
-  " Use Lua to define the koreo_ls language server in lspconfig
-  lua << EOF
-    local lspconfig = require("lspconfig")
-    local configs = require("lspconfig.configs")
+" Use Lua to define the koreo_ls language server in lspconfig
+lua << EOF
+  local lspconfig = require("lspconfig")
+  local configs = require("lspconfig.configs")
 
-    if not configs.koreo_ls then
-      configs.koreo_ls = {
-        default_config = {
-          cmd = { "koreo-ls" },
-          filetypes = { "koreo" },
-          root_dir = lspconfig.util.root_pattern(".git"),
-        },
-      }
-    end
+  if not configs.koreo_ls then
+    configs.koreo_ls = {
+      default_config = {
+        cmd = { "koreo-ls" },
+        filetypes = { "koreo" },
+        root_dir = lspconfig.util.root_pattern(".git"),
+      },
+    }
+  end
 
-    lspconfig.koreo_ls.setup({})
-  EOF
+  lspconfig.koreo_ls.setup({})
+EOF
 ```
