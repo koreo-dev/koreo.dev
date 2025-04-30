@@ -46,7 +46,7 @@ You can install the latest-published version of the Koreo Language Server VS
 Code extension directly from VS Code. Simply open the extensions panel and
 search for “koreo-ls”.
 
-It will assume your language server is at `/usr/local/bin/koreo-ls`. You can
+It will assume your language server is at `koreo-ls`. You can
 override this by going to `Preferences → Settings → Koreo Language Server` or
 setting it in your settings.json file.
 
@@ -64,53 +64,17 @@ From within the LSP4IJ plugin, add a new server:
 
 Adjust the koreo-ls entrypoint as needed.
 
-### Vim/Neovim
-
-#### CoC
-
-Add the following to your Vim/Neovim configuration:
-
-<Tabs>
-  <TabItem value="vimscript" label="Vimscript" default>
-```
-autocmd BufNewFile,BufRead *.koreo set filetype=koreo
-```
-  </TabItem>
-  <TabItem value="lua" label="Lua">
-```lua
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.koreo",
-  command = "set filetype=koreo",
-})
-```
-  </TabItem>
-</Tabs>
-
-Next, add the following to your coc-settings.json:
-
-```json
-"languageserver": {
-  "koreo-ls": {
-    "command": "koreo-ls",
-    "filetypes": ["koreo"],
-    "root_dir": ["*.git"],
-    "settings": {
-      "semanticTokens.filetypes": ["*"]
-    }
-  }
-}
-```
-
-Ensure `command` points to the appropriate `koreo-ls` executable.
-
-#### LSP
+### NeoVim Lua LSP
 
 Add the following to your Neovim's init.lua:
 
 ```lua
 vim.filetype.add {
   extension = {
+    k = 'koreo',
     koreo = 'koreo',
+    ['k.yaml'] = 'koreo',
+    ['k.yml'] = 'koreo',
   },
 }
 
@@ -125,14 +89,14 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.smartindent = true
     vim.lsp.start {
       name = 'koreo_ls',
-      cmd = { 'koreo-ls' }, -- Ensure this command is correct and accessible
+      cmd = { 'koreo-ls' },
       root_dir = vim.fn.getcwd(),
     }
   end,
 })
 
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*.koreo',
+  pattern = { '*.k', '*.koreo', '*.k.yaml', '*.k.yml' },
   callback = function()
     local clients = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf() }
     for _, client in ipairs(clients) do

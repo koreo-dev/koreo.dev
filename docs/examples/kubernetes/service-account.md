@@ -16,7 +16,7 @@ associated resources in a single .koreo file.
 ## deployment-service-account.v1 Workflow
 
 <Tabs>
-  <TabItem value="k8s-sa" label="k8s-sa.koreo" default>
+  <TabItem value="k8s-sa" label="k8s-sa.k.yaml" default>
 ```yaml
 apiVersion: v1
 kind: Namespace

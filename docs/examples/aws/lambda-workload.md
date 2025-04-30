@@ -19,7 +19,7 @@ in GitHub for complete instructions for running this example.
 ## hello-lambda-workload Workflow
 
 <Tabs>
-  <TabItem value="hello-workload" label="hello-workload.koreo" default>
+  <TabItem value="hello-workload" label="hello-workload.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -148,7 +148,7 @@ spec:
 ## calculate-bucket-name ValueFunction
 
 <Tabs>
-  <TabItem value="calculate-bucket-name" label="calculate-bucket-name.koreo" default>
+  <TabItem value="calculate-bucket-name" label="calculate-bucket-name.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -203,7 +203,7 @@ spec:
 ## bucket-factory ResourceFunction
 
 <Tabs>
-  <TabItem value="bucket-factory" label="bucket-factory.koreo" default>
+  <TabItem value="bucket-factory" label="bucket-factory.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -276,7 +276,7 @@ spec:
 ## bucket-policy ResourceFunction
 
 <Tabs>
-  <TabItem value="bucket-policy" label="bucket-policy.koreo" default>
+  <TabItem value="bucket-policy" label="bucket-policy.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -380,7 +380,7 @@ spec:
 ## lambda-role ResourceFunction
 
 <Tabs>
-  <TabItem value="lambda-role" label="lambda-role.koreo" default>
+  <TabItem value="lambda-role" label="lambda-role.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -469,7 +469,7 @@ spec:
 ## lambda ResourceFunction
 
 <Tabs>
-  <TabItem value="lambda" label="lambda.koreo" default>
+  <TabItem value="lambda" label="lambda.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction

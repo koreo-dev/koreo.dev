@@ -15,7 +15,7 @@ Workload CRD.
 ## hello-workload Workflow
 
 <Tabs>
-  <TabItem value="hello-workload" label="hello-workload.koreo" default>
+  <TabItem value="hello-workload" label="hello-workload.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -106,7 +106,7 @@ spec:
 ## deployment-factory ResourceFunction
 
 <Tabs>
-  <TabItem value="deployment-factory" label="deployment-factory.koreo" default>
+  <TabItem value="deployment-factory" label="deployment-factory.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -261,7 +261,7 @@ spec:
 ## deployment-template ResourceTemplate
 
 <Tabs>
-  <TabItem value="deployment-template" label="deployment-template.koreo" default>
+  <TabItem value="deployment-template" label="deployment-template.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceTemplate
@@ -293,7 +293,7 @@ spec:
 ## get-deployment-config ValueFunction
 
 <Tabs>
-  <TabItem value="get-deployment-config" label="get-deployment-config.koreo" default>
+  <TabItem value="get-deployment-config" label="get-deployment-config.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -338,7 +338,7 @@ spec:
 ## service-factory.v2 ResourceFunction
 
 <Tabs>
-  <TabItem value="service-factory-v2" label="service-factory-v2.koreo" default>
+  <TabItem value="service-factory-v2" label="service-factory-v2.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -436,7 +436,7 @@ spec:
 ## service-template ResourceTemplate
 
 <Tabs>
-  <TabItem value="service-template" label="service-template.koreo" default>
+  <TabItem value="service-template" label="service-template.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceTemplate
