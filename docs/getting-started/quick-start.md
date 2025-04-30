@@ -22,6 +22,14 @@ Before we begin, ensure you have followed the installation instructions for the
 Koreo [Controller](./controller-installation.md) and
 [Tooling](./tooling-installation.md).
 
+:::tip[Koreo files]
+The Koreo Syntax is not much more than YAML + CEL. The tooling supports a number
+of file suffixes including `.k`, `.koreo`, `.k.yaml`, and `k.yml`. We recommend
+using the latter two as it may provide more useful when viewing the code in your
+Source Code site like GitHub or Gitlab, until we can grow the language and get
+the `.k` suffix working more widely.
+:::
+
 ## Hello Koreo
 
 We will build a Workflow that will do a very simple task: "stamp" every
