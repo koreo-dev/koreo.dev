@@ -343,9 +343,9 @@ Let's clean up the resources before moving on to the next example:
 
 ```
 kubectl delete -f deployment.yaml
-kubectl delete -f hello-koreo.koreo
-kubectl delete -f set-deployment-labels.koreo
-kubectl delete -f get-labels.koreo
+kubectl delete -f hello-koreo.k.yaml
+kubectl delete -f set-deployment-labels.k.yaml
+kubectl delete -f get-labels.k.yaml
 ```
 
 We've built a simple Workflow comprised of a ValueFunction and
@@ -891,9 +891,9 @@ Start example:
 
 ```
 kubectl delete -f deployment-with-label.yaml
-kubectl delete -f hello-service.koreo
-kubectl delete -f service-factory.koreo
-kubectl delete -f get-service-config.koreo
+kubectl delete -f hello-service.k.yaml
+kubectl delete -f service-factory.k.yaml
+kubectl delete -f get-service-config.k.yaml
 ```
 
 This slightly more advanced Workflow has shown how we can orchestrate resource
@@ -1592,12 +1592,12 @@ You can run the following to clean up the resources from this example:
 
 ```
 kubectl delete -f workload.yaml
-kubectl delete -f hello-workload.koreo
-kubectl delete -f service-factory-v2.koreo
-kubectl delete -f service-template.koreo
-kubectl delete -f deployment-factory.koreo
-kubectl delete -f get-deployment-config.koreo
-kubectl delete -f deployment-template.koreo
+kubectl delete -f hello-workload.k.yaml
+kubectl delete -f service-factory-v2.k.yaml
+kubectl delete -f service-template.k.yaml
+kubectl delete -f deployment-factory.k.yaml
+kubectl delete -f get-deployment-config.k.yaml
+kubectl delete -f deployment-template.k.yaml
 kubectl delete -f workload-crd.yaml
 ```
 
