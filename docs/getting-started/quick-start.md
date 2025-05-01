@@ -22,6 +22,14 @@ Before we begin, ensure you have followed the installation instructions for the
 Koreo [Controller](./controller-installation.md) and
 [Tooling](./tooling-installation.md).
 
+:::tip[Koreo files]
+The Koreo Syntax is not much more than YAML + CEL. The tooling supports a number
+of file suffixes including `.k`, `.koreo`, `.k.yaml`, and `.k.yml`. We recommend
+using the latter two as it may prove more useful when viewing the code in your
+Source Code site like GitHub or Gitlab, until we can grow the language and get
+the `.k` suffix supported more widely.
+:::
+
 ## Hello Koreo
 
 We will build a Workflow that will do a very simple task: "stamp" every
@@ -38,7 +46,7 @@ metadata. We'll also include an accompanying FunctionTest that validates the
 expected behavior.
 
 <Tabs>
-  <TabItem value="get-labels" label="get-labels.koreo" default>
+  <TabItem value="get-labels" label="get-labels.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -50,7 +58,7 @@ spec:
       hello: =inputs.name
 ```
   </TabItem>
-  <TabItem value="get-labels-test" label="get-labels-test.koreo">
+  <TabItem value="get-labels-test" label="get-labels-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -104,7 +112,7 @@ Congratulations, you've written your first Koreo ValueFunction and
 FunctionTest! Go ahead and apply it to the cluster:
 
 ```
-kubectl apply -f get-labels.koreo
+kubectl apply -f get-labels.k.yaml
 ```
 
 Unfortunately, on its own this Function does nothing, but in a
@@ -119,7 +127,7 @@ ResourceFunctions provide a way to interact with Kubernetes APIs by interfacing
 with resources. In our case, we will be patching existing Deployment resources.
 
 <Tabs>
-  <TabItem value="set-deployment-labels" label="set-deployment-labels.koreo" default>
+  <TabItem value="set-deployment-labels" label="set-deployment-labels.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -141,7 +149,7 @@ spec:
     enabled: false
 ```
   </TabItem>
-  <TabItem value="set-deployment-labels-test" label="set-deployment-labels-test.koreo">
+  <TabItem value="set-deployment-labels-test" label="set-deployment-labels-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -218,7 +226,7 @@ labels are present.
 Apply `set-deployment-labels` to the cluster:
 
 ```
-kubectl apply -f set-deployment-labels.koreo
+kubectl apply -f set-deployment-labels.k.yaml
 ```
 
 Our ResourceFunction is now ready to be used.
@@ -233,7 +241,7 @@ Deployment, compute a label to be applied, and update the Deployment with the
 new label.
 
 <Tabs>
-  <TabItem value="hello-koreo" label="hello-koreo.koreo" default>
+  <TabItem value="hello-koreo" label="hello-koreo.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -289,7 +297,7 @@ resource's metadata and the `labels` from the previous step's output.
 That's it. Now we can deploy our Workflow and test it out.
 
 ```
-kubectl apply -f hello-koreo.koreo
+kubectl apply -f hello-koreo.k.yaml
 ```
 
 In the [Koreo UI](../koreo-ui.md), this Workflow looks like the following:
@@ -343,9 +351,9 @@ Let's clean up the resources before moving on to the next example:
 
 ```
 kubectl delete -f deployment.yaml
-kubectl delete -f hello-koreo.koreo
-kubectl delete -f set-deployment-labels.koreo
-kubectl delete -f get-labels.koreo
+kubectl delete -f hello-koreo.k.yaml
+kubectl delete -f set-deployment-labels.k.yaml
+kubectl delete -f get-labels.k.yaml
 ```
 
 We've built a simple Workflow comprised of a ValueFunction and
@@ -382,7 +390,7 @@ Additionally, the `get-service-config` Function will validate several
 preconditions. As before, we've also included an accompanying FunctionTest.
 
 <Tabs>
-  <TabItem value="get-service-config" label="get-service-config.koreo" default>
+  <TabItem value="get-service-config" label="get-service-config.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -411,7 +419,7 @@ spec:
     targetPort: =inputs.spec.template.spec.containers[0].ports[0].containerPort
 ```
   </TabItem>
-  <TabItem value="get-service-config-test" label="get-service-config-test.koreo">
+  <TabItem value="get-service-config-test" label="get-service-config-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -518,7 +526,7 @@ changing a precondition predicate and see how the test breaks.
 Let's apply `get-service-config` to the cluster:
 
 ```
-kubectl apply -f get-service-config.koreo
+kubectl apply -f get-service-config.k.yaml
 ```
 
 ### Creating the Service
@@ -528,7 +536,7 @@ configure a Service for the Deployment. Now let's write the ResourceFunction
 that actually creates the Service.
 
 <Tabs>
-  <TabItem value="service-factory" label="service-factory.koreo" default>
+  <TabItem value="service-factory" label="service-factory.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -564,7 +572,7 @@ spec:
       type: ClusterIP
 ```
   </TabItem>
-  <TabItem value="service-factory-test" label="service-factory-test.koreo">
+  <TabItem value="service-factory-test" label="service-factory-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -656,7 +664,7 @@ returned when the business rules are violated.
 Let's apply `service-factory` to the cluster:
 
 ```
-kubectl apply -f service-factory.koreo
+kubectl apply -f service-factory.k.yaml
 ```
 
 ### Building the Workflow
@@ -668,7 +676,7 @@ _Unlike_ the previous example, we will only act on Deployments that have a
 specific `service` label.
 
 <Tabs>
-  <TabItem value="hello-service" label="hello-service.koreo" default>
+  <TabItem value="hello-service" label="hello-service.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -731,7 +739,7 @@ they manage.
 We're now ready to apply our Workflow to the cluster:
 
 ```
-kubectl apply -f hello-service.koreo
+kubectl apply -f hello-service.k.yaml
 ```
 
 :::warning[Multiple Workflows with the same trigger]
@@ -891,9 +899,9 @@ Start example:
 
 ```
 kubectl delete -f deployment-with-label.yaml
-kubectl delete -f hello-service.koreo
-kubectl delete -f service-factory.koreo
-kubectl delete -f get-service-config.koreo
+kubectl delete -f hello-service.k.yaml
+kubectl delete -f service-factory.k.yaml
+kubectl delete -f get-service-config.k.yaml
 ```
 
 This slightly more advanced Workflow has shown how we can orchestrate resource
@@ -1007,7 +1015,7 @@ We'll start by implementing a ResourceTemplate that specifies the base
 configuration for our Workload Deployments.
 
 <Tabs>
-  <TabItem value="deployment-template" label="deployment-template.koreo" default>
+  <TabItem value="deployment-template" label="deployment-template.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceTemplate
@@ -1043,7 +1051,7 @@ in a bit how this gets used to materialize a Deployment.
 Apply the `deployment-template` to the cluster:
 
 ```
-kubectl apply -f deployment-template.koreo
+kubectl apply -f deployment-template.k.yaml
 ```
 
 ### ValueFunctions as Overlays
@@ -1053,7 +1061,7 @@ configuration to the Deployment based on the Workload's environment. This will
 be _overlaid_ on top of the configuration from the `deployment-template`.
 
 <Tabs>
-  <TabItem value="get-deployment-config" label="get-deployment-config.koreo" default>
+  <TabItem value="get-deployment-config" label="get-deployment-config.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -1068,7 +1076,7 @@ spec:
       replicas: =locals.replicas
 ```
   </TabItem>
-  <TabItem value="get-deployment-config-test" label="get-deployment-config-test.koreo">
+  <TabItem value="get-deployment-config-test" label="get-deployment-config-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -1107,7 +1115,7 @@ resource configurations into small, reusable components.
 Apply `get-deployment-config` to the cluster:
 
 ```
-kubectl apply -f get-deployment-config.koreo
+kubectl apply -f get-deployment-config.k.yaml
 ```
 
 Next, we'll see how the ResourceTemplate and overlay are used in a
@@ -1120,7 +1128,7 @@ to implement the ResourceFunction that will materialize the Deployment for a
 Workload.
 
 <Tabs>
-  <TabItem value="deployment-factory" label="deployment-factory.koreo" default>
+  <TabItem value="deployment-factory" label="deployment-factory.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -1174,7 +1182,7 @@ spec:
       env: =inputs.env
 ```
   </TabItem>
-  <TabItem value="deployment-factory-test" label="deployment-factory-test.koreo">
+  <TabItem value="deployment-factory-test" label="deployment-factory-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -1291,7 +1299,7 @@ to apply _layers_ of configuration to a resource based on business logic.
 Let's apply the ResourceFunction to the cluster:
 
 ```
-kubectl apply -f deployment-factory.koreo
+kubectl apply -f deployment-factory.k.yaml
 ```
 
 ### Service ResourceTemplate
@@ -1301,7 +1309,7 @@ previous ResourceTemplate we implemented but instead of a Deployment we're
 specing out a Kubernetes Service.
 
 <Tabs>
-  <TabItem value="service-template" label="service-template.koreo" default>
+  <TabItem value="service-template" label="service-template.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceTemplate
@@ -1326,7 +1334,7 @@ spec:
 Deploy the ResourceTemplate:
 
 ```
-kubectl apply -f service-template.koreo
+kubectl apply -f service-template.k.yaml
 ```
 
 ### Materializing the Service
@@ -1336,7 +1344,7 @@ We're ready to build the Service. We'll name this ResourceFunction
 we built in the previous example.
 
 <Tabs>
-  <TabItem value="service-factory-v2" label="service-factory-v2.koreo" default>
+  <TabItem value="service-factory-v2" label="service-factory-v2.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -1376,7 +1384,7 @@ spec:
     clusterIP: =resource.spec.clusterIP
 ```
   </TabItem>
-  <TabItem value="service-factory-v2-test" label="service-factory-v2-test.koreo">
+  <TabItem value="service-factory-v2-test" label="service-factory-v2-test.k.yaml">
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: FunctionTest
@@ -1463,7 +1471,7 @@ returned from the Function with `expectReturn`.
 Go ahead and apply `service-factory.v2` to the cluster:
 
 ```
-kubectl apply -f service-factory-v2.koreo
+kubectl apply -f service-factory-v2.k.yaml
 ```
 
 ### Building the Workflow
@@ -1471,7 +1479,7 @@ kubectl apply -f service-factory-v2.koreo
 We're ready to implement the Workflow:
 
 <Tabs>
-  <TabItem value="hello-workload" label="hello-workload.koreo" default>
+  <TabItem value="hello-workload" label="hello-workload.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -1533,7 +1541,7 @@ returned `clusterIP` from the Service on the parent Workload.
 Let's apply the Workflow and then test it out:
 
 ```
-kubectl apply -f hello-workload.koreo
+kubectl apply -f hello-workload.k.yaml
 ```
 
 The Workflow will look like the following:
@@ -1592,12 +1600,12 @@ You can run the following to clean up the resources from this example:
 
 ```
 kubectl delete -f workload.yaml
-kubectl delete -f hello-workload.koreo
-kubectl delete -f service-factory-v2.koreo
-kubectl delete -f service-template.koreo
-kubectl delete -f deployment-factory.koreo
-kubectl delete -f get-deployment-config.koreo
-kubectl delete -f deployment-template.koreo
+kubectl delete -f hello-workload.k.yaml
+kubectl delete -f service-factory-v2.k.yaml
+kubectl delete -f service-template.k.yaml
+kubectl delete -f deployment-factory.k.yaml
+kubectl delete -f get-deployment-config.k.yaml
+kubectl delete -f deployment-template.k.yaml
 kubectl delete -f workload-crd.yaml
 ```
 

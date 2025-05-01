@@ -42,16 +42,18 @@ run `koreo -h` or `koreo <command> -h`.
 
 ### koreo apply
 
-`koreo apply` applies .koreo files in a specified directory as YAML to the
-Kubernetes cluster via kubectl. 
+`koreo apply` recursively applies Koreo files in a specified directory as YAML to the
+Kubernetes cluster via kubectl. If you use the `.k` or `.koreo` file suffix, 
+it will first attempt to rename each file to have a `.yaml` suffix before 
+applying and will clean up after.
 
 ```
 koreo apply .
 ```
 
-If any of the files have already been previously applied, this will
-only apply updated files unless the `--force` flag is provided. Otherwise it
-will apply everything in the specified directory.
+The apply command will make a `.last-modified` file in each directory, only 
+files modified after will be applied on a subsequent apply unless the 
+`--force` flag is provided. 
 
 ```
 koreo apply --force .
@@ -74,4 +76,9 @@ be pruned.
 
 ### koreo inspect
 
-_coming soon_
+`koreo inspect` evaluates a given K8s resource that triggered a deployed
+workflow and will output created subresources from it.
+
+```
+koreo inspect -n trigger-namespace TriggerResourceKind trigger-resource-name
+```

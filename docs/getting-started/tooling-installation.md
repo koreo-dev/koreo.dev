@@ -46,7 +46,7 @@ You can install the latest-published version of the Koreo Language Server VS
 Code extension directly from VS Code. Simply open the extensions panel and
 search for “koreo-ls”.
 
-It will assume your language server is at `/usr/local/bin/koreo-ls`. You can
+It will assume the `koreo-ls` language server executable is in your system path. You can
 override this by going to `Preferences → Settings → Koreo Language Server` or
 setting it in your settings.json file.
 
@@ -64,22 +64,27 @@ From within the LSP4IJ plugin, add a new server:
 
 Adjust the koreo-ls entrypoint as needed.
 
-### Vim/Neovim
-
-#### CoC
+### Coc
 
 Add the following to your Vim/Neovim configuration:
 
 <Tabs>
   <TabItem value="vimscript" label="Vimscript" default>
 ```
-autocmd BufNewFile,BufRead *.koreo set filetype=koreo
+augroup koreo_filetypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.k,*.koreo,*.k.yaml,*.k.yml setfiletype koreo
+augroup END
+augroup koreo_filetype_settings
+  autocmd!
+  autocmd FileType koreo setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 autoindent smartindent
+augroup END
 ```
   </TabItem>
   <TabItem value="lua" label="Lua">
-```lua
+``` lua
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.koreo",
+  pattern = { "*.k", "*.koreo", "*.k.yaml", "*.k.yml" },
   command = "set filetype=koreo",
 })
 ```
@@ -99,47 +104,77 @@ Next, add the following to your coc-settings.json:
     }
   }
 }
-```
 
-Ensure `command` points to the appropriate `koreo-ls` executable.
+### NeoVim Lua LSPConfig via Lazy
 
-#### LSP
-
-Add the following to your Neovim's init.lua:
+Add the following to your Neovim's plugins dir e.g. ~/.config/nvim/lua/plugins/koreo-ls.lua
+and add `require 'plugins.koreo-ls'` to your init.lua file.
 
 ```lua
-vim.filetype.add {
-  extension = {
-    koreo = 'koreo',
-  },
-}
+return {
+  "neovim/nvim-lspconfig",
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+    local lspconfig = require("lspconfig")
+    local configs = require("lspconfig.configs")
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'koreo',
-  callback = function()
-    vim.opt_local.expandtab = true
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.tabstop = 2
-    vim.opt_local.softtabstop = 2
-    vim.opt_local.autoindent = true
-    vim.opt_local.smartindent = true
-    vim.lsp.start {
-      name = 'koreo_ls',
-      cmd = { 'koreo-ls' }, -- Ensure this command is correct and accessible
-      root_dir = vim.fn.getcwd(),
-    }
-  end,
-})
+    -- Associate file extensions with the koreo filetype
+    vim.filetype.add({
+      extension = {
+        k = "koreo",
+        koreo = "koreo",
+        ["k.yaml"] = "koreo",
+        ["k.yml"] = "koreo",
+      },
+    })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*.koreo',
-  callback = function()
-    local clients = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf() }
-    for _, client in ipairs(clients) do
-      if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint.enable(true)
-      end
+    vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+      pattern = { "*.k", "*.koreo", "*.k.yaml", "*.k.yml" },
+      callback = function()
+        vim.bo.filetype = "koreo"
+      end,
+    })
+
+    -- Define the koreo_ls language server if not already defined
+    if not configs.koreo_ls then
+      configs.koreo_ls = {
+        default_config = {
+          cmd = { "koreo-ls" }, -- ensure it's in your PATH
+          filetypes = { "koreo" },
+          root_dir = lspconfig.util.root_pattern(".git"),
+        },
+      }
     end
+
+    lspconfig.koreo_ls.setup({})
   end,
-})
+}
+```
+
+### NeoVim LSPConfig via VimScript
+
+``` vim
+" Ensure filetype is detected for .k, .koreo, .k.yaml, .k.yml
+augroup koreo_filetype
+  autocmd!
+  autocmd BufRead,BufNewFile *.k,*.koreo,*.k.yaml,*.k.yml set filetype=koreo
+augroup END
+
+" Use Lua to define the koreo_ls language server in lspconfig
+lua << EOF
+  local lspconfig = require("lspconfig")
+  local configs = require("lspconfig.configs")
+
+  if not configs.koreo_ls then
+    configs.koreo_ls = {
+      default_config = {
+        cmd = { "koreo-ls" },
+        filetypes = { "koreo" },
+        root_dir = lspconfig.util.root_pattern(".git"),
+      },
+    }
+  end
+
+  lspconfig.koreo_ls.setup({})
+EOF
 ```

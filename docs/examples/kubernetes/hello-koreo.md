@@ -15,7 +15,7 @@ metadata.
 ## hello-koreo Workflow
 
 <Tabs>
-  <TabItem value="hello-koreo" label="hello-koreo.koreo" default>
+  <TabItem value="hello-koreo" label="hello-koreo.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -48,7 +48,7 @@ spec:
 ## get-labels ValueFunction
 
 <Tabs>
-  <TabItem value="get-labels" label="get-labels.koreo" default>
+  <TabItem value="get-labels" label="get-labels.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -82,7 +82,7 @@ spec:
 ## set-deployment-labels ResourceFunction
 
 <Tabs>
-  <TabItem value="set-deployment-labels" label="set-deployment-labels.koreo" default>
+  <TabItem value="set-deployment-labels" label="set-deployment-labels.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction

@@ -17,7 +17,7 @@ for provisioning AWS resources.
 ## aws-environment Workflow
 
 <Tabs>
-  <TabItem value="workflow" label="workflow.koreo" default>
+  <TabItem value="workflow" label="workflow.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -204,7 +204,7 @@ spec:
 ## aws-environment-config ValueFunction
 
 <Tabs>
-  <TabItem value="config" label="config.koreo" default>
+  <TabItem value="config" label="config.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -276,7 +276,7 @@ spec:
 ## aws-environment-metadata ValueFunction
 
 <Tabs>
-  <TabItem value="metadata" label="metadata.koreo" default>
+  <TabItem value="metadata" label="metadata.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -319,7 +319,7 @@ spec:
 ## aws-environment-tags ValueFunction
 
 <Tabs>
-  <TabItem value="tags" label="tags.koreo" default>
+  <TabItem value="tags" label="tags.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -370,7 +370,7 @@ spec:
 ## aws-environment-vpc ResourceFunction
 
 <Tabs>
-  <TabItem value="vpc" label="vpc.koreo" default>
+  <TabItem value="vpc" label="vpc.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -451,7 +451,7 @@ spec:
 ## aws-environment-internet-gateway ResourceFunction
 
 <Tabs>
-  <TabItem value="internet-gateway" label="internet-gateway.koreo" default>
+  <TabItem value="internet-gateway" label="internet-gateway.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -566,7 +566,7 @@ spec:
 ## aws-environment-public-route-table ResourceFunction
 
 <Tabs>
-  <TabItem value="public-route-table" label="public-route-table.koreo" default>
+  <TabItem value="public-route-table" label="public-route-table.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -662,7 +662,7 @@ spec:
 ## aws-environment-public-subnet ResourceFunction
 
 <Tabs>
-  <TabItem value="public-subnet" label="public-subnet.koreo" default>
+  <TabItem value="public-subnet" label="public-subnet.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction

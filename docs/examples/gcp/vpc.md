@@ -15,7 +15,7 @@ for provisioning GCP resources.
 ## gcp-environment Workflow
 
 <Tabs>
-  <TabItem value="workflow" label="workflow.koreo" default>
+  <TabItem value="workflow" label="workflow.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -150,7 +150,7 @@ spec:
 ## gcp-environment-config ValueFunction
 
 <Tabs>
-  <TabItem value="config" label="config.koreo" default>
+  <TabItem value="config" label="config.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -193,7 +193,7 @@ spec:
 ## gcp-environment-network ResourceFunction
 
 <Tabs>
-  <TabItem value="network" label="network.koreo" default>
+  <TabItem value="network" label="network.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -253,7 +253,7 @@ spec:
 ## gcp-environment-subnet ResourceFunction
 
 <Tabs>
-  <TabItem value="subnet" label="subnet.koreo" default>
+  <TabItem value="subnet" label="subnet.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction
@@ -318,7 +318,7 @@ spec:
 ## gcp-environment-firewall ResourceFunction
 
 <Tabs>
-  <TabItem value="firewall" label="firewall.koreo" default>
+  <TabItem value="firewall" label="firewall.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction

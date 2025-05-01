@@ -15,7 +15,7 @@ Service for the Deployment.
 ## hello-service Workflow
 
 <Tabs>
-  <TabItem value="hello-service" label="hello-service.koreo" default>
+  <TabItem value="hello-service" label="hello-service.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: Workflow
@@ -53,7 +53,7 @@ spec:
 ## get-service-config ValueFunction
 
 <Tabs>
-  <TabItem value="get-service-config" label="get-service-config.koreo" default>
+  <TabItem value="get-service-config" label="get-service-config.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ValueFunction
@@ -161,7 +161,7 @@ spec:
 ## service-factory ResourceFunction
 
 <Tabs>
-  <TabItem value="service-factory" label="service-factory.koreo" default>
+  <TabItem value="service-factory" label="service-factory.k.yaml" default>
 ```yaml
 apiVersion: koreo.dev/v1beta1
 kind: ResourceFunction

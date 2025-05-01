@@ -76,17 +76,17 @@ const exampleKoreo: TabbedSpotlightItem = {
   header: <>Workflows and functions</>,
   subheader: <>provide composable primitives for building platforms</>,
   description: (
-  <>
-    <p>
-      <strong>Koreo empowers you to build complex Kubernetes platforms using composable workflows and functions</strong>, drawing inspiration from functional programming principles. Workflows act as blueprints for platform operations, defining the steps for tasks like application deployments or infrastructure provisioning. Functions are the individual building blocks within these workflows, encapsulating specific logic for data transformation, API interaction, or resource creation. And with built-in testing, you can validate configuration and catch errors early in the development process.
-    </p>
-    <p>
-      The true power of Koreo lies in its ability to program these workflows. Incorporate conditional logic, loops, and error handling to create dynamic platform operations. Automate complex processes, enforce policies, and build self-service platforms for your development teams.
-    </p>
-  </>
+    <>
+      <p>
+        <strong>Koreo empowers you to build complex Kubernetes platforms using composable workflows and functions</strong>, drawing inspiration from functional programming principles. Workflows act as blueprints for platform operations, defining the steps for tasks like application deployments or infrastructure provisioning. Functions are the individual building blocks within these workflows, encapsulating specific logic for data transformation, API interaction, or resource creation. And with built-in testing, you can validate configuration and catch errors early in the development process.
+      </p>
+      <p>
+        The true power of Koreo lies in its ability to program these workflows. Incorporate conditional logic, loops, and error handling to create dynamic platform operations. Automate complex processes, enforce policies, and build self-service platforms for your development teams.
+      </p>
+    </>
   ),
   imageSrcs: ["/img/home/workflow_koreo.png", "/img/home/value_function_koreo.png", "/img/home/resource_function_koreo.png", "/img/home/resource_function_test_koreo.png"],
-  imageTitles: ["aws-env.koreo", "tags.koreo", "vpc.koreo", "test-vpc.koreo"],
+  imageTitles: ["aws-env.k.yaml", "tags.k.yaml", "vpc.k.yaml", "test-vpc.k.yaml"],
 };
 
 const spotlightItems: SpotlightItem[] = [
@@ -94,14 +94,14 @@ const spotlightItems: SpotlightItem[] = [
     header: <>Powerful configuration management</>,
     subheader: <>with flexible resource orchestration</>,
     description: (
-    <>
-      <p>
-        Koreo is a platform engineering toolkit that introduces a new approach to configuration management and resource orchestration in Kubernetes. It builds upon the best aspects of tools like Helm, Kustomize, Argo, Crossplane, and kro while addressing some of their limitations.
-      </p>
-      <p>
-      <strong>It serves as a meta-controller programming language and runtime</strong> that allows you to compose off-the-shelf operators into cohesive platforms by orchestrating Kubernetes controllers. Connect any resource by mapping the outputs of one to the inputs of another. Through powerful primitives, Koreo enables DevOps and platform engineers to create dynamic workflows that automate everything from simple deployments to entire internal developer platforms. Its layered configuration management enables teams like security, compliance, or SRE to enforce consistent standards and practices for resources within your organization.
-      </p>
-    </>
+      <>
+        <p>
+          Koreo is a platform engineering toolkit that introduces a new approach to configuration management and resource orchestration in Kubernetes. It builds upon the best aspects of tools like Helm, Kustomize, Argo, Crossplane, and kro while addressing some of their limitations.
+        </p>
+        <p>
+          <strong>It serves as a meta-controller programming language and runtime</strong> that allows you to compose off-the-shelf operators into cohesive platforms by orchestrating Kubernetes controllers. Connect any resource by mapping the outputs of one to the inputs of another. Through powerful primitives, Koreo enables DevOps and platform engineers to create dynamic workflows that automate everything from simple deployments to entire internal developer platforms. Its layered configuration management enables teams like security, compliance, or SRE to enforce consistent standards and practices for resources within your organization.
+        </p>
+      </>
     ),
     imageSrc: "/img/home/koreo.png",
     imageAltText: "Powerful configuration management",
@@ -131,14 +131,14 @@ const spotlightItems: SpotlightItem[] = [
     header: <>The team behind Koreo</>,
     subheader: <>with over a decade of platform engineering expertise</>,
     description: (
-    <>
-      <p>
-        <a href="https://realkinetic.com" target="_blank">Real Kinetic</a> has spent years helping organizations—from startups to Fortune 500s—implement platform engineering to accelerate product delivery, improve efficiency, and reduce complexity. Before that, the team played a key role in building the internal platform for Workiva, an early cloud-native SaaS company, enabling its growth from startup to IPO.
-      </p>
-      <p>
-      Koreo distills this experience into a powerful toolkit for building internal developer platforms in a fraction of the time. It also powers <a href="https://konfigurate.com" target="_blank">Konfigurate</a>, our pre-configured platform that allows startups and scaleups to focus on product development, not undifferentiated work.
-      </p>
-    </>
+      <>
+        <p>
+          <a href="https://realkinetic.com" target="_blank">Real Kinetic</a> has spent years helping organizations—from startups to Fortune 500s—implement platform engineering to accelerate product delivery, improve efficiency, and reduce complexity. Before that, the team played a key role in building the internal platform for Workiva, an early cloud-native SaaS company, enabling its growth from startup to IPO.
+        </p>
+        <p>
+          Koreo distills this experience into a powerful toolkit for building internal developer platforms in a fraction of the time. It also powers <a href="https://konfigurate.com" target="_blank">Konfigurate</a>, our pre-configured platform that allows startups and scaleups to focus on product development, not undifferentiated work.
+        </p>
+      </>
     ),
     imageSrc: "/img/home/real_kinetic_konfigurate.png",
     imageAltText: "The team behind Koreo",
@@ -220,7 +220,7 @@ export function Spotlight({
               <div className={styles.spotlightDescription}>
                 {description}
               </div>
-            </div> 
+            </div>
           )}
         </div>
       </section>
@@ -300,11 +300,11 @@ export function TabbedSpotlight({
         )}
       </div>
     </section>
-  ); 
+  );
 }
 
 export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={siteConfig.tagline}
@@ -328,6 +328,6 @@ export default function Home(): ReactNode {
           <Spotlight {...spotlightItems[3]} />
         </div>
       </main>
-    </Layout> 
+    </Layout>
   );
 }
