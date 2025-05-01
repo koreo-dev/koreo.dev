@@ -104,6 +104,7 @@ Next, add the following to your coc-settings.json:
     }
   }
 }
+```
 
 ### NeoVim Lua LSPConfig via Lazy
 
