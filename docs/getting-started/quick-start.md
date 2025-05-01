@@ -27,7 +27,7 @@ The Koreo Syntax is not much more than YAML + CEL. The tooling supports a number
 of file suffixes including `.k`, `.koreo`, `.k.yaml`, and `.k.yml`. We recommend
 using the latter two as it may prove more useful when viewing the code in your
 Source Code site like GitHub or Gitlab, until we can grow the language and get
-the `.k` suffix working more widely.
+the `.k` suffix supported more widely.
 :::
 
 ## Hello Koreo
