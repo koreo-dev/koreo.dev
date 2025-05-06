@@ -105,7 +105,6 @@ spec:
   apiConfig:
     apiVersion: koreo.dev/v1beta1
     kind: TestDummy
-    plural: testdummies
 
     name: =inputs.metadata.name + "-template-docs"
     namespace: =inputs.metadata.namespace
