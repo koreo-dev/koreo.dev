@@ -108,7 +108,6 @@ spec:
   apiConfig:
     apiVersion: koreo.dev/v1beta1
     kind: TestDummy
-    plural: testdummies
     name: =inputs.metadata.name + "-docs"
     namespace: =inputs.metadata.namespace
     owned: true
@@ -121,11 +120,6 @@ evaluation time. Similar to `apiVersion` and `kind`, these values are always
 overlaid onto the materialized resource view before it is applied to the
 cluster. This prevents accidental resource definitions or overlays that might
 inadvertently change the desired name/namespace.
-
-`plural` is required only for resources whose plural form is not a simple
-pluralization. This is due to a design decision of the Kubernetes API server
-which makes using the singular form harder. At some point, a lookup mechanism
-will be implemented and this requirement will likely be removed.
 
 `owned` indicates if you would like the parent to be automatically added to the
 managed resource's `metadata.ownerReferences` list. The reference will only be
@@ -265,7 +259,6 @@ spec:
     kind: Bucket
     name: =locals.name
     namespace: =inputs.metadata.namespace
-    plural: buckets
 
   locals:
     capabilities: =inputs.resource.spec.capabilities
@@ -535,7 +528,6 @@ spec:
   apiConfig:
     apiVersion: koreo.dev/v1beta1
     kind: TestDummy
-    plural: testdummies
 
     name: =inputs.metadata.name + "-docs"
     namespace: =inputs.metadata.namespace

@@ -309,7 +309,6 @@ spec:
   apiConfig:
     apiVersion: koreo.dev/v1beta1
     kind: TestDummy
-    plural: testdummies
 
     name: =inputs.metadata.name
     namespace: =inputs.metadata.namespace
