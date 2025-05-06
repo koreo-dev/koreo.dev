@@ -52,7 +52,8 @@ spec:
     inputs:
       metadata: =steps.config.metadata
     state:
-      ref: =resource.self_ref()
+      service_account:
+        ref: =value.ref
 
   - label: role
     ref:
