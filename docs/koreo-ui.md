@@ -28,8 +28,8 @@ kubectl port-forward svc/koreo-controller-ui 8080:8080
 ## Viewing Workflows
 
 The home page of Koreo UI displays a list of Workflows by namespace. This list
-can be filtered by Name, Parent API Group, Parent Kind, Parent Version, Steps,
-and Instances.
+can be filtered by Name, Namespace, Parent API Group, Parent Kind, Parent
+Version, Steps, and Instances.
 
 <div className="docImage-100">
 ![Koreo UI Workflows](/img/docs/koreo-ui/koreo-ui-workflows.png)
@@ -70,10 +70,26 @@ and purple border.
 ![Koreo UI Workflow Instance Example](/img/docs/koreo-ui/koreo-ui-workflow-instance-example.png)
 </div>
 
+## Viewing Functions
+
+The Functions page shows a list of ValueFunctions and ResourceFunctions by
+namespace. This list can be filtered by Name, Namespace, and Kind.
+
+<div className="docImage-100">
+![Koreo UI Functions](/img/docs/koreo-ui/koreo-ui-functions.png)
+</div>
+
+Clicking into a Function will show the metadata for it as well as the Function
+`spec`.
+
+<div className="docImage-100">
+![Koreo UI Function Example](/img/docs/koreo-ui/koreo-ui-function-example.png)
+</div>
+
 ## Viewing ResourceTemplates
 
 The Resource Templates page shows a list of ResourceTemplates by namespace.
-This list can be filtered by Name, API Version, and Kind.
+This list can be filtered by Name, Namespace, API Version, and Kind.
 
 API Version and Kind refer to the KRM for which the ResourceTemplate
 corresponds to.
